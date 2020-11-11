@@ -21,7 +21,7 @@
     
     <div id=side>
         <div class="avatar-border">
-            <img src="https://yingfengpiao.github.io/images/avatar.png?v=1605064004352" class="avatar">
+            <img src="https://yingfengpiao.github.io/images/avatar.png?v=1605065745770" class="avatar">
         </div>
         <div class="sitename">迎风飘</div>
         <span class="describtion" data-text='["迎风而立，顺风而飘"]'>&nbsp;</span>
@@ -36,12 +36,14 @@
         <span>社交按钮</span>
         
         
+        <a onclick="showqq()"><i style="font-size: 20px;"><img class="icon" src="https://yingfengpiao.github.io/media/images/QQ.png" alt=""></i></a>
+        
         
         
         
         
     </div>
-    <div id="qq" style="display:none"></div>
+    <div id="qq" style="display:none">3263336144</div>
     
     
     <div class="mchocie describtion">
@@ -76,6 +78,10 @@
     
     
     
+    <div class="mchocie describtion">
+        <a href="https://yingfengpiao.github.io/talk" class="menubutton">说说</a>
+    </div>
+    
     
     <div class="mchocie describtion">
         <a href="https://yingfengpiao.github.io/friends" class="menubutton">友人帐</a>
@@ -85,11 +91,46 @@
     <div id="footinfo">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | Theme: <a
         href="https://github.com/850552586/gridea-theme-fog">Fog</a></div>
     
+    <div class="sitetime"><div id="sitegotimeDate">载入天数...</div>
+    <div id="sitegotimes">载入时分秒...</div></div>
+    <div id="cussitetime" style="display:none">02/02/2020</div>
+    
     
     </div>
 
 
 <script src="https://yingfengpiao.github.io/media/js/wordshow.js"></script>
+    
+    <script>
+        //----------------------站点运行时间
+        var now = new Date();
+
+        function createtime() {
+            var sitegotime = document.getElementById("cussitetime").innerHTML + " 00:00:00";
+            var grt = new Date(sitegotime); //此处修改你的建站时间或者网站上线时间
+            now.setTime(now.getTime() + 250);
+            days = (now - grt) / 1000 / 60 / 60 / 24;
+            dnum = Math.floor(days);
+            hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
+            hnum = Math.floor(hours);
+            if (String(hnum).length == 1) {
+                hnum = "0" + hnum;
+            }
+            minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
+            mnum = Math.floor(minutes);
+            if (String(mnum).length == 1) {
+                mnum = "0" + mnum;
+            }
+            seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+            snum = Math.round(seconds);
+            if (String(snum).length == 1) {
+                snum = "0" + snum;
+            }
+            document.getElementById("sitegotimeDate").innerHTML = "本站已安全运行 " + dnum + " 天 ";
+            document.getElementById("sitegotimes").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+        }
+        setInterval("createtime()", 250);
+    </script>
     
 
 
@@ -302,6 +343,8 @@
           
           
           
+          <li><a href="https://yingfengpiao.github.io/talk">说说</a></li>
+          
           
           <li><a href="https://yingfengpiao.github.io/friends">友链</a></li>
 
@@ -435,7 +478,7 @@
         <div id="bgchoice" style="display: none">link
             </div>
             
-            <div id="bgurl" style="display:none">https://i.loli.net/2020/11/11/VxGrUX1WwJvDS5P.jpg</div>
+            <div id="bgurl" style="display:none">https://i.loli.net/2020/11/11/wKLkT42jND5Ace3.jpg</div>
                
     </div>
     <div id="landlord">
@@ -512,7 +555,7 @@
                 <img src="' + talks[i].img + '" class="talkimg"> \
                 <div class="ainfo">\
                     <div class="ainfo-intro">\
-                        <img class="intro1" src="https://yingfengpiao.github.io/images/avatar.png?v=1605064004352">\
+                        <img class="intro1" src="https://yingfengpiao.github.io/images/avatar.png?v=1605065745770">\
                         <div class="author">' + talks[i].author + '</div>·\
                         <div class="time">' + talks[i].time + '</div>\
                     </div>\
@@ -525,7 +568,7 @@
             <div class="talk" v-for="t in talks"> \
                 <div class="ainfo">\
                     <div class="ainfo-intro">\
-                        <img class="intro1" src="https://yingfengpiao.github.io/images/avatar.png?v=1605064004352">\
+                        <img class="intro1" src="https://yingfengpiao.github.io/images/avatar.png?v=1605065745770">\
                         <div class="author">' + talks[i].author + '</div>·\
                         <div class="time">' + talks[i].time + '</div>\
                     </div>\
