@@ -1,22 +1,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
-    <meta name="description" content="线段树
-区间修改，查询lognlognlogn
-总复杂度nlognnlognnlogn
-高级数据结构
-可以用于88满足区间二分和区间加法的高级数据结构
+    <meta name="description" content="tarjan
+线性的复杂度求解有向图的强连通分量与无向图的割点割边问题
 
-求和
-最大公因数
-最大最小值
-区间覆盖问题
+强连通分量
+割点
+割边
 
-
-区间修改 区间查询
-分为以下几个部分
-..." />
-    <meta name="keywords" content="数据结构" />
+强连通分量
+对于一张无向图，定义一个点的集合中。点两两之间可以相互到达，这个点的元素数量最大化，则称这个点的集合为这个无向图的强连通分量
+1..." />
+    <meta name="keywords" content="图论" />
     <link rel="stylesheet" href="https://yingfengpiao.github.io/media/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://yingfengpiao.github.io/styles/main.css">
     
@@ -435,15 +430,15 @@
         <div class="postshow" style="padding-bottom: 0;">
             
             <div class="postdetailimg" style="width:100%;overflow: hidden;">
-                <img src="https://s3.ax1x.com/2020/11/11/Bvu4u4.png" class="postimage" style="cursor:auto">
+                <img src="https://s3.ax1x.com/2020/11/11/BvlJsS.png" class="postimage" style="cursor:auto">
             </div>
             <div class="postinfo-detail">
                 <div class="postdate"><i class="fa fa-calendar"></i>2020-11-11</div>
-                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 6 min read</div>
+                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 5 min read</div>
                 <div class="posttag">
                     
-                    <a href="https://yingfengpiao.github.io/tag/UfzCbkxAh/" class="postlink">
-                        <i class="fa fa-tag"></i> 数据结构
+                    <a href="https://yingfengpiao.github.io/tag/uacC4WkMh/" class="postlink">
+                        <i class="fa fa-tag"></i> 图论
                     </a>
                     
                 </div>
@@ -451,9 +446,9 @@
             
         <div id="articlecontent">
             <div id="texttitle" style="text-align: center">
-                <h2>线段树</h2>
+                <h2>tarjan</h2>
                 <!-- id 将作为查询条件 -->
-                <div id="pl" style="display:none">https://yingfengpiao.github.io/post/xian-duan-shu/</div>
+                <div id="pl" style="display:none">https://yingfengpiao.github.io/post/tarjan/</div>
                 <div id="rootaddr" style="display:none">https://yingfengpiao.github.io</div>
                 <span id="hotnum">
                     <h4><i class="fa fa-eye" aria-hidden="true" style="color: #FF8C00;"></i>&nbsp;&nbsp;热度</i>: <i
@@ -461,167 +456,128 @@
                 </span>
             </div>
             <div class="text ">
-                <h1 id="线段树">线段树</h1>
-<p><strong>区间修改，查询<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">logn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span></strong><br>
-<strong>总复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">nlogn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span></strong><br>
-<strong>高级数据结构</strong><br>
-<strong>可以用于88满足区间二分和区间加法的高级数据结构</strong></p>
+                <h1 id="tarjan">tarjan</h1>
+<p><strong>线性的复杂度求解有向图的强连通分量与无向图的割点割边问题</strong></p>
 <ul>
-<li><strong>求和</strong></li>
-<li><strong>最大公因数</strong></li>
-<li><strong>最大最小值</strong></li>
-<li><strong>区间覆盖问题</strong></li>
+<li>强连通分量</li>
+<li>割点</li>
+<li>割边</li>
 </ul>
-<hr>
-<p><strong>区间修改 区间查询</strong><br>
-<strong>分为以下几个部分</strong></p>
-<ul>
-<li><strong>建树</strong></li>
-<li><strong>区间修改</strong></li>
-<li><strong>区间查询</strong></li>
-<li><strong>懒标记下移</strong></li>
-</ul>
-<hr>
-<h2 id="建树">建树</h2>
-<pre><code class="language-cpp">void build(int id,int l,int r){
-	if(l==r){ segtree[id]=a[l]; return ; }
-	int mid=(l+r)&gt;&gt;1;
-	build(id&lt;&lt;1,l,mid);
-	build(id&lt;&lt;1|1,mid+1,r);
-	push_up(id);
-}
-</code></pre>
-<hr>
-<h2 id="区间修改">区间修改</h2>
-<pre><code class="language-cpp">void quadd(int li,int ri,int id,int l,int r,int v){
-	if(li&lt;=l&amp;&amp;r&lt;=ri){
-		lazy[id]+=v;
-		segtree[id]+=(r-l+1)*v;
-		return ; 
-	}
-	push_down(id,l,r);
-	int mid=(l+r)&gt;&gt;1;
-	if(mid&gt;=li){ quadd(li,ri,id&lt;&lt;1,l,mid,v);}
-	if(mid&lt;ri){ quadd(li,ri,id&lt;&lt;1|1,mid+1,r,v);}
-	push_up(id);
-}
-</code></pre>
-<p><strong>注意懒标记下移，边界判断</strong></p>
-<hr>
-<h2 id="区间查询">区间查询</h2>
-<pre><code class="language-cpp">int query(int li,int ri,int id,int l,int r){
-	if(li&lt;=l&amp;&amp;r&lt;=ri){
-		return segtree[id];
-	}
-	push_down(id,l,r);
-	int sum=0;
-	int mid=(l+r)&gt;&gt;1;
-	if(mid&gt;=li){ sum+=query(li,ri,id&lt;&lt;1,l,mid);}
-	if(mid&lt;ri){ sum+=query(li,ri,id&lt;&lt;1|1,mid+1,r);}
-	return sum;
-}
-</code></pre>
-<hr>
-<h2 id="懒标记下移">懒标记下移</h2>
-<pre><code class="language-cpp">void push_down(int id,int l,int r){
-	int mid=(l+r)&gt;&gt;1;
-	segtree[id&lt;&lt;1]+=(mid-l+1)*lazy[id];
-	segtree[id&lt;&lt;1|1]+=(r-mid)*lazy[id];
-	lazy[id&lt;&lt;1]+=lazy[id];
-	lazy[id&lt;&lt;1|1]+=lazy[id];
-	lazy[id]=0;
-}
-</code></pre>
-<p><strong>注意懒标记下推时的范围大小</strong></p>
-<hr>
-<h2 id="模板"><a href="https://www.luogu.com.cn/problem/P3372">模板</a></h2>
-<p><strong>贴一波完整代码</strong></p>
-<pre><code class="language-cpp">#include&lt;iostream&gt;
-#include&lt;cmath&gt;
-#include&lt;cstdio&gt;
-using namespace std;
-int n,m;
-long long segtree[400001];
-int a[100001];
-int lazy[400001];
-void push_up(int id){
-	segtree[id]=segtree[id&lt;&lt;1]+segtree[id&lt;&lt;1|1];
-}
-void push_down(int id,int l,int r){
-	int mid=(l+r)&gt;&gt;1;
-	segtree[id&lt;&lt;1]+=(mid-l+1)*lazy[id];
-	segtree[id&lt;&lt;1|1]+=(r-mid)*lazy[id];
-	lazy[id&lt;&lt;1]+=lazy[id];
-	lazy[id&lt;&lt;1|1]+=lazy[id];
-	lazy[id]=0;
-}
-void build(int id,int l,int r){
-	if(l==r){ segtree[id]=a[l]; return ;}
-	int mid=(l+r)&gt;&gt;1;
-	build(id&lt;&lt;1,l,mid);
-	build(id&lt;&lt;1|1,mid+1,r);
-	push_up(id);
-}
-void quadd(int li,int ri,int id,int l,int r,int v){
-	if(li&lt;=l&amp;&amp;r&lt;=ri){
-		segtree[id]+=(r-l+1)*v;
-		lazy[id]+=v;
-		return ; 
-	}
-	push_down(id,l,r);
-	int mid=(l+r)&gt;&gt;1;
-	if(mid&gt;=li){ quadd(li,ri,id&lt;&lt;1,l,mid,v);}
-	if(mid&lt;ri){ quadd(li,ri,id&lt;&lt;1|1,mid+1,r,v);}
-	push_up(id);
-}
-long long query(int li,int ri,int id,int l,int r){
-	if(li&lt;=l&amp;&amp;r&lt;=ri){
-		return segtree[id];
-	}
-	push_down(id,l,r);
-	long long sum=0;
-	int mid=(l+r)&gt;&gt;1;
-	if(mid&gt;=li){ sum+=query(li,ri,id&lt;&lt;1,l,mid);}
-	if(mid&lt;ri){ sum+=query(li,ri,id&lt;&lt;1|1,mid+1,r);}
-	return sum;
-}
-int main()
-{
-	cin&gt;&gt;n&gt;&gt;m;
-	for(int i=1;i&lt;=n;++i){
-		scanf(&quot;%d&quot;,&amp;a[i]); 
-	}
-	build(1,1,n);
-	for(int i=1;i&lt;=m;++i){
-		int id,x,y,k;
-		scanf(&quot;%d&quot;,&amp;id);
-		if(id==1){
-			scanf(&quot;%d%d%d&quot;,&amp;x,&amp;y,&amp;k);
-			quadd(x,y,1,1,n,k); 
+<h2 id="强连通分量">强连通分量</h2>
+<p><strong>对于一张无向图，定义一个点的集合中。点两两之间可以相互到达，这个点的元素数量最大化，则称这个点的集合为这个无向图的强连通分量</strong><br>
+<strong>1.找图中任意一点，从该点开始dfs</strong><br>
+<strong>2.当点未被遍历时打上时间戳，初始化low[x]=时间戳dfn[x]，将其压入栈中</strong><br>
+<strong>3.当节点已经被遍历时，说明此时找到了一个强连通分量，用其dfn更新我们当前节点的low</strong><br>
+<strong>4.当发现搜索完成所有的子树之后，dfn[x]==low[x]，说明当前节点为关键节点，即一个强连通分量的&quot;入口&quot;</strong><br>
+<strong>5.我们一直弹栈，直到将当前节点弹出，弹出的点都在一个强连通分量中</strong></p>
+<pre><code class="language-cpp">stack&lt;int &gt; q;
+int dfn[N];
+int low[N];
+int sign[N];
+int ans[N];
+int num,re;
+void tarjan(int x){
+	dfn[x]=low[x]=++num;
+	q.push(x);
+	int k=head[x];
+	while(k){
+		if(!dfn[e[k].to]){
+			tarjan(e[k].to);
+			low[x]=min(low[x],low[e[k].to]);
 		}else{
-			scanf(&quot;%d%d&quot;,&amp;x,&amp;y);
-			printf(&quot;%lld\n&quot;,query(x,y,1,1,n));
+			if(!sign[e[k].to]){
+				low[x]=min(low[x],dfn[e[k].to]);
+			}
 		}
+		k=e[k].next;
 	}
-	return 0;
+	if(dfn[x]==low[x]){
+		sign[x]=++re;
+		ans[re]++;
+		while(q.top()!=x){
+			sign[q.top()]=re;
+			ans[re]++;
+			q.pop();
+		}
+		q.pop();
+	}
 }
 </code></pre>
-<h2 id="区间覆盖问题">区间覆盖问题</h2>
-<h3 id="noi2015软件包管理器"><a href="https://www.luogu.com.cn/problem/P2146">[NOI2015]软件包管理器</a></h3>
-<p><strong>将所有的+=改为=</strong><br>
-<strong>考虑线段的初始值以及更改后的值如何变化</strong><br>
-<strong>考虑懒标记的变化</strong></p>
-<h2 id="区间最大值问题">区间最大值问题</h2>
-<h3 id="zjoi2008树的统计"><a href="https://www.luogu.com.cn/problem/P2590">[ZJOI2008]树的统计</a></h3>
-<p><strong>注意懒标记和最大值线段树的初始化为负无穷</strong></p>
-<h2 id="区间连续字段的长最长长度">区间连续字段的长最长长度</h2>
-<h3 id="序列操作"><a href="https://www.luogu.com.cn/problem/P2572">序列操作</a></h3>
-<p><strong>一道极其疯狂的线段树码农题</strong><br>
-<strong>维护：</strong><br>
-<strong>一个节点中最长的1段长度，最长的0段长度</strong><br>
-<strong>右段开始的1段长度，右端开始的0段长度</strong><br>
-<strong>左端开始的1段长度，左端开始的0段长度</strong><br>
-<strong>在push_down ，push_up ,合并查询最长1段数时都有许多细节需要思考</strong></p>
+<p><strong>为什么需要判遍历到的节点是否已经存在于一个强连通分量中？</strong><br>
+<strong>假设此节点存在于这个强连通分量中，那么它一定会在退栈之前被搜索到</strong><br>
+<strong>即现在的情况是，此节点可以便利到强连通分量中的点，但此强连通分量中的点无法到达目前节点</strong><br>
+<strong>对于强连通分量能否将low[x]=min(low[x],low[e[k].to])改成low[x]=min(low[x],low[e[k].to])?</strong><br>
+<strong>目前未找到反例，但是dfn[e[k].to]绝对没问题</strong></p>
+<hr>
+<h3 id="割点">割点</h3>
+<p><strong>对于一张无向图，删除某一个点之后，图便不再联通，这个点成为割点</strong><br>
+<strong>1.任选一个点作为根节点，开始dfs，这个根节点为root</strong><br>
+<strong>2.当遍历到一个未遍历过的节点，标记时间戳，初始化它的low[x]=dfn[x]</strong><br>
+<strong>3.当遍历到一个已经访问过的节点，用它的时间戳来更新我们的low[x]</strong><br>
+<strong>4.我们需要分两种情况讨论一个节点是否属于割点</strong><br>
+<strong>（1）当前节点为为非根节点</strong><br>
+<strong>如果其存在一个无法到达其上方的任何一个祖先的子树，那么这个节点时割点</strong><br>
+<strong>（2）当前节点时根节点</strong><br>
+<strong>如果根节点不止一个子树，即这个点的任意两棵子树之间必不存在边（如果存在一定会合并成一棵子树）那么这个点是割点</strong></p>
+<h4 id="为什么lowxminlowxdfnekto不能改成lowxminlowxlowekto">为什么low[x]=min(low[x],dfn[e[k].to])不能改成low[x]=min(low[x],low[e[k].to])?</h4>
+<p><strong>对于一个割点下的子树而言，出现遍历到已经访问过的节点用其low来更新没有问题，但是存在一个节点用割点的low来更新，那就炸了</strong><br>
+<strong>即我们对于一个点对其子节点的low的要求是，能通过一条边连接到这个点的祖先，但是不能通过这个点，必须绕过这个点，所以这样是错误的</strong></p>
+<pre><code class="language-cpp">int ans_coun;
+int coun;
+bool ans[N];
+int root;
+int dfn[N];
+int low[N];
+int num;
+void tarjan(int x){
+	dfn[x]=low[x]=++num;
+	int k=head[x];
+	while(k){
+		if(!dfn[e[k].to]){
+			tarjan(e[k].to);
+			low[x]=min(low[x],low[e[k].to]);
+			if(x!=root&amp;&amp;low[e[k].to]&gt;=dfn[x]){
+				ans[x]=1;
+			}
+			if(root==x) coun++;
+		}else{
+			low[x]=min(low[x],dfn[e[k].to]);
+		}
+		k=e[k].next;
+	}
+	if(x==root&amp;&amp;coun&gt;1){
+		ans[x]=1;
+	}
+}
+</code></pre>
+<hr>
+<h3 id="割边">割边</h3>
+<p><strong>当删除图中的一条边时，图不在联通，则这条边称为割边</strong><br>
+<strong>1.任选一节点开始dfs</strong><br>
+<strong>2.当一个边未被遍历过时，遍历它，并记录它的时间戳，初始化它的low为dfn</strong><br>
+<strong>3.当一个点已经被遍历时，用它的dfn 更新我们的low</strong><br>
+<strong>4.对于当前节点，一条边所连的子树中不存在一条能够回到当前点或者当前点祖先的边，则此边为割边</strong></p>
+<pre><code class="language-cpp">int ans;
+int dfn[N];
+int low[N];
+int num;
+void tarjan(int x){
+	dfn[x]=low[x]=++num;
+	int k=head[x];
+	while(k){
+		if(!dfn[e[k].to]){
+			tarjan(e[k].to); 
+			low[x]=min(low[x],low[e[k].to];)
+			if(low[e[k].to]&gt;dfn[x]){
+				ans++;
+			}
+		}else{
+			low[x]=min(low[x],dfn[e[k].to]);
+		}
+		k=e[k].next;
+	}
+} 
+</code></pre>
 
             </div>
             <hr style="width: 80%;">
@@ -659,7 +615,7 @@ int main()
             <div class="postfooter">
                 <ul class="post-copyright">
                     <li><strong>文章作者：</strong>Piao-Yingfeng</li>
-            <li><strong>原文链接：</strong>https://yingfengpiao.github.io/post/xian-duan-shu/</li>
+            <li><strong>原文链接：</strong>https://yingfengpiao.github.io/post/tarjan/</li>
             <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA
                 许可协议。转载请注明出处！</li>
             </ul>
@@ -667,28 +623,28 @@ int main()
         <div id="otherpost">
             
             <div class="prev-post-pc">
-                <div id="ppcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/shu-zhuang-shu-zu/';return false">
+                <div id="ppcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/zhong-guo-sheng-yu-ding-li-yu-tuo-zhan/';return false">
                     
-                    <img src="https://s3.ax1x.com/2020/11/11/BvuXvD.png" style="width: 100%;" class="opimg">
+                    <img src="https://s3.ax1x.com/2020/11/11/Bv1N6K.png" style="width: 100%;" class="opimg">
                     
-                    <h4 class="optitle">树状数组</h4>
+                    <h4 class="optitle">中国剩余定理与拓展</h4>
                 </div>
             </div>
             <div class="prev-post">
-                上一篇 <a href="https://yingfengpiao.github.io/post/shu-zhuang-shu-zu/">树状数组</a>
+                上一篇 <a href="https://yingfengpiao.github.io/post/zhong-guo-sheng-yu-ding-li-yu-tuo-zhan/">中国剩余定理与拓展</a>
             </div>
             
             
             <div class="next-post-pc">
-                <div id="npcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/spfa/';return false">
+                <div id="npcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/ni-yuan/';return false">
                     
-                    <img src="https://s3.ax1x.com/2020/11/11/BvmbZR.png" style="width: 100%;" class="opimg">
+                    <img src="https://s3.ax1x.com/2020/11/11/BvMX0H.png" style="width: 100%;" class="opimg">
                     
-                    <h4 class="optitle">SPFA</h4>
+                    <h4 class="optitle">逆元</h4>
                 </div>
             </div>
             <div class="next-post">
-                下一篇 <a href="https://yingfengpiao.github.io/post/spfa/">SPFA</a>
+                下一篇 <a href="https://yingfengpiao.github.io/post/ni-yuan/">逆元</a>
             </div>
             
         </div>
@@ -807,26 +763,16 @@ int main()
         
         <div class="toc-container">
             <ul class="markdownIt-TOC">
-<li><a href="#%E7%BA%BF%E6%AE%B5%E6%A0%91">线段树</a>
+<li><a href="#tarjan">tarjan</a>
 <ul>
-<li><a href="#%E5%BB%BA%E6%A0%91">建树</a></li>
-<li><a href="#%E5%8C%BA%E9%97%B4%E4%BF%AE%E6%94%B9">区间修改</a></li>
-<li><a href="#%E5%8C%BA%E9%97%B4%E6%9F%A5%E8%AF%A2">区间查询</a></li>
-<li><a href="#%E6%87%92%E6%A0%87%E8%AE%B0%E4%B8%8B%E7%A7%BB">懒标记下移</a></li>
-<li><a href="#%E6%A8%A1%E6%9D%BF">模板</a></li>
-<li><a href="#%E5%8C%BA%E9%97%B4%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98">区间覆盖问题</a>
+<li><a href="#%E5%BC%BA%E8%BF%9E%E9%80%9A%E5%88%86%E9%87%8F">强连通分量</a>
 <ul>
-<li><a href="#noi2015%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8">[NOI2015]软件包管理器</a></li>
+<li><a href="#%E5%89%B2%E7%82%B9">割点</a>
+<ul>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88lowxminlowxdfnekto%E4%B8%8D%E8%83%BD%E6%94%B9%E6%88%90lowxminlowxlowekto">为什么low[x]=min(low[x],dfn[e[k].to])不能改成low[x]=min(low[x],low[e[k].to])?</a></li>
 </ul>
 </li>
-<li><a href="#%E5%8C%BA%E9%97%B4%E6%9C%80%E5%A4%A7%E5%80%BC%E9%97%AE%E9%A2%98">区间最大值问题</a>
-<ul>
-<li><a href="#zjoi2008%E6%A0%91%E7%9A%84%E7%BB%9F%E8%AE%A1">[ZJOI2008]树的统计</a></li>
-</ul>
-</li>
-<li><a href="#%E5%8C%BA%E9%97%B4%E8%BF%9E%E7%BB%AD%E5%AD%97%E6%AE%B5%E7%9A%84%E9%95%BF%E6%9C%80%E9%95%BF%E9%95%BF%E5%BA%A6">区间连续字段的长最长长度</a>
-<ul>
-<li><a href="#%E5%BA%8F%E5%88%97%E6%93%8D%E4%BD%9C">序列操作</a></li>
+<li><a href="#%E5%89%B2%E8%BE%B9">割边</a></li>
 </ul>
 </li>
 </ul>
@@ -1070,7 +1016,7 @@ int main()
                 var nc = new NewCounter();
                 nc.save({
                     time: 1,
-                    title: "线段树",
+                    title: "tarjan",
                     url: pl,
                     xid: pl,
                 }).then(function (object) {

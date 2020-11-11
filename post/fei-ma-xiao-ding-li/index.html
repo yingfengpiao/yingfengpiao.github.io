@@ -1,22 +1,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
-    <meta name="description" content="线段树
-区间修改，查询lognlognlogn
-总复杂度nlognnlognnlogn
-高级数据结构
-可以用于88满足区间二分和区间加法的高级数据结构
-
-求和
-最大公因数
-最大最小值
-区间覆盖问题
-
-
-区间修改 区间查询
-分为以下几个部分
-..." />
-    <meta name="keywords" content="数据结构" />
+    <meta name="description" content="费马小定理
+若p是质数，a与p互质，那么ap−1≡1(modp)a^{p-1}\equiv 1\pmod{p}ap−1≡1(modp)
+等价于ap≡a(modp)a^p\equiv a\pmod{p}ap≡a(modp)
+前置知识：
+完全剩..." />
+    <meta name="keywords" content="数论" />
     <link rel="stylesheet" href="https://yingfengpiao.github.io/media/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://yingfengpiao.github.io/styles/main.css">
     
@@ -435,15 +425,15 @@
         <div class="postshow" style="padding-bottom: 0;">
             
             <div class="postdetailimg" style="width:100%;overflow: hidden;">
-                <img src="https://s3.ax1x.com/2020/11/11/Bvu4u4.png" class="postimage" style="cursor:auto">
+                <img src="https://s3.ax1x.com/2020/11/11/Bv3m4A.png" class="postimage" style="cursor:auto">
             </div>
             <div class="postinfo-detail">
                 <div class="postdate"><i class="fa fa-calendar"></i>2020-11-11</div>
-                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 6 min read</div>
+                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 3 min read</div>
                 <div class="posttag">
                     
-                    <a href="https://yingfengpiao.github.io/tag/UfzCbkxAh/" class="postlink">
-                        <i class="fa fa-tag"></i> 数据结构
+                    <a href="https://yingfengpiao.github.io/tag/3p6DbAmd5/" class="postlink">
+                        <i class="fa fa-tag"></i> 数论
                     </a>
                     
                 </div>
@@ -451,9 +441,9 @@
             
         <div id="articlecontent">
             <div id="texttitle" style="text-align: center">
-                <h2>线段树</h2>
+                <h2>费马小定理</h2>
                 <!-- id 将作为查询条件 -->
-                <div id="pl" style="display:none">https://yingfengpiao.github.io/post/xian-duan-shu/</div>
+                <div id="pl" style="display:none">https://yingfengpiao.github.io/post/fei-ma-xiao-ding-li/</div>
                 <div id="rootaddr" style="display:none">https://yingfengpiao.github.io</div>
                 <span id="hotnum">
                     <h4><i class="fa fa-eye" aria-hidden="true" style="color: #FF8C00;"></i>&nbsp;&nbsp;热度</i>: <i
@@ -461,167 +451,34 @@
                 </span>
             </div>
             <div class="text ">
-                <h1 id="线段树">线段树</h1>
-<p><strong>区间修改，查询<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">logn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span></strong><br>
-<strong>总复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">nlogn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span></strong><br>
-<strong>高级数据结构</strong><br>
-<strong>可以用于88满足区间二分和区间加法的高级数据结构</strong></p>
-<ul>
-<li><strong>求和</strong></li>
-<li><strong>最大公因数</strong></li>
-<li><strong>最大最小值</strong></li>
-<li><strong>区间覆盖问题</strong></li>
-</ul>
-<hr>
-<p><strong>区间修改 区间查询</strong><br>
-<strong>分为以下几个部分</strong></p>
-<ul>
-<li><strong>建树</strong></li>
-<li><strong>区间修改</strong></li>
-<li><strong>区间查询</strong></li>
-<li><strong>懒标记下移</strong></li>
-</ul>
-<hr>
-<h2 id="建树">建树</h2>
-<pre><code class="language-cpp">void build(int id,int l,int r){
-	if(l==r){ segtree[id]=a[l]; return ; }
-	int mid=(l+r)&gt;&gt;1;
-	build(id&lt;&lt;1,l,mid);
-	build(id&lt;&lt;1|1,mid+1,r);
-	push_up(id);
-}
-</code></pre>
-<hr>
-<h2 id="区间修改">区间修改</h2>
-<pre><code class="language-cpp">void quadd(int li,int ri,int id,int l,int r,int v){
-	if(li&lt;=l&amp;&amp;r&lt;=ri){
-		lazy[id]+=v;
-		segtree[id]+=(r-l+1)*v;
-		return ; 
-	}
-	push_down(id,l,r);
-	int mid=(l+r)&gt;&gt;1;
-	if(mid&gt;=li){ quadd(li,ri,id&lt;&lt;1,l,mid,v);}
-	if(mid&lt;ri){ quadd(li,ri,id&lt;&lt;1|1,mid+1,r,v);}
-	push_up(id);
-}
-</code></pre>
-<p><strong>注意懒标记下移，边界判断</strong></p>
-<hr>
-<h2 id="区间查询">区间查询</h2>
-<pre><code class="language-cpp">int query(int li,int ri,int id,int l,int r){
-	if(li&lt;=l&amp;&amp;r&lt;=ri){
-		return segtree[id];
-	}
-	push_down(id,l,r);
-	int sum=0;
-	int mid=(l+r)&gt;&gt;1;
-	if(mid&gt;=li){ sum+=query(li,ri,id&lt;&lt;1,l,mid);}
-	if(mid&lt;ri){ sum+=query(li,ri,id&lt;&lt;1|1,mid+1,r);}
-	return sum;
-}
-</code></pre>
-<hr>
-<h2 id="懒标记下移">懒标记下移</h2>
-<pre><code class="language-cpp">void push_down(int id,int l,int r){
-	int mid=(l+r)&gt;&gt;1;
-	segtree[id&lt;&lt;1]+=(mid-l+1)*lazy[id];
-	segtree[id&lt;&lt;1|1]+=(r-mid)*lazy[id];
-	lazy[id&lt;&lt;1]+=lazy[id];
-	lazy[id&lt;&lt;1|1]+=lazy[id];
-	lazy[id]=0;
-}
-</code></pre>
-<p><strong>注意懒标记下推时的范围大小</strong></p>
-<hr>
-<h2 id="模板"><a href="https://www.luogu.com.cn/problem/P3372">模板</a></h2>
-<p><strong>贴一波完整代码</strong></p>
-<pre><code class="language-cpp">#include&lt;iostream&gt;
-#include&lt;cmath&gt;
-#include&lt;cstdio&gt;
-using namespace std;
-int n,m;
-long long segtree[400001];
-int a[100001];
-int lazy[400001];
-void push_up(int id){
-	segtree[id]=segtree[id&lt;&lt;1]+segtree[id&lt;&lt;1|1];
-}
-void push_down(int id,int l,int r){
-	int mid=(l+r)&gt;&gt;1;
-	segtree[id&lt;&lt;1]+=(mid-l+1)*lazy[id];
-	segtree[id&lt;&lt;1|1]+=(r-mid)*lazy[id];
-	lazy[id&lt;&lt;1]+=lazy[id];
-	lazy[id&lt;&lt;1|1]+=lazy[id];
-	lazy[id]=0;
-}
-void build(int id,int l,int r){
-	if(l==r){ segtree[id]=a[l]; return ;}
-	int mid=(l+r)&gt;&gt;1;
-	build(id&lt;&lt;1,l,mid);
-	build(id&lt;&lt;1|1,mid+1,r);
-	push_up(id);
-}
-void quadd(int li,int ri,int id,int l,int r,int v){
-	if(li&lt;=l&amp;&amp;r&lt;=ri){
-		segtree[id]+=(r-l+1)*v;
-		lazy[id]+=v;
-		return ; 
-	}
-	push_down(id,l,r);
-	int mid=(l+r)&gt;&gt;1;
-	if(mid&gt;=li){ quadd(li,ri,id&lt;&lt;1,l,mid,v);}
-	if(mid&lt;ri){ quadd(li,ri,id&lt;&lt;1|1,mid+1,r,v);}
-	push_up(id);
-}
-long long query(int li,int ri,int id,int l,int r){
-	if(li&lt;=l&amp;&amp;r&lt;=ri){
-		return segtree[id];
-	}
-	push_down(id,l,r);
-	long long sum=0;
-	int mid=(l+r)&gt;&gt;1;
-	if(mid&gt;=li){ sum+=query(li,ri,id&lt;&lt;1,l,mid);}
-	if(mid&lt;ri){ sum+=query(li,ri,id&lt;&lt;1|1,mid+1,r);}
-	return sum;
-}
-int main()
-{
-	cin&gt;&gt;n&gt;&gt;m;
-	for(int i=1;i&lt;=n;++i){
-		scanf(&quot;%d&quot;,&amp;a[i]); 
-	}
-	build(1,1,n);
-	for(int i=1;i&lt;=m;++i){
-		int id,x,y,k;
-		scanf(&quot;%d&quot;,&amp;id);
-		if(id==1){
-			scanf(&quot;%d%d%d&quot;,&amp;x,&amp;y,&amp;k);
-			quadd(x,y,1,1,n,k); 
-		}else{
-			scanf(&quot;%d%d&quot;,&amp;x,&amp;y);
-			printf(&quot;%lld\n&quot;,query(x,y,1,1,n));
-		}
-	}
-	return 0;
-}
-</code></pre>
-<h2 id="区间覆盖问题">区间覆盖问题</h2>
-<h3 id="noi2015软件包管理器"><a href="https://www.luogu.com.cn/problem/P2146">[NOI2015]软件包管理器</a></h3>
-<p><strong>将所有的+=改为=</strong><br>
-<strong>考虑线段的初始值以及更改后的值如何变化</strong><br>
-<strong>考虑懒标记的变化</strong></p>
-<h2 id="区间最大值问题">区间最大值问题</h2>
-<h3 id="zjoi2008树的统计"><a href="https://www.luogu.com.cn/problem/P2590">[ZJOI2008]树的统计</a></h3>
-<p><strong>注意懒标记和最大值线段树的初始化为负无穷</strong></p>
-<h2 id="区间连续字段的长最长长度">区间连续字段的长最长长度</h2>
-<h3 id="序列操作"><a href="https://www.luogu.com.cn/problem/P2572">序列操作</a></h3>
-<p><strong>一道极其疯狂的线段树码农题</strong><br>
-<strong>维护：</strong><br>
-<strong>一个节点中最长的1段长度，最长的0段长度</strong><br>
-<strong>右段开始的1段长度，右端开始的0段长度</strong><br>
-<strong>左端开始的1段长度，左端开始的0段长度</strong><br>
-<strong>在push_down ，push_up ,合并查询最长1段数时都有许多细节需要思考</strong></p>
+                <h1 id="费马小定理">费马小定理</h1>
+<p><strong>若p是质数，a与p互质，那么<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>a</mi><mrow><mi>p</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>≡</mo><mn>1</mn><mspace></mspace><mspace width="0.4444444444444444em"/><mo>(</mo><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mspace width="0.3333333333333333em"/><mi>p</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">a^{p-1}\equiv 1\pmod{p}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">p</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≡</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:0.4444444444444444em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord"><span class="mord mathrm">m</span><span class="mord mathrm">o</span><span class="mord mathrm">d</span></span></span><span class="mspace" style="margin-right:0.3333333333333333em;"></span><span class="mord mathdefault">p</span><span class="mclose">)</span></span></span></span></strong><br>
+<strong>等价于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>a</mi><mi>p</mi></msup><mo>≡</mo><mi>a</mi><mspace></mspace><mspace width="0.4444444444444444em"/><mo>(</mo><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mspace width="0.3333333333333333em"/><mi>p</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">a^p\equiv a\pmod{p}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">p</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≡</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:0.4444444444444444em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord"><span class="mord mathrm">m</span><span class="mord mathrm">o</span><span class="mord mathrm">d</span></span></span><span class="mspace" style="margin-right:0.3333333333333333em;"></span><span class="mord mathdefault">p</span><span class="mclose">)</span></span></span></span></strong></p>
+<h2 id="前置知识">前置知识：</h2>
+<p><strong><a href="https://baike.baidu.com/item/%E5%AE%8C%E5%85%A8%E5%89%A9%E4%BD%99%E7%B3%BB/3712670?fr=aladdin">完全剩余系</a></strong><br>
+<strong><a href="https://baike.baidu.com/item/%E5%89%A9%E4%BD%99%E7%B1%BB/3712708?fr=aladdin">剩余类</a></strong><br>
+<strong>完全剩余系引理</strong><br>
+<strong>m是一个大于1的整数，a是整数且<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>m</mi><mo separator="true">,</mo><mi>a</mi><mo>)</mo><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">(m,a)=1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">a</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>,如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>{</mo><mi>b</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>}</mo><mo>(</mo><mi>i</mi><mo>∈</mo><mo>[</mo><mn>1</mn><mo separator="true">,</mo><mi>m</mi><mo>]</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">\{b[i]\}(i\in[1,m])</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord mathdefault">b</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mclose">}</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mclose">]</span><span class="mclose">)</span></span></span></span>是模m的一个完全剩余系，则<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>{</mo><mi>a</mi><mo>×</mo><mi>b</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>}</mo></mrow><annotation encoding="application/x-tex">\{a\times b[i]\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mclose">}</span></span></span></span>也是模m的一个完全剩余系</strong><br>
+<strong>证明：</strong><br>
+<strong>假设存在两个整数满足<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>×</mo><mi>b</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo separator="true">,</mo><mi>a</mi><mo>×</mo><mi>b</mi><mo>[</mo><mi>j</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">a\times b[i],a\times b[j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span>同余，那么</strong><br>
+<strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mspace width="2em"/><mi>a</mi><mo>×</mo><mi>b</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>≡</mo><mi>a</mi><mo>×</mo><mi>b</mi><mo>[</mo><mi>j</mi><mo>]</mo><mspace></mspace><mspace width="0.4444444444444444em"/><mo>(</mo><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mspace width="0.3333333333333333em"/><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\qquad a\times b[i]\equiv a\times b[j]\pmod{m}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mspace" style="margin-right:2em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≡</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:0.4444444444444444em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord"><span class="mord mathrm">m</span><span class="mord mathrm">o</span><span class="mord mathrm">d</span></span></span><span class="mspace" style="margin-right:0.3333333333333333em;"></span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span></strong><br>
+<strong>由<a href="https://yingfengpiao.blog.luogu.org/shu-lun">同余的性质（8）</a>可知</strong><br>
+<strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mspace width="2em"/><mi>b</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>≡</mo><mi>b</mi><mo>[</mo><mi>j</mi><mo>]</mo><mspace></mspace><mspace width="0.4444444444444444em"/><mo>(</mo><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mspace width="0.3333333333333333em"/><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\qquad b[i]\equiv b[j]\pmod{m}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mspace" style="margin-right:2em;"></span><span class="mord mathdefault">b</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≡</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:0.4444444444444444em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord"><span class="mord mathrm">m</span><span class="mord mathrm">o</span><span class="mord mathrm">d</span></span></span><span class="mspace" style="margin-right:0.3333333333333333em;"></span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span></strong><br>
+<strong>此时与我们的完全剩余系定义矛盾</strong><br>
+<strong>由此得证</strong></p>
+<h2 id="证明">证明：</h2>
+<p><strong>可知p是一个大于1的素数，可知一个模p的完全剩余系<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>{</mo><mi>i</mi><mo>}</mo><mo>(</mo><mi>i</mi><mo>∈</mo><mo>[</mo><mn>1</mn><mo separator="true">,</mo><mi>p</mi><mo>−</mo><mn>1</mn><mo>]</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">\{i\}(i\in [1,p-1])</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord mathdefault">i</span><span class="mclose">}</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mclose">)</span></span></span></span>,</strong><br>
+<strong>当p与a互质时，我们可以找到一个不大于p的唯一整数j，满足</strong><br>
+<strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mspace width="2em"/><mi>i</mi><mo>≡</mo><mi>a</mi><mo>×</mo><mi>j</mi><mspace></mspace><mspace width="0.4444444444444444em"/><mo>(</mo><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mspace width="0.3333333333333333em"/><mi>p</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\qquad i\equiv a\times j\pmod{p}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mspace" style="margin-right:2em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≡</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:0.4444444444444444em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord"><span class="mord mathrm">m</span><span class="mord mathrm">o</span><span class="mord mathrm">d</span></span></span><span class="mspace" style="margin-right:0.3333333333333333em;"></span><span class="mord mathdefault">p</span><span class="mclose">)</span></span></span></span></strong><br>
+<strong>且j与唯一的i对应</strong><br>
+<strong>或者说，对于我们已知的完全剩余系<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>{</mo><mi>i</mi><mo>}</mo><mo>(</mo><mi>i</mi><mo>∈</mo><mo>[</mo><mn>1</mn><mo separator="true">,</mo><mi>p</mi><mo>−</mo><mn>1</mn><mo>]</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">\{i\}(i\in [1,p-1])</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord mathdefault">i</span><span class="mclose">}</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mclose">)</span></span></span></span>,</strong><br>
+<strong>存在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>{</mo><mi>i</mi><mo>×</mo><mi>a</mi><mo>}</mo><mo>(</mo><mi>i</mi><mo>∈</mo><mo>[</mo><mn>1</mn><mo separator="true">,</mo><mi>p</mi><mo>−</mo><mn>1</mn><mo>]</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">\{i\times a\}(i\in [1,p-1])</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mclose">}</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mclose">)</span></span></span></span>也是模p的完全剩余系</strong><br>
+<strong>将一一对应的每一个方程相乘</strong><br>
+<strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mspace width="2em"/><mo>(</mo><mi>p</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>!</mo><mo>≡</mo><mo>(</mo><mi>p</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>!</mo><mo>×</mo><msup><mi>a</mi><mrow><mi>p</mi><mo>−</mo><mn>1</mn></mrow></msup><mspace></mspace><mspace width="0.4444444444444444em"/><mo>(</mo><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mspace width="0.3333333333333333em"/><mi>p</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\qquad (p-1)!\equiv (p-1)!\times a^{p-1}\pmod{p}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mspace" style="margin-right:2em;"></span><span class="mopen">(</span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">!</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≡</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">!</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">p</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:0.4444444444444444em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord"><span class="mord mathrm">m</span><span class="mord mathrm">o</span><span class="mord mathrm">d</span></span></span><span class="mspace" style="margin-right:0.3333333333333333em;"></span><span class="mord mathdefault">p</span><span class="mclose">)</span></span></span></span></strong><br>
+<strong>p是质数，与(p-1)!互质，根据<a href="https://yingfengpiao.blog.luogu.org/shu-lun">性质八</a>可知</strong><br>
+<strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mspace width="2em"/><msup><mi>a</mi><mrow><mi>p</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>≡</mo><mn>1</mn><mspace></mspace><mspace width="0.4444444444444444em"/><mo>(</mo><mrow><mi mathvariant="normal">m</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">d</mi></mrow><mspace width="0.3333333333333333em"/><mi>p</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">\qquad a^{p-1}\equiv 1\pmod{p}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mspace" style="margin-right:2em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">p</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≡</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mspace allowbreak"></span><span class="mspace" style="margin-right:0.4444444444444444em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord"><span class="mord mathrm">m</span><span class="mord mathrm">o</span><span class="mord mathrm">d</span></span></span><span class="mspace" style="margin-right:0.3333333333333333em;"></span><span class="mord mathdefault">p</span><span class="mclose">)</span></span></span></span></strong></p>
+<h2 id="费马小定理求逆元">费马小定理求逆元</h2>
+<p><strong><a href="https://yingfengpiao.blog.luogu.org/ni-yuan">逆元</a></strong></p>
 
             </div>
             <hr style="width: 80%;">
@@ -659,7 +516,7 @@ int main()
             <div class="postfooter">
                 <ul class="post-copyright">
                     <li><strong>文章作者：</strong>Piao-Yingfeng</li>
-            <li><strong>原文链接：</strong>https://yingfengpiao.github.io/post/xian-duan-shu/</li>
+            <li><strong>原文链接：</strong>https://yingfengpiao.github.io/post/fei-ma-xiao-ding-li/</li>
             <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA
                 许可协议。转载请注明出处！</li>
             </ul>
@@ -667,28 +524,28 @@ int main()
         <div id="otherpost">
             
             <div class="prev-post-pc">
-                <div id="ppcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/shu-zhuang-shu-zu/';return false">
+                <div id="ppcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/sao-miao-xian/';return false">
                     
-                    <img src="https://s3.ax1x.com/2020/11/11/BvuXvD.png" style="width: 100%;" class="opimg">
+                    <img src="https://s3.ax1x.com/2020/11/11/Bv81R1.png" style="width: 100%;" class="opimg">
                     
-                    <h4 class="optitle">树状数组</h4>
+                    <h4 class="optitle">扫描线</h4>
                 </div>
             </div>
             <div class="prev-post">
-                上一篇 <a href="https://yingfengpiao.github.io/post/shu-zhuang-shu-zu/">树状数组</a>
+                上一篇 <a href="https://yingfengpiao.github.io/post/sao-miao-xian/">扫描线</a>
             </div>
             
             
             <div class="next-post-pc">
-                <div id="npcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/spfa/';return false">
+                <div id="npcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/zhong-guo-sheng-yu-ding-li-yu-tuo-zhan/';return false">
                     
-                    <img src="https://s3.ax1x.com/2020/11/11/BvmbZR.png" style="width: 100%;" class="opimg">
+                    <img src="https://s3.ax1x.com/2020/11/11/Bv1N6K.png" style="width: 100%;" class="opimg">
                     
-                    <h4 class="optitle">SPFA</h4>
+                    <h4 class="optitle">中国剩余定理与拓展</h4>
                 </div>
             </div>
             <div class="next-post">
-                下一篇 <a href="https://yingfengpiao.github.io/post/spfa/">SPFA</a>
+                下一篇 <a href="https://yingfengpiao.github.io/post/zhong-guo-sheng-yu-ding-li-yu-tuo-zhan/">中国剩余定理与拓展</a>
             </div>
             
         </div>
@@ -807,28 +664,11 @@ int main()
         
         <div class="toc-container">
             <ul class="markdownIt-TOC">
-<li><a href="#%E7%BA%BF%E6%AE%B5%E6%A0%91">线段树</a>
+<li><a href="#%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86">费马小定理</a>
 <ul>
-<li><a href="#%E5%BB%BA%E6%A0%91">建树</a></li>
-<li><a href="#%E5%8C%BA%E9%97%B4%E4%BF%AE%E6%94%B9">区间修改</a></li>
-<li><a href="#%E5%8C%BA%E9%97%B4%E6%9F%A5%E8%AF%A2">区间查询</a></li>
-<li><a href="#%E6%87%92%E6%A0%87%E8%AE%B0%E4%B8%8B%E7%A7%BB">懒标记下移</a></li>
-<li><a href="#%E6%A8%A1%E6%9D%BF">模板</a></li>
-<li><a href="#%E5%8C%BA%E9%97%B4%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98">区间覆盖问题</a>
-<ul>
-<li><a href="#noi2015%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8">[NOI2015]软件包管理器</a></li>
-</ul>
-</li>
-<li><a href="#%E5%8C%BA%E9%97%B4%E6%9C%80%E5%A4%A7%E5%80%BC%E9%97%AE%E9%A2%98">区间最大值问题</a>
-<ul>
-<li><a href="#zjoi2008%E6%A0%91%E7%9A%84%E7%BB%9F%E8%AE%A1">[ZJOI2008]树的统计</a></li>
-</ul>
-</li>
-<li><a href="#%E5%8C%BA%E9%97%B4%E8%BF%9E%E7%BB%AD%E5%AD%97%E6%AE%B5%E7%9A%84%E9%95%BF%E6%9C%80%E9%95%BF%E9%95%BF%E5%BA%A6">区间连续字段的长最长长度</a>
-<ul>
-<li><a href="#%E5%BA%8F%E5%88%97%E6%93%8D%E4%BD%9C">序列操作</a></li>
-</ul>
-</li>
+<li><a href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86">前置知识：</a></li>
+<li><a href="#%E8%AF%81%E6%98%8E">证明：</a></li>
+<li><a href="#%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86%E6%B1%82%E9%80%86%E5%85%83">费马小定理求逆元</a></li>
 </ul>
 </li>
 </ul>
@@ -1070,7 +910,7 @@ int main()
                 var nc = new NewCounter();
                 nc.save({
                     time: 1,
-                    title: "线段树",
+                    title: "费马小定理",
                     url: pl,
                     xid: pl,
                 }).then(function (object) {

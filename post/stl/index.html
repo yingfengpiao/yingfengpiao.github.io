@@ -1,0 +1,2001 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    <meta name="description" content="stl 总结
+
+迭代器
+priority_queue
+vector
+pair
+map
+set
+multiset
+
+迭代器
+详情
+
+
+
+迭代器类别
+说明
+
+
+
+
+输入
+从容器中读取元素。输入迭代器只能一次读入一个元素向前移动，输入迭代器只支持..." />
+    <meta name="keywords" content="STL" />
+    <link rel="stylesheet" href="https://yingfengpiao.github.io/media/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://yingfengpiao.github.io/styles/main.css">
+    
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/dracula.min.css">
+    
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/js/clipboard.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/live2d.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.13.1/css/all.min.css" rel="stylesheet">
+    <!-- 数学公式 -->
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.css"
+        integrity="sha384-9tPv11A+glH/on/wEu99NVwDPwkMQESOocs/ZGXPoIiLE8MU/qkqUcZ3zzL+6DuH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/katex.min.js"
+        integrity="sha384-U8Vrjwb8fuHMt6ewaCy8uqeUXv4oitYACKdB0VziCerzt011iQ/0TqlSlv8MReCm" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0-beta/dist/contrib/auto-render.min.js"
+        integrity="sha384-aGfk5kvhIq5x1x5YdvCp4upKZYnA8ckafviDpmWEKp4afOZEqOli7gqSnh8I6enH" crossorigin="anonymous">
+    </script>
+    <script>
+        renderMathInElement(document.body, {
+            delimiters: [{
+                    left: "$$",
+                    right: "$$",
+                    display: true
+                },
+                {
+                    left: "$",
+                    right: "$",
+                    display: false
+                }
+            ]
+        });
+    </script>
+
+    
+    <title>迎风飘</title>
+    
+    <style>
+        .markdownIt-TOC {
+            margin-left: 28%;
+            padding-left: 2px;
+            width: 80%;
+        }
+
+        .markdownIt-TOC li {
+            padding-left: 8%;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <div id="landlord">
+        <div class="message" style="opacity:0"></div>
+        <canvas id="live2d" width="240" height="250" class="live2d"></canvas>
+    </div>
+    <div id="codeCopyText" style="display: none">代码复制成功了哦</div>
+    <div id="domainname" style="display:none">https://yingfengpiao.github.io</div>
+    <!-- 响应式布局，针对PC端内容显示 -->
+    <div id="content">
+        <div>
+            <div id="bar">
+                <head>
+  <!-- 引入Bootstrap核心样式文件 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/bootstrap.min.css">
+</head>
+<style>
+  @media screen and (max-width:1200px) and (min-width: 768px) {
+    @media (min-width: 768px) {
+      .navbar-nav {
+        float: right;
+        margin: 0;
+      }
+    }
+  }
+  @media screen and (max-width:768px){
+    .mbapspan{
+      padding: 0;
+    }
+  }
+</style>
+
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#barmenu"
+          aria-expanded="false" id="barbutton">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="https://yingfengpiao.github.io">迎风飘&nbsp;&nbsp;|</a>
+        <span class="navbar-brand mbapspan"><i id="mbaplayer" class="fa fa-play-circle-o" aria-hidden="true"
+            style="font-size: 28px;top: 12px;position: absolute;" onclick="aplayerPlay();"></i></span>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="barmenu">
+        <ul class="nav navbar-nav">
+          
+          
+          <li>
+            <a href="/">
+              首页
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="/archives">
+              归档
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="/tags">
+              标签
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="/post/about">
+              关于
+            </a>
+          </li>
+          
+          
+          
+          <li><a href="https://yingfengpiao.github.io/talk">说说</a></li>
+          
+          
+          <li><a href="https://yingfengpiao.github.io/friends">友链</a></li>
+
+          
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+
+  <!-- 引入jQuery核心js文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+  <script>
+  var btstate = false;
+  var bt = $("#barbutton");
+  var bm = $("#barmenu");
+  bt.click(function(){
+    dropdown();
+  })
+  function dropdown(){
+    console.log(btstate);
+    //下拉
+    if(btstate==false){
+      bt.removeClass("collapsed");
+      bt.attr("aria-expanded","true");
+      bm.attr("aria-expanded","true")
+      bm.fadeIn(700);
+      btstate = true;
+    }
+    else{
+      bt.addClass("collapsed");
+      bt.attr("aria-expanded","false");
+      bm.removeClass("in");
+      bm.hide();
+      bm.attr("aria-expanded","false");
+      btstate = false;
+    }
+  }
+  </script> 
+</body>
+            </div>
+            <div class="row">
+                <div class="side"><body>
+    
+    <div id=side>
+        <div class="avatar-border">
+            <img src="https://yingfengpiao.github.io/images/avatar.png?v=1605099626482" class="avatar">
+        </div>
+        <div class="sitename">迎风飘</div>
+        <span class="describtion" data-text='["迎风而立，顺风而飘"]'>&nbsp;</span>
+        
+        <div class="search">
+            <!-- <input type="text" class="search-input" placeholder="标题搜索(●'◡'●)" /> -->
+            <input type="text" class="search-input" placeholder="⚆_⚆ つ♡">
+            <div class="search-results"></div>
+        </div>
+        
+    <div class="share-button">
+        <span>社交按钮</span>
+        
+        
+        <a onclick="showqq()"><i style="font-size: 20px;"><img class="icon" src="https://yingfengpiao.github.io/media/images/QQ.png" alt=""></i></a>
+        
+        
+        
+        
+        
+    </div>
+    <div id="qq" style="display:none">3263336144</div>
+    
+    
+    <div class="mchocie describtion">
+        <a href="/" class="menubutton">
+            首页
+        </a>
+    </div>
+    
+    
+    
+    <div class="mchocie describtion">
+        <a href="/archives" class="menubutton">
+            归档
+        </a>
+    </div>
+    
+    
+    
+    <div class="mchocie describtion">
+        <a href="/tags" class="menubutton">
+            标签
+        </a>
+    </div>
+    
+    
+    
+    <div class="mchocie describtion">
+        <a href="/post/about" class="menubutton">
+            关于
+        </a>
+    </div>
+    
+    
+    
+    <div class="mchocie describtion">
+        <a href="https://yingfengpiao.github.io/talk" class="menubutton">说说</a>
+    </div>
+    
+    
+    <div class="mchocie describtion">
+        <a href="https://yingfengpiao.github.io/friends" class="menubutton">友人帐</a>
+    </div>
+    
+    <hr>
+    <div id="footinfo">nnez-OIer-Piao | Theme: <a
+        href="https://github.com/850552586/gridea-theme-fog">Fog</a></div>
+    
+    
+    </div>
+
+
+<script src="https://yingfengpiao.github.io/media/js/wordshow.js"></script>
+    
+
+
+
+
+    
+</body>
+<script>
+    //-------------------------------------------------搜索
+    // 获取搜索框、搜索按钮、清空搜索、结果输出对应的元素
+    var searchInput = document.querySelector('.search-input');
+    var searchResults = document.querySelector('.search-results');
+
+    // 申明保存文章的标题、链接、内容的数组变量
+    var searchValue = '',
+        arrItems = [],
+        arrLinks = [],
+        arrTitles = [],
+        arrResults = [],
+        indexItem = [],
+        itemLength = 0;
+    var tmpDiv = document.createElement('div');
+    tmpDiv.className = 'result-item';
+
+    // ajax 的兼容写法
+    var xhr = new XMLHttpRequest() || new ActiveXObject('Microsoft.XMLHTTP');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            xml = xhr.responseXML;
+            arrItems = xml.getElementsByTagName('entry');
+            itemLength = arrItems.length;
+            // 遍历并保存所有文章对应的标题、链接、内容到对应的数组中
+            // 同时过滤掉 HTML 标签
+            for (i = 0; i < itemLength; i++) {
+                var link = arrItems[i].getElementsByTagName('link')[0];
+                arrLinks[i] = link.getAttribute("href");
+                arrTitles[i] = arrItems[i].getElementsByTagName('title')[0].
+                childNodes[0].nodeValue.replace(/<.*?>/g, '');
+            }
+        }
+    }
+
+    // 开始获取根目录下 feed.xml 文件内的数据
+    xhr.open('get', '/atom.xml', true);
+    xhr.send();
+
+
+
+    // 输入框内容变化后就开始匹配，可以不用点按钮
+    // 经测试，onkeydown, onchange 等方法效果不太理想，
+    // 存在输入延迟等问题，最后发现触发 input 事件最理想，
+    // 并且可以处理中文输入法拼写的变化
+    searchInput.oninput = function () {
+        setTimeout(searchConfirm, 0);
+    }
+    searchInput.onfocus = function () {
+        searchResults.style.display = 'block';
+    }
+
+    function searchConfirm() {
+        if (searchInput.value == '') {
+            searchResults.style.display = 'none';
+        } else if (searchInput.value.search(/^\s+$/) >= 0) {
+            // 检测输入值全是空白的情况
+            searchInit();
+            var itemDiv = tmpDiv.cloneNode(true);
+            itemDiv.innerText = '请输入有效内容...';
+            searchResults.appendChild(itemDiv);
+        } else {
+            // 合法输入值的情况
+            searchInit();
+            searchValue = searchInput.value;
+            // 在标题、内容中查找
+            searchMatching(arrTitles, searchValue);
+        }
+    }
+
+    // 每次搜索完成后的初始化
+    function searchInit() {
+        arrResults = [];
+        indexItem = [];
+        searchResults.innerHTML = '';
+        searchResults.style.display = 'block';
+    }
+
+    function searchMatching(arr1, input) {
+        // 忽略输入大小写
+        input = new RegExp(input, 'i');
+        // 在所有文章标题、内容中匹配查询值
+        for (i = 0; i < itemLength; i++) {
+            if (arr1[i].search(input) !== -1) {
+                var arr = arr1;
+                indexItem.push(i); // 保存匹配值的索引
+                var indexContent = arr[i].search(input);
+                // 此时 input 为 RegExp 格式 /input/i，转换为原 input 字符串长度
+                var l = input.toString().length - 3;
+                var step = 10;
+
+                // 将匹配到内容的地方进行黄色标记，并包括周围一定数量的文本
+                arrResults.push(arr[i].slice(indexContent - step, indexContent));
+            }
+        }
+
+        // 输出总共匹配到的数目
+        var totalDiv = tmpDiv.cloneNode(true);
+        totalDiv.innerHTML = '<b>总匹配：' + indexItem.length + ' 项<hr></b>';
+        searchResults.appendChild(totalDiv);
+
+        // 未匹配到内容的情况
+        if (indexItem.length == 0) {
+            var itemDiv = tmpDiv.cloneNode(true);
+            itemDiv.innerText = '未匹配到内容...';
+            searchResults.appendChild(itemDiv);
+        }
+
+        // 将所有匹配内容进行组合
+        for (i = 0; i < arrResults.length; i++) {
+            var itemDiv = tmpDiv.cloneNode(true);
+            itemDiv.innerHTML = '<b>[' + arrTitles[indexItem[i]] +
+                ']</b><p>' + arrResults[i] + "</p><hr />";
+            itemDiv.setAttribute('onclick', 'changeHref(arrLinks[indexItem[' + i + ']])');
+            searchResults.appendChild(itemDiv);
+        }
+    }
+
+    function changeHref(href) {
+        location.href = href;
+    }
+
+    function showqq() {
+        var qq = document.getElementById("qq").innerHTML;
+        if (qq != '')
+            window.location.href = "tencent://message/?uin=" + qq + "&Site=&Menu=yes";
+        else
+            alert("博主暂未设置QQ联系方式");
+    }
+</script>
+</div>
+                
+                <div id="tab1" class="tab">
+                    <div class="bars">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div class="close"></div>
+                </div>
+                <div class="col-md-1 col-lg-3"></div>
+                <div id="main" class="col-xs-12 col-sm-12 col-md-10 col-lg-7">
+                    <link rel="stylesheet" href="https://yingfengpiao.github.io/media/css/font-awesome.css">
+
+<body>
+    <div class="allcontent" id="postdetail">
+        <div class="postshow" style="padding-bottom: 0;">
+            
+            <div class="postdetailimg" style="width:100%;overflow: hidden;">
+                <img src="https://s3.ax1x.com/2020/11/11/BvG79A.png" class="postimage" style="cursor:auto">
+            </div>
+            <div class="postinfo-detail">
+                <div class="postdate"><i class="fa fa-calendar"></i>2020-11-11</div>
+                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 29 min read</div>
+                <div class="posttag">
+                    
+                    <a href="https://yingfengpiao.github.io/tag/V5i0fFSFb/" class="postlink">
+                        <i class="fa fa-tag"></i> STL
+                    </a>
+                    
+                </div>
+            </div>
+            
+        <div id="articlecontent">
+            <div id="texttitle" style="text-align: center">
+                <h2>STL</h2>
+                <!-- id 将作为查询条件 -->
+                <div id="pl" style="display:none">https://yingfengpiao.github.io/post/stl/</div>
+                <div id="rootaddr" style="display:none">https://yingfengpiao.github.io</div>
+                <span id="hotnum">
+                    <h4><i class="fa fa-eye" aria-hidden="true" style="color: #FF8C00;"></i>&nbsp;&nbsp;热度</i>: <i
+                            class="hotnum">loading...</i></h4>
+                </span>
+            </div>
+            <div class="text ">
+                <h1 id="stl-总结">stl 总结</h1>
+<ul>
+<li>迭代器</li>
+<li>priority_queue</li>
+<li>vector</li>
+<li>pair</li>
+<li>map</li>
+<li>set</li>
+<li>multiset</li>
+</ul>
+<h2 id="迭代器">迭代器</h2>
+<p><strong><a href="https://blog.csdn.net/CSDN_564174144/article/details/76231626">详情</a></strong></p>
+<table>
+<thead>
+<tr>
+<th>迭代器类别</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输入</td>
+<td>从容器中读取元素。输入迭代器只能一次读入一个元素向前移动，输入迭代器只支持一遍算法，同一个输入迭代器不能两遍遍历一个序列</td>
+</tr>
+<tr>
+<td>输出</td>
+<td>向容器中写入元素。输出迭代器只能一次一个元素向前移动。输出迭代器只支持一遍算法，统一输出迭代器不能两次遍历一个序列</td>
+</tr>
+<tr>
+<td>正向</td>
+<td>组合输入迭代器和输出迭代器的功能，并保留在容器中的位置</td>
+</tr>
+<tr>
+<td>双向</td>
+<td>组合正向迭代器和逆向迭代器的功能，支持多遍算法</td>
+</tr>
+<tr>
+<td>随机访问</td>
+<td>组合双向迭代器的功能与直接访问容器中任何元素的功能，即可向前向后跳过任意个元素</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>迭代器操作</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>所有迭代器</td>
+<td></td>
+</tr>
+<tr>
+<td>p++</td>
+<td>后置自增迭代器</td>
+</tr>
+<tr>
+<td>++p</td>
+<td>前置自增迭代器</td>
+</tr>
+<tr>
+<td>输入迭代器</td>
+<td></td>
+</tr>
+<tr>
+<td>*p</td>
+<td>复引用迭代器，作为右值</td>
+</tr>
+<tr>
+<td>p=p1</td>
+<td>将一个迭代器赋给另一个迭代器</td>
+</tr>
+<tr>
+<td>p==p1</td>
+<td>比较迭代器的相等性</td>
+</tr>
+<tr>
+<td>p!=p1</td>
+<td>比较迭代器的不等性</td>
+</tr>
+<tr>
+<td>输出迭代器</td>
+<td></td>
+</tr>
+<tr>
+<td>*p</td>
+<td>复引用迭代器，作为左值</td>
+</tr>
+<tr>
+<td>p=p1</td>
+<td>将一个迭代器赋给另一个迭代器</td>
+</tr>
+<tr>
+<td>正向迭代器</td>
+<td>提供输入输出迭代器的所有功能</td>
+</tr>
+<tr>
+<td>双向迭代器</td>
+<td></td>
+</tr>
+<tr>
+<td>--p</td>
+<td>前置自减迭代器</td>
+</tr>
+<tr>
+<td>p--</td>
+<td>后置自减迭代器</td>
+</tr>
+<tr>
+<td>随机迭代器</td>
+<td></td>
+</tr>
+<tr>
+<td>p+=i</td>
+<td>将迭代器递增i位</td>
+</tr>
+<tr>
+<td>p-=i</td>
+<td>将迭代器递减i位</td>
+</tr>
+<tr>
+<td>p+i</td>
+<td>在p位加i位后的迭代器</td>
+</tr>
+<tr>
+<td>p-i</td>
+<td>在p位减i位后的迭代器</td>
+</tr>
+<tr>
+<td>p[i]</td>
+<td>返回p位元素偏离i位的元素引用</td>
+</tr>
+<tr>
+<td>p&lt;p1</td>
+<td>如果迭代器p的位置在p1前，返回true，否则返回false</td>
+</tr>
+<tr>
+<td>p&lt;=p1</td>
+<td>p的位置在p1的前面或同一位置时返回true，否则返回false</td>
+</tr>
+<tr>
+<td>p&gt;p1</td>
+<td>如果迭代器p的位置在p1后，返回true，否则返回false</td>
+</tr>
+<tr>
+<td>p&gt;=p1</td>
+<td>p的位置在p1的后面或同一位置时返回true，否则返回false</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>vector</th>
+<th>随机访问</th>
+<th>一种随机访问的数组类型，提供了对数组元素进行快速随机访问以及在序列尾部进行快速的插入和删除操作的功能。可以再需要的时候修改其自身的大小</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>deque</td>
+<td>随机访问</td>
+<td>一种随机访问的数组类型，提供了序列两端快速进行插入和删除操作的功能。可以再需要的时候修改其自身的大小</td>
+</tr>
+<tr>
+<td>list</td>
+<td>双向</td>
+<td>一种不支持随机访问的数组类型，插入和删除所花费的时间是固定的，与位置无关。</td>
+</tr>
+<tr>
+<td>set</td>
+<td>双向</td>
+<td>一种随机存取的容器，其关键字和数据元素是同一个值。所有元素都必须具有惟一值。</td>
+</tr>
+<tr>
+<td>multiset</td>
+<td>双向</td>
+<td>一种随机存取的容器，其关键字和数据元素是同一个值。可以包含重复的元素。</td>
+</tr>
+<tr>
+<td>map</td>
+<td>双向</td>
+<td>一种包含成对数值的容器，一个值是实际数据值，另一个是用来寻找数据的关键字。一个特定的关键字只能与一个元素关联。</td>
+</tr>
+<tr>
+<td>multimap</td>
+<td>双向</td>
+<td>一种包含成对数值的容器，一个值是实际数据值，另一个是用来寻找数据的关键字。一个关键字可以与多个数据元素关联。</td>
+</tr>
+<tr>
+<td>stack</td>
+<td>不支持</td>
+<td>适配器容器类型，用vector，deque或list对象创建了一个先进后出容器</td>
+</tr>
+<tr>
+<td>queue</td>
+<td>不支持</td>
+<td>适配器容器类型，用deque或list对象创建了一个先进先出容器</td>
+</tr>
+<tr>
+<td>priority_queue</td>
+<td>不支持</td>
+<td>适配器容器类型，用vector或deque对象创建了一个排序队列</td>
+</tr>
+</tbody>
+</table>
+<h2 id="priority_queue">priority_queue</h2>
+<p><strong>基于二插堆的实现的优先队列</strong></p>
+<p><strong>手写堆</strong></p>
+<pre><code class="language-cpp">struct num{
+    int id;
+    int val;
+}queue[1000001];
+int tail=1;
+void shift_up(int x){
+    while(x/2&gt;=1){
+        if(queue[x].val&lt;queue[x/2].val){
+            swap(queue[x],queue[x/2]);
+            x/=2;
+        }else{
+            break;
+        } 
+    }
+    return ;
+}
+void shift_down(int x,int n){
+    while(x*2&lt;=n){
+        int t=x*2;
+        if(t+1&lt;=n&amp;&amp;queue[t+1].val&lt;queue[t].val){
+            t++;
+        }
+        if(queue[x].val&gt;queue[t].val){
+            swap(queue[x],queue[t]);
+            x=t;
+        }else{
+            break;
+        }
+    }
+    return ;
+}
+void push(num x){
+    queue[tail++]=x;
+    shift_up(tail-1);
+    return ;
+}
+void pop(){
+    swap(queue[1],queue[tail-1]);
+    tail--;
+    shift_down(1,tail-1);
+}
+</code></pre>
+<h3 id="头文件">头文件</h3>
+<pre><code class="language-cpp">#include&lt;queue&gt;
+</code></pre>
+<h3 id="运算符重载">运算符重载</h3>
+<p><strong>内部使用了小于号，默认是大根堆</strong></p>
+<p><strong>重载小于号为小根堆</strong></p>
+<pre><code class="language-cpp">struct node{
+  int dis;
+  int x;
+  bool operator &lt; (const node &amp;x )const {
+    return dis&gt;x.dis;
+  };
+};
+priority_queue&lt;node &gt; q;
+</code></pre>
+<h3 id="相关函数操作">相关函数操作</h3>
+<pre><code class="language-cpp">变量名.empty();//判断优先队列中是否为空，为空则返回假，非空则为真
+变量名.top();//返回堆顶元素，大根堆为最大的，小根堆为最小的
+变量名.push(x);//将元素 x 放入优先队列中
+变量名.pop();//将堆顶元素弹出
+变量名.size();//返回堆中的元素个数
+</code></pre>
+<h3 id="时间复杂度">时间复杂度</h3>
+<p><strong>插入删除<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(logn)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></strong></p>
+<h2 id="vetor">vetor</h2>
+<p><strong>是封装动态数组的顺序容器</strong></p>
+<p><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">vector</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>存储是自动管理的，按需自动扩张</strong></p>
+<h3 id="头文件-2">头文件</h3>
+<pre><code class="language-cpp">#include&lt;vector&gt;
+</code></pre>
+<h3 id="相关函数">相关函数</h3>
+<pre><code class="language-cpp">vector&lt;T1&gt; x; //定义一个变量名为x的vector数组
+变量名.begin();//返回容器的起始迭代器
+变量名.end();//返回容器的末尾迭代器
+变量名.front();//访问第一个元素
+变量名.back();//访问最后一个元素
+变量名.empty();//判断容器是否为空，为空则为真，非空则为假
+变量名.size();//返回容器的元素数
+变量名.clear();//清楚容器
+变量名.insert();//插入元素
+变量名.erase();//擦除元素
+变量名.push_back();//在容器末尾添加元素
+//比较
+&lt; &lt;= == &gt;= &gt; != ;//可以执行正常的值的比较
+</code></pre>
+<h3 id="定义">定义</h3>
+<p><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">vector</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>的空间是动态变化的</strong></p>
+<pre><code class="language-cpp">vector&lt;int &gt; q(K,1);//d定义一个名为q长度为k的vector数组，并将其前K个赋值为1
+int a[10]={0,2,1,3,2,3,1,2,2};
+vector&lt;int &gt; q(a,a+5);//将a数组的前5项赋值给q
+vector&lt;T1 &gt; x(&amp;n,&amp;m);//可以将顺序存储数据结构的先后地址传给vector 进行赋值操作
+</code></pre>
+<p><strong>初始化</strong></p>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;vector&gt;
+#include&lt;cstdio&gt;
+using namespace std;
+int main()
+{
+  vector&lt;int &gt; q(10,1);
+  for(int i=0;i&lt;=20;++i){
+    cout&lt;&lt;i&lt;&lt;' '&lt;&lt;q[i]&lt;&lt;endl;
+  }
+  return 0;
+}
+</code></pre>
+<p><strong>在定义<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">vector</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>数组时进行初始化时，此时<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">vector</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>中已经有预定义的大小，即<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mi>u</mi><mi>s</mi><mi>h</mi><mi mathvariant="normal">_</mi><mi>b</mi><mi>a</mi><mi>c</mi><mi>k</mi></mrow><annotation encoding="application/x-tex">push\_back</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.00444em;vertical-align:-0.31em;"></span><span class="mord mathdefault">p</span><span class="mord mathdefault">u</span><span class="mord mathdefault">s</span><span class="mord mathdefault">h</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathdefault">b</span><span class="mord mathdefault">a</span><span class="mord mathdefault">c</span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>时只能在定义的大小之后插入</strong></p>
+<p><strong>可以发现，未被初始化的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mi>e</mi><mi>c</mi><mi>o</mi><mi>t</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">vecotr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>的值是不确定的</strong></p>
+<p><strong>当我们对未存在的索引进行赋值操作时，会出现错误，但访问时只是值不确定</strong></p>
+<h3 id="访问">访问</h3>
+<p><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">vector</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>可以想正常数组一样进行索引访问与修改</strong></p>
+<p><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mi>e</mi><mi>c</mi><mi>t</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">vector</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>可以进行迭代器的顺序访问，访问方式为指针的间接访问<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>∗</mo></mrow><annotation encoding="application/x-tex">*</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord">∗</span></span></span></span></strong></p>
+<pre><code class="language-cpp">vector&lt;int &gt; q;
+vector&lt;int &gt;::iterator t;
+for(t=q.begin;t!=q.end();t++){
+   	cout&lt;&lt;i&lt;&lt;' '&lt;&lt;*t&lt;&lt;endl;
+}
+</code></pre>
+<h3 id="插入与删除">插入与删除</h3>
+<p><strong>变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.insert()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span>;变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>s</mi><mi>e</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.erase()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></strong></p>
+<p><strong>【时间复杂度】<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span>暴力</strong></p>
+<pre><code class="language-cpp">vector&lt;int &gt; q;
+insert(q.begin(),100);//在begin前插入元素100
+insert(q.begin(),2,100);//在begin前插入数量为2的元素100
+vector&lt;int &gt; a(5,100);
+insert(q.begin(),a.begin(),a.end());//将a整个vector插入q前
+int arr[10]={100,232,231};
+insert(q.begin(),a,a+2);//将a开头的3个数插入q前
+</code></pre>
+<p><strong>栗子：</strong></p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+void print_vec(vector&lt;int&gt; &amp;vec)
+{
+  vector&lt;int &gt;::iterator iter;
+  for (iter=vec.begin();iter!=vec.end();++iter) {
+    cout &lt;&lt; ' ' &lt;&lt; (*iter);
+  }
+  cout &lt;&lt; '\n';
+  return ;
+}
+ 
+int main ()
+{
+    vector&lt;int&gt; vec(3,100);
+    print_vec(vec);
+ 
+    vector&lt;int &gt;::iterator  it = vec.begin();
+    it = vec.insert(it, 200);
+    print_vec(vec);
+ 
+    vec.insert(it,2,300);
+    print_vec(vec);
+ 
+    it = vec.begin();
+ 
+    vector&lt;int&gt; vec2(2,400);
+    vec.insert(it, vec2.begin(), vec2.end());
+    print_vec(vec);
+ 
+    int arr[] = { 501,502,503 };
+    print_vec(vec);
+}
+</code></pre>
+<h2 id="pair">pair</h2>
+<p><strong>类模版，提供一个单元存储两个相异类型的途径</strong></p>
+<p><strong>其内部封装为一个结构体</strong></p>
+<ul>
+<li>第一个值称为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>i</mi><mi>r</mi><mi>s</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">first</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span></span></span></span></li>
+<li>第二个值称为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>c</mi><mi>o</mi><mi>n</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">second</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span></span></span></span></li>
+</ul>
+<h3 id="头文件-3">头文件</h3>
+<pre><code class="language-cpp">#include&lt;utility&gt;
+</code></pre>
+<h3 id="相关函数-2">相关函数</h3>
+<pre><code class="language-cpp">pair&lt;T1,T2&gt;x(n,m);//创建一个first类型是T1,second类型是T2的pair对象x
+//并分别用n,m对first,second 赋值
+x.first;//引用第一个成员值first 
+x.second;//引用第二个成员值second 
+make_pair(x,y);//创建一个first=x,second=y的pair对象
+operator = ;// 赋值操作
+&lt; &lt;= == &gt;= &gt; != ;//比较操作，依次对first，second 按字典序比较
+tie(x,y)=函数；//当pair作为返回值时，可以用tie来进行接受
+</code></pre>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;utility&gt;
+#define N 100010
+using namespace std;
+pair&lt;int ,string &gt;q[N];
+int main()
+{
+  int n;
+  cin&gt;&gt;n;
+  for(int i=1;i&lt;=n;++i){
+    int x;
+    string s;
+    cin&gt;&gt;x&gt;&gt;s;
+    q[i]=make_pair(x,s);
+    cout&lt;&lt;q[i].first&lt;&lt;' '&lt;&lt;q[i].second&lt;&lt;'*'&lt;&lt;endl;
+  }
+  for(int i=1;i&lt;=n;++i){
+    for(int j=i+1;j&lt;=n;++j){
+      if(q[i]==q[j]){
+        cout&lt;&lt;i&lt;&lt;' '&lt;&lt;j&lt;&lt;endl;
+      }
+    }
+  }
+  cout&lt;&lt;(q[1]&lt;q[2])&lt;&lt;' '&lt;&lt;(q[2]&gt;q[3])&lt;&lt;endl;
+  return 0;
+}
+/*
+10 
+1 hasdiuhas
+2 adifos
+3 hiofidos
+4 nsdija
+3 hiofidos
+6 asidja
+7 ashdihas
+8 hsda
+1 hasdiuhas
+4 nsdija
+*/
+</code></pre>
+<h2 id="map">map</h2>
+<p><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>是一个有序键值容器</strong></p>
+<p><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>的内部实现是一颗红黑树，可以实现对数据的排序功能，建立<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi><mi>e</mi><mi>y</mi><mo>−</mo><mi>v</mi><mi>a</mi><mi>l</mi><mi>u</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">key-value</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">u</span><span class="mord mathdefault">e</span></span></span></span>的映射关系</strong></p>
+<p><strong>根据键值来引用而不是索引</strong></p>
+<ul>
+<li>
+<p>第一个我们称为关键字（键），每个关键字在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>中只能出现一次</p>
+</li>
+<li>
+<p>第二个我们称为该关键字的键值</p>
+</li>
+</ul>
+<p><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>中插入的元素默认是按关键字升序排列</strong></p>
+<p><strong>对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">multimap</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>的迭代器，可以这样进行访问:</strong></p>
+<pre><code class="language-cpp">map&lt;int ,string &gt; q1;
+multimap&lt;int ,string &gt;q2;
+q1&gt;first,q1-&gt;second;
+q2-&gt;first,q2-&gt;second;
+(*q1).first,(*q1).second;
+(*q2).first,(*q2).second;
+</code></pre>
+<h3 id="头文件-4">头文件</h3>
+<pre><code class="language-cpp">#include&lt;map&gt;
+</code></pre>
+<h3 id="相关函数-3">相关函数</h3>
+<pre><code class="language-cpp">变量名.begin();//返回指向起始的迭代器
+变量名.end();//返回指向末尾的迭代器（最后一个元素的后一个位置）
+变量名.operator =; //给容器赋值
+变量名.operator[];//访问或者插入指定的元素
+变量名.empty();//检查容器是否为空，为空则返回假，非空则为真
+变量名.size();//返回容器中的元素个数
+变量名.clear();//清空容器
+变量名.inser();//插入元素
+变量名.erase();//删除元素
+变量名.lower_bound();//指向首个大于等于给定键的元素的迭代器
+变量名.upper_bound();//指向首个大于给定键的元素的迭代器
+变量名.equal_range();//返回特定键值的取值范围
+变量名.find();//查找特定键的元素
+变量民.count();//返回特键的元素的数量
+</code></pre>
+<h4 id="变量名operator">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>o</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mo>[</mo><mo>]</mo></mrow><annotation encoding="application/x-tex">.operator[]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">o</span><span class="mord mathdefault">p</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mopen">[</span><span class="mclose">]</span></span></span></span></h4>
+<p>**【时间复杂度】<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">logn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span> **</p>
+<p><strong>变量名.【键】=值</strong></p>
+<p><strong>当键存在时，会覆盖当前键的键值；当键不存在时，插入一对如此的键对</strong></p>
+<h4 id="变量名insert">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.insert()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></h4>
+<p>**【时间复杂度】<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">logn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span> **</p>
+<p><strong>插入键对，如果键已经存在，则插入失败，即不插入，保持原来的键对</strong></p>
+<p><strong>插入时需要配合<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mi>a</mi><mi>i</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">pair</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span></strong></p>
+<p><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>n</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">insert()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span>的返回值是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mi>a</mi><mi>i</mi><mi>r</mi><mo>&lt;</mo><mi>i</mi><mi>t</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mo separator="true">,</mo><mi>b</mi><mi>o</mi><mi>o</mi><mi>l</mi><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">pair&lt;iterator,bool&gt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span></span></span></span>,当插入的键值已经存在时，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mi>o</mi><mi>o</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">bool</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span></span>值为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>a</mi><mi>l</mi><mi>s</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">false</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span></span></span></span></strong></p>
+<p>**当插入的键值未存在，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mi>o</mi><mi>o</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">bool</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span></span>值为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>r</mi><mi>u</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">true</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">u</span><span class="mord mathdefault">e</span></span></span></span> **</p>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;map&gt;
+using namespace std;
+map&lt;int ,string &gt;s;
+int main()
+{
+  int n;
+  cin&gt;&gt;n;
+
+  for(int i=1;i&lt;=n;++i){
+    int n;string x;
+    cin&gt;&gt;n&gt;&gt;x;
+    if(i%2==1)
+      s[n]=x;//operator []
+    else
+      s.insert(pair&lt;int ,string&gt;(n,x));//insert
+  }
+
+  pair&lt;map&lt;int,string &gt;::iterator,bool&gt; t;//return pair&lt;iterator,int &gt;
+  t=s.insert(make_pair(2,&quot;dbaushsahdua&quot;));
+  cout&lt;&lt;t.first-&gt;first&lt;&lt;' '&lt;&lt;t.second&lt;&lt;endl;
+  t=s.insert(make_pair(11,&quot;adasdasdaf&quot;));
+  cout&lt;&lt;t.first-&gt;first&lt;&lt;' '&lt;&lt;t.second&lt;&lt;endl;
+
+  cout&lt;&lt;s.empty()&lt;&lt;endl;//.empty()
+  cout&lt;&lt;s.size()&lt;&lt;endl;//.size()
+  map&lt;int,string &gt;::iterator iter;
+  for(iter=s.begin();iter!=s.end();++iter){
+    cout&lt;&lt;iter-&gt;first&lt;&lt;' '&lt;&lt;iter-&gt;second&lt;&lt;endl;
+  }
+  s.erase(s.begin(),s.end());
+  cout&lt;&lt;s.empty()&lt;&lt;endl;
+  return 0;
+}
+/*
+10
+4 hasidhas
+2 jofos
+3 josdja
+8 iosajhda
+1 ansdkna
+9 klahsdia
+5 jhdsfkjhsd
+6 jhsidja
+7 hdioaoi
+10 sdahioasjh
+*/
+</code></pre>
+<h4 id="变量名find">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>f</mi><mi>i</mi><mi>n</mi><mi>d</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.find()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></h4>
+<p><strong>【时间复杂度】<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">logn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span></strong></p>
+<p><strong>当键值存在时，返回其迭代器，当不存在时，返回与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>e</mi><mi>n</mi><mi>d</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.end()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span>的值相同</strong></p>
+<p><strong>即存在可以判断是否存在键值的方法</strong></p>
+<pre><code class="language-cpp">//查找是否存在键值为(x)的set
+map&lt;int,string&gt; q;
+map&lt;int,string&gt;::iterator iter;//定义迭代器
+iter=find(x);//.find()
+if(iter==q.end()){
+    cout&lt;&quot;no&quot;&lt;&lt;endl;
+}
+</code></pre>
+<h4 id="变量名count">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>c</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.count()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></h4>
+<p><strong>【时间复杂度】<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">logn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span></strong></p>
+<p><strong>由于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>不允许存在重复的关键字，所以返回值为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>或者<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></strong></p>
+<p><strong>可以用来判断是否存在需要查询的键</strong></p>
+<pre><code class="language-cpp">map&lt;int ,string &gt; q;
+if(q.count(x)==1){ return 1;} 
+else return 0;
+</code></pre>
+<h4 id="变量名erase">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>s</mi><mi>e</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.erase()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></h4>
+<p><strong>可以删除给出的迭代器的元素</strong></p>
+<p><strong>可以传出给定的迭代器的范围内的元素</strong></p>
+<p><strong>可以删除给定的键值的元素</strong></p>
+<pre><code class="language-cpp">map&lt;int ,string &gt; s;
+map&lt;int ,string &gt;::iterator iter;
+......
+s.earse(1);//删除特定键值的元素
+s.erase(iter);//删除迭代器指定的元素
+s.erase(s.begin(),s.end());
+//遍历容器中的元素
+for(iter=s.begin();iter!=s.end();++iter){
+    输出；
+	erase(iter)
+}
+..上为错误写法
+在stl中，已经被删除的迭代器便失去了作用
+正确写法：
+for(iter=s.begin();iter!=s.end();){
+    输出；
+   	iter=s.erase(iter);//删除之后会返回后一个元素的迭代器
+    erase(itera++);//可能会有锅
+}
+#include &lt;iostream&gt;
+#include &lt;map&gt;
+using namespace std;
+int main ()
+{
+  std::map&lt;char,int&gt; mymap;
+  std::map&lt;char,int&gt;::iterator it;
+
+  // insert some values:
+  mymap['a']=10;
+  mymap['b']=20;
+  mymap['c']=30;
+  mymap['d']=40;
+  mymap['e']=50;
+  mymap['f']=60;
+
+  it=mymap.find('b');
+  mymap.erase (it);                   // erasing by iterator
+
+  mymap.erase ('c');                  // erasing by key
+
+  it=mymap.find ('e');
+  mymap.erase ( it, mymap.end() );    // erasing by range
+
+  // show content:
+  for (it=mymap.begin(); it!=mymap.end(); ++it)
+    cout &lt;&lt; it-&gt;first &lt;&lt; &quot; =&gt; &quot; &lt;&lt; it-&gt;second &lt;&lt; '\n';
+
+  return 0;
+}
+</code></pre>
+<h4 id="变量名lower_boundqquad-qquad-变量名upper_bound">变量名$.lower_bound\qquad &amp;&amp;\qquad <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">变</mi><mi mathvariant="normal">量</mi><mi mathvariant="normal">名</mi></mrow><annotation encoding="application/x-tex">变量名</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">变</span><span class="mord cjk_fallback">量</span><span class="mord cjk_fallback">名</span></span></span></span>.upper_bound$</h4>
+<p>**【时间复杂度】<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">logn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span> **</p>
+<p>**<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>w</mi><mi>e</mi><mi>r</mi><mi mathvariant="normal">_</mi><mi>b</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>d</mi><mo>:</mo></mrow><annotation encoding="application/x-tex">lower\_bound:</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.00444em;vertical-align:-0.31em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathdefault">b</span><span class="mord mathdefault">o</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span></span></span></span>返回首个大于或者等于键的元素的迭代器,找不到则返回尾后迭代器<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>e</mi><mi>n</mi><mi>d</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.end()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span> **</p>
+<p>**<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi><mi>p</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi mathvariant="normal">_</mi><mi>b</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>d</mi><mo>:</mo></mrow><annotation encoding="application/x-tex">upper\_bound:</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.00444em;vertical-align:-0.31em;"></span><span class="mord mathdefault">u</span><span class="mord mathdefault">p</span><span class="mord mathdefault">p</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathdefault">b</span><span class="mord mathdefault">o</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">:</span></span></span></span>返回首个大于键的元素的迭代器,找不到则返回尾后迭代器<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>e</mi><mi>n</mi><mi>d</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.end()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span> **</p>
+<pre><code class="language-CPP">#include&lt;iostream&gt;
+#include&lt;cstdio&gt;
+#include&lt;utility&gt;
+#include&lt;map&gt;
+using namespace std;
+map&lt;int,string &gt; q;
+int n;
+int main()
+{
+  scanf(&quot;%d&quot;,&amp;n);
+  for(int i=1;i&lt;=n;++i){
+    int x;string s;
+    cin&gt;&gt;x&gt;&gt;s;
+    q[x]=s;
+  }
+  map&lt;int ,string &gt;::iterator iter;
+  iter=q.lower_bound(4);
+  cout&lt;&lt;iter-&gt;first&lt;&lt;' '&lt;&lt;iter-&gt;second&lt;&lt;endl;
+  iter=q.upper_bound(4);
+  cout&lt;&lt;iter-&gt;first&lt;&lt;' '&lt;&lt;iter-&gt;second&lt;&lt;endl;
+  return 0;
+}
+/*
+10
+1 ansdkna
+2 jofos
+3 josdja
+4 hasidhas
+5 jhdsfkjhsd
+6 jhsidja
+7 hdioaoi
+8 iosajhda
+9 klahsdia
+10 sdahioasjh
+*/
+</code></pre>
+<h4 id="变量名equal_range">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>e</mi><mi>q</mi><mi>u</mi><mi>a</mi><mi>l</mi><mi mathvariant="normal">_</mi><mi>r</mi><mi>a</mi><mi>n</mi><mi>g</mi><mi>e</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.equal\_range()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.06em;vertical-align:-0.31em;"></span><span class="mord">.</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mord mathdefault">u</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></h4>
+<p><strong>返回特定键值的取值范围</strong></p>
+<p><strong>其返回值为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mi>a</mi><mi>i</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">pair</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>,<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>f</mi><mi>i</mi><mi>r</mi><mi>s</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">.first</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord">.</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span></span></span></span>可由<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>w</mi><mi>e</mi><mi>r</mi><mi mathvariant="normal">_</mi><mi>b</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">lower\_bound</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.00444em;vertical-align:-0.31em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathdefault">b</span><span class="mord mathdefault">o</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span></span></span></span>得到，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>s</mi><mi>e</mi><mi>c</mi><mi>o</mi><mi>n</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">.second</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">.</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span></span></span></span>可由<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>u</mi><mi>p</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi mathvariant="normal">_</mi><mi>b</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">upper\_bound</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.00444em;vertical-align:-0.31em;"></span><span class="mord mathdefault">u</span><span class="mord mathdefault">p</span><span class="mord mathdefault">p</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathdefault">b</span><span class="mord mathdefault">o</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span></span></span></span>得到</strong></p>
+<pre><code class="language-cpp">// map::equal_range
+#include &lt;iostream&gt;
+#include &lt;map&gt;
+using namespace std;
+int main ()
+{
+  map&lt;char,int&gt; mymap;
+
+  mymap['a']=10;
+  mymap['b']=20;
+  mymap['c']=30;
+
+  pair&lt;map&lt;char,int&gt;::iterator,map&lt;char,int&gt;::iterator&gt; ret;
+  ret = mymap.equal_range('b');
+
+  cout &lt;&lt; &quot;lower bound points to: &quot;;
+  cout &lt;&lt; ret.first-&gt;first &lt;&lt; &quot; =&gt; &quot; &lt;&lt; ret.first-&gt;second &lt;&lt; '\n';
+
+  cout &lt;&lt; &quot;upper bound points to: &quot;;
+  cout &lt;&lt; ret.second-&gt;first &lt;&lt; &quot; =&gt; &quot; &lt;&lt; ret.second-&gt;second &lt;&lt; '\n';
+
+  return 0;
+}
+</code></pre>
+<h2 id="multimap">multimap</h2>
+<p><strong>一个有序键值容器，允许含有相同键值的键对</strong>、</p>
+<p><strong>内部默认按第一关键字排序，但是对第二关键字并不排序，即按输入稳定</strong></p>
+<h3 id="头文件-5">头文件</h3>
+<pre><code class="language-cpp">#include&lt;map&gt;
+</code></pre>
+<h3 id="相关函数-4">相关函数</h3>
+<pre><code class="language-cpp">变量名.begin();//返回指向起始的迭代器
+变量名.end();//返回指向末尾的迭代器（最后一个元素的后一个位置）
+变量名.operator =; //给容器赋值
+变量名.empty();//检查容器是否为空，为空则返回假，非空则为真
+变量名.size();//返回容器中的元素个数
+变量名.clear();//清空容器
+变量名.inser();//插入元素
+变量名.erase();//删除元素
+变量名.lower_bound();//指向首个大于等于给定键的元素的迭代器
+变量名.upper_bound();//指向首个大于给定键的元素的迭代器
+变量名.equal_range();//返回特定键值的取值范围
+变量名.find();//查找特定键的元素
+变量民.count();//返回特键的元素的数量
+</code></pre>
+<p><strong>相对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>而言，没有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>o</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mo>[</mo><mo>]</mo></mrow><annotation encoding="application/x-tex">operator []</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">o</span><span class="mord mathdefault">p</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mopen">[</span><span class="mclose">]</span></span></span></span>的操作，因为可能存在相同键值的键对</strong></p>
+<h4 id="变量名insert-2">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.insert()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></h4>
+<p><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">multiset</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>的返回值是一个迭代器，返回的是插入的键对的迭代器</strong></p>
+<p>**不同于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>的是，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>返回的是一个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mi>a</mi><mi>i</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">pair</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span> **</p>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;map&gt;
+using namespace std;
+multimap&lt;int ,string &gt;s;
+int main()
+{
+  int n;
+  cin&gt;&gt;n;
+
+  for(int i=1;i&lt;=n;++i){
+    int n;string x;
+    cin&gt;&gt;n&gt;&gt;x;
+    s.insert(pair&lt;int ,string&gt;(n,x));//insert
+  }
+
+  multimap&lt;int,string &gt;::iterator t;//return iterator
+  t=s.insert(make_pair(2,&quot;dbaushsahdua&quot;));
+  cout&lt;&lt;t-&gt;first&lt;&lt;' '&lt;&lt;t-&gt;second&lt;&lt;endl;
+  t=s.insert(make_pair(11,&quot;adasdasdaf&quot;));
+  cout&lt;&lt;t-&gt;first&lt;&lt;' '&lt;&lt;t-&gt;second&lt;&lt;endl;
+
+  cout&lt;&lt;s.empty()&lt;&lt;endl;//.empty()
+  cout&lt;&lt;s.size()&lt;&lt;endl;//.size()
+  multimap&lt;int,string &gt;::iterator iter;
+  for(iter=s.begin();iter!=s.end();++iter){
+    cout&lt;&lt;iter-&gt;first&lt;&lt;' '&lt;&lt;iter-&gt;second&lt;&lt;endl;
+  }
+  s.erase(s.begin(),s.end());
+  cout&lt;&lt;s.empty()&lt;&lt;endl;
+  return 0;
+}
+/*
+10
+4 hasidhas
+2 jofos
+3 josdja
+8 iosajhda
+1 ansdkna
+9 klahsdia
+5 jhdsfkjhsd
+6 jhsidja
+7 hdioaoi
+10 sdahioasjh
+*/
+</code></pre>
+<h4 id="变量名erase-2">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>s</mi><mi>e</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.erase()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></h4>
+<p><strong>可以实现键值，迭代器以及迭代器范围的删除</strong></p>
+<p><strong>有所不同的是</strong></p>
+<p><strong>对与键值的删除，会将所有的相同键值的键对删除；对于迭代器只会删除一个，即指定的迭代器不会影响与其相同键值的其它键对</strong></p>
+<pre><code class="language-cpp">// erasing from multimap
+#include &lt;iostream&gt;
+#include &lt;map&gt;
+using namespace std;
+int main ()
+{
+  multimap&lt;char,int&gt; mymultimap;
+
+  // insert some values:
+  mymultimap.insert(pair&lt;char,int&gt;('a',10));
+  mymultimap.insert(pair&lt;char,int&gt;('b',20));
+  mymultimap.insert(pair&lt;char,int&gt;('b',30));
+  mymultimap.insert(pair&lt;char,int&gt;('c',40));
+  mymultimap.insert(pair&lt;char,int&gt;('d',50));
+  mymultimap.insert(pair&lt;char,int&gt;('d',60));
+  mymultimap.insert(pair&lt;char,int&gt;('e',70));
+  mymultimap.insert(pair&lt;char,int&gt;('e',90));
+  mymultimap.insert(pair&lt;char,int&gt;('f',80));
+
+  multimap&lt;char,int&gt;::iterator it = mymultimap.find('b');
+
+  mymultimap.erase (it);                     // erasing by iterator (1 element)
+
+  mymultimap.erase ('d');                    // erasing by key (2 elements)
+
+  it=mymultimap.find ('e');
+  mymultimap.erase ( it, mymultimap.end() ); // erasing by range
+
+  // show content:
+  for (it=mymultimap.begin(); it!=mymultimap.end(); ++it)
+    cout &lt;&lt; (*it).first &lt;&lt; &quot; =&gt; &quot; &lt;&lt; (*it).second &lt;&lt; '\n';
+
+  return 0;
+}
+</code></pre>
+<h4 id="变量名find-2">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>f</mi><mi>i</mi><mi>n</mi><mi>d</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.find()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></h4>
+<p><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>i</mi><mi>n</mi><mi>d</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">find()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span>返回的是第一个与输入键值相同的元素的迭代器，与插入的顺序相关</strong></p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;map&gt;
+using namespace std;
+int main ()
+{
+  multimap&lt;char,int&gt; mymm;
+
+  mymm.insert (make_pair('x',10));
+  mymm.insert (make_pair('y',20));
+  mymm.insert (make_pair('z',1000));
+  mymm.insert (make_pair('z',200));
+  mymm.insert (make_pair('z',12230));
+  // print content:
+  cout &lt;&lt; &quot;elements in mymm:&quot; &lt;&lt; '\n';
+  cout &lt;&lt; &quot;y =&gt; &quot; &lt;&lt; mymm.find('y')-&gt;second &lt;&lt; '\n';
+  cout &lt;&lt; &quot;z =&gt; &quot; &lt;&lt; mymm.find('z')-&gt;second &lt;&lt; '\n';
+
+  multimap&lt;char ,int &gt;::iterator iter;
+  for(iter=mymm.begin();iter!=mymm.end();++iter){
+    cout&lt;&lt;iter-&gt;first&lt;&lt;' '&lt;&lt;iter-&gt;second&lt;&lt;endl;
+  }
+  return 0;
+}
+</code></pre>
+<p><strong>可以发现其内部对第二关键字并没有排序</strong></p>
+<h4 id="变量名count-2">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>c</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.count()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></h4>
+<p><strong>对<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">multimap</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>而言，其返回值可能大于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>,而<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>只能为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>或者<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></strong></p>
+<pre><code class="language-cpp">// multimap::count
+#include &lt;iostream&gt;
+#include &lt;map&gt;
+using namespace std;
+int main ()
+{
+  multimap&lt;char,int&gt; mymm;
+
+  mymm.insert(make_pair('x',50));
+  mymm.insert(make_pair('y',100));
+  mymm.insert(make_pair('y',150));
+  mymm.insert(make_pair('y',200));
+  mymm.insert(make_pair('z',250));
+  mymm.insert(make_pair('z',300));
+
+  for (char c='x'; c&lt;='z'; c++)
+  {
+    cout &lt;&lt; &quot;There are &quot; &lt;&lt; mymm.count(c) &lt;&lt; &quot; elements with key &quot; &lt;&lt; c &lt;&lt; &quot;:&quot;;
+    multimap&lt;char,int&gt;::iterator it;
+    for (it=mymm.equal_range(c).first; it!=mymm.equal_range(c).second; ++it)
+      cout &lt;&lt; ' ' &lt;&lt; (*it).second;
+    cout &lt;&lt; '\n';
+  }
+
+  return 0;
+}
+</code></pre>
+<h4 id="变量名equal_range-2">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>e</mi><mi>q</mi><mi>u</mi><mi>a</mi><mi>l</mi><mi mathvariant="normal">_</mi><mi>r</mi><mi>a</mi><mi>n</mi><mi>g</mi><mi>e</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.equal\_range()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.06em;vertical-align:-0.31em;"></span><span class="mord">.</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mord mathdefault">u</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></h4>
+<p><strong>返回特定键值的取值范围</strong></p>
+<p><strong>对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>而言，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>取值范围最多为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>,而<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">multimap</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>则不一定</strong></p>
+<pre><code class="language-cpp">// map::equal_range
+#include &lt;iostream&gt;
+#include &lt;map&gt;
+using namespace std;
+int main ()
+{
+  map&lt;char,int&gt; mymap;
+
+  mymap['a']=10;
+  mymap['b']=20;
+  mymap['c']=30;
+
+  pair&lt;map&lt;char,int&gt;::iterator,map&lt;char,int&gt;::iterator&gt; ret;
+  ret = mymap.equal_range('b');
+
+  cout &lt;&lt; &quot;lower bound points to: &quot;;
+  cout &lt;&lt; ret.first-&gt;first &lt;&lt; &quot; =&gt; &quot; &lt;&lt; ret.first-&gt;second &lt;&lt; '\n';
+
+  cout &lt;&lt; &quot;upper bound points to: &quot;;
+  cout &lt;&lt; ret.second-&gt;first &lt;&lt; &quot; =&gt; &quot; &lt;&lt; ret.second-&gt;second &lt;&lt; '\n';
+
+  return 0;
+}
+</code></pre>
+<h2 id="set">set</h2>
+<p><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span> 的内部实现为红黑树,可以实现对数级别的高效检索</strong></p>
+<p><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span> 中每个元素只包含一个关键字：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span> 支持高效的关键字查询操作,检查一个给定关键字是否在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>中</strong></p>
+<p><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span> 中每个元素的值都唯一，而且系统能根据元素的值自动进行排序</strong></p>
+<p><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span> 中数元素的值不能直接被改变,因为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>中只有键，键即为值，值即为键</strong></p>
+<h3 id="头文件-6">头文件</h3>
+<pre><code class="language-cpp">#includ&lt;set&gt;
+</code></pre>
+<h3 id="相关函数-5">相关函数</h3>
+<pre><code class="language-cpp">operator = ;//容器间复制操作
+变量名.begin();//返回起始元素的迭代器
+变量名.end();//返回末尾元素的迭代器
+变量名.empty();//判断容器是否为空，为空则为真，非空则为假
+变量名.size();//返回容器中的元素个数
+变量名.clear();//清空容器
+变量名.insert();//插入元素
+变量名.erase();//删除元素
+变量名.count();//返回特定键的数量
+变量名.find();//查找特定键的元素
+变量名.lower_bound();//返回首个大于或者等于特定键的元素的迭代器
+变量名.upper_bound();//返回首个大于特定键的元素的迭代器
+变量名.equal_range();//返回特定键值的取值范围
+//按字典序比较set中的值
+&lt; &lt;= == &gt;= &gt; != ;//返回bool值
+</code></pre>
+<p><strong>操作实现基本与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>相同</strong></p>
+<h4 id="变量名insert-3">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.insert()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></h4>
+<p>**【时间复杂度】<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">logn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span> **</p>
+<p><strong>与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>不同的是，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>只能通过<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>n</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">insert</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span></span></span></span>来进行插入</strong></p>
+<p><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>n</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">insert()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span>的返回值是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mi>a</mi><mi>i</mi><mi>r</mi><mo>&lt;</mo><mi>i</mi><mi>t</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mo separator="true">,</mo><mi>b</mi><mi>o</mi><mi>o</mi><mi>l</mi><mo>&gt;</mo></mrow><annotation encoding="application/x-tex">pair&lt;iterator,bool&gt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span></span></span></span>,当键值已经存在时,<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mi>o</mi><mi>o</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">bool</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span></span>值为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mi>a</mi><mi>l</mi><mi>s</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">false</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span></span></span></span>，插入失败</strong></p>
+<p><strong>键值不存在时，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mi>o</mi><mi>o</mi><mi>l</mi></mrow><annotation encoding="application/x-tex">bool</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span></span>值为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>t</mi><mi>r</mi><mi>u</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">true</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">u</span><span class="mord mathdefault">e</span></span></span></span>，插入成功</strong></p>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;cstdio&gt;
+#include&lt;set&gt;
+#include&lt;utility&gt;
+#define N 100010
+using namespace std;
+set&lt;int &gt; q;
+int main()
+{
+  int n;
+  scanf(&quot;%d&quot;,&amp;n);
+  for(int i=1;i&lt;=n;++i){
+    int x;
+    scanf(&quot;%d&quot;,&amp;x);
+    q.insert(x);
+  }
+  set&lt;int &gt;::iterator iter=q.begin();
+  for(;iter!=q.end();iter++){
+    cout&lt;&lt;(*iter)&lt;&lt;' ';
+  }
+  cout&lt;&lt;endl;
+  pair&lt; set&lt;int &gt;::iterator ,bool &gt; kk;
+  kk=q.insert(2);
+  cout&lt;&lt;*kk.first&lt;&lt;' '&lt;&lt;kk.second&lt;&lt;endl;
+  kk=q.insert(11);
+  cout&lt;&lt;*kk.first&lt;&lt;' '&lt;&lt;kk.second&lt;&lt;endl;
+  return 0;
+}
+/*
+10 
+10 9 8 7 6 5 4 3 2 1
+*/
+</code></pre>
+<h4 id="变量名count-3">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>c</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.count()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></h4>
+<p>**【时间复杂度】<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">logn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span> **</p>
+<p><strong>与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>相同，因为不存在相同的键，即返回值为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>或<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></strong></p>
+<p><strong>可以进行键值是否存在的判断</strong></p>
+<h4 id="变量名erase-3">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>s</mi><mi>e</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.erase()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></h4>
+<p>**【时间复杂度】<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">logn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span> **</p>
+<p><strong>可以进行特定键值的删除</strong></p>
+<p><strong>可以进行特定迭代器删除</strong></p>
+<p><strong>可以进行特定迭代器范围的删除</strong></p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;set&gt;
+using namespace std;
+int main ()
+{
+  set&lt;int&gt; myset;
+  set&lt;int&gt;::iterator it;
+
+  for (int i=1; i&lt;10; i++) myset.insert(i*10);  
+  // 10 20 30 40 50 60 70 80 90
+
+  it = myset.begin();
+  ++it;                                         
+  // &quot;it&quot; points now to 20
+
+  myset.erase (it);
+
+  myset.erase (40);
+
+  it = myset.find (60);
+  myset.erase (it, myset.end());
+
+  cout &lt;&lt; &quot;myset contains:&quot;;
+  for (it=myset.begin(); it!=myset.end(); ++it)
+    cout &lt;&lt; ' ' &lt;&lt; *it;
+  cout &lt;&lt; '\n';
+
+  return 0;
+}
+</code></pre>
+<h2 id="multiset">multiset</h2>
+<p><strong>含有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi><mi>e</mi><mi>y</mi></mrow><annotation encoding="application/x-tex">key</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>类型对象的有序容器，不同于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>的是，它允许多个等价的键值</strong></p>
+<h3 id="头文件-7">头文件</h3>
+<pre><code class="language-cpp">#include&lt;set&gt;
+</code></pre>
+<h3 id="相关函数-6">相关函数</h3>
+<pre><code class="language-cpp">operator = ;//容器间复制操作
+变量名.begin();//返回起始元素的迭代器
+变量名.end();//返回末尾元素的迭代器
+变量名.empty();//判断容器是否为空，为空则为真，非空则为假
+变量名.size();//返回容器中的元素个数
+变量名.clear();//清空容器
+变量名.insert();//插入元素
+变量名.erase();//删除元素
+变量名.count();//返回特定键的数量
+变量名.find();//查找特定键的元素
+变量名.lower_bound();//返回首个大于或者等于特定键的元素的迭代器
+变量名.upper_bound();//返回首个大于特定键的元素的迭代器
+变量名.equal_range();//返回特定键值的取值范围
+//按字典序比较set中的值
+&lt; &lt;= == &gt;= &gt; != ;//返回bool值
+</code></pre>
+<h3 id="multiset与set的区别"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">multiset</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>的区别</h3>
+<p><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">multiset</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>的区别与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">multimap</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span>的区别十分类似，可参见上述</strong></p>
+<p><strong><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">multiset</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>可以存放相同的键值</strong></p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.insert()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></li>
+</ul>
+<p><strong>对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>而言，返回的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mi>a</mi><mi>i</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">pair</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mord mathdefault">a</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>的$second $有可能存在为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>，即插入失败</strong></p>
+<p><strong>对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">multiset</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>而言，返回的是一个<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>t</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">iterator</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>，即总会插入成功</strong></p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">count()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></li>
+</ul>
+<p><strong>对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>而言，其返回值只有可能为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>或者<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></strong></p>
+<p><strong>对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">multiset</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>而言，可能存在多个相同的键值，即返回值可能大于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></strong></p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>e</mi><mi>r</mi><mi>a</mi><mi>s</mi><mi>e</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">erase()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></li>
+</ul>
+<p><strong>对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>而言，每次操作删除的元素最多为1</strong></p>
+<p><strong>对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">multiset</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>指定键值而言，只要为相同的键值都会被删除</strong></p>
+<p><strong>对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">multiset</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>指定迭代器而言，只会删除迭代器指定的元素</strong></p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>e</mi><mi>q</mi><mi>u</mi><mi>a</mi><mi>l</mi><mi mathvariant="normal">_</mi><mi>r</mi><mi>a</mi><mi>n</mi><mi>g</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">equal\_rang()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.06em;vertical-align:-0.31em;"></span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mord mathdefault">u</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></li>
+</ul>
+<p><strong>对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>而言，其取值范围最多为2</strong></p>
+<p><strong>对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">multiset</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>而言，取值范围则可能大于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span></strong></p>
+
+            </div>
+            <hr style="width: 80%;">
+            
+            <div class="sharebtnContainer">
+                <button type="button" class="sharebtn">转载分享</button>
+            </div>
+            <div class="shareContainer">
+                <div class="share" style="height:30px;background: white;">
+                    <a class="qq" href=""><i><img class="shareicon"
+                                src="https://yingfengpiao.github.io/media/images/QQ.png" alt=""></i></a>
+                    <a class="wechat" href=""><i><img class="shareicon"
+                                src="https://yingfengpiao.github.io/media/images/wechat.png" alt=""></i></a>
+                    <a class="weibo" href=""><i><img class="shareicon"
+                                src="https://yingfengpiao.github.io/media/images/weibo.png" alt=""></i></a>
+                    <a class="qzone" href=""><i><img class="shareicon"
+                                src="https://yingfengpiao.github.io/media/images/qzone.png" alt=""></i></a>
+                    <a class="douban" href=""><i><img class="shareicon"
+                                src="https://yingfengpiao.github.io/media/images/douban.png" alt=""></i></a>
+                    <a class="facebook" href=""><i><img class="shareicon"
+                                src="https://yingfengpiao.github.io/media/images/facebook.png" alt=""></i></a>
+                    <a class="twitter" href=""><i><img class="shareicon"
+                                src="https://yingfengpiao.github.io/media/images/twitter.png" alt=""></i></a>
+                </div>
+            </div>
+            
+            
+            <div class="donateContainer">
+                <img src="https://yingfengpiao.github.io/media/images/donate.png" alt="" class="donateImg">
+            </div>
+            <div class="donateContainer">
+                <img src="" alt="" class="donate">
+            </div>
+            
+            <div class="postfooter">
+                <ul class="post-copyright">
+                    <li><strong>文章作者：</strong>Piao-Yingfeng</li>
+            <li><strong>原文链接：</strong>https://yingfengpiao.github.io/post/stl/</li>
+            <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA
+                许可协议。转载请注明出处！</li>
+            </ul>
+        </div>
+        <div id="otherpost">
+            
+            
+            <div class="next-post-pc">
+                <div id="npcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/dong-tai-gui-hua/';return false">
+                    
+                    <img src="https://s3.ax1x.com/2020/11/11/BvG07F.png" style="width: 100%;" class="opimg">
+                    
+                    <h4 class="optitle">动态规划</h4>
+                </div>
+            </div>
+            <div class="next-post">
+                下一篇 <a href="https://yingfengpiao.github.io/post/dong-tai-gui-hua/">动态规划</a>
+            </div>
+            
+        </div>
+    </div>
+    </div>
+    </div>
+
+</body>
+<script>
+    //文章阅读热度
+    var pl = $("#pl").html();
+    var rootaddr = $("#rootaddr").html();
+    pl = pl.replace(rootaddr, "");
+    $("#hotnum").attr('id', pl);
+</script>
+                <div id="comment"  class="comment" style="background: white">
+                    <div class="commentcontainer">
+                        
+                        
+                        <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: 'a0e1f09434f1eea38691',
+    clientSecret: 'bb5247916ce7e7305a74920a7b58f94abda40921',
+    repo: 'yingfengpiao.github.io',
+    owner: 'yingfengpiao',
+    admin: ['yingfengpiao'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+                        
+                        
+                        
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-1 col-lg-2"></div>
+                <div id="bg">
+                </div>
+            </div>
+            
+        
+        <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+</head>
+<body>
+    <div class="miniMode">
+        <meting-js id="myaplayer" server="netease" type="playlist" fixed="true" order="default">
+        </meting-js>
+    </div>   
+</body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+<script>
+    var aplayerid = "";
+    var aplayerserver = "netease";
+    var aplayerorder = "default";
+    var aplayerautoplay = "true";
+    var aplayer = $("#myaplayer");
+    aplayer.attr("server",aplayerserver);
+    aplayer.attr("id",aplayerid);
+    aplayer.attr("order",aplayerorder);
+    if(aplayerautoplay=="true")
+        aplayer.attr("autoplay","true");
+</script>
+
+<script src="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/js/Aplayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+<script>
+    function aplayerbtnInit(){
+        var player = document.querySelectorAll('meting-js')[0].aplayer;
+        player.lrc.hide();
+        var mbabtn = $("#mbaplayer");
+        if(player.paused==false)
+        {
+            mbabtn.removeClass("fa-play-circle-o");
+            mbabtn.addClass("fa-pause-circle");
+        }
+        else
+        {
+            mbabtn.addClass("fa-play-circle-o");
+            mbabtn.removeClass("fa-pause-circle");
+        }
+    }
+
+    function aplayerPlay(){
+        var player = document.querySelectorAll('meting-js')[0].aplayer;
+        var mbabtn = $("#mbaplayer");
+        if(player.paused==true)
+        {
+            player.play();
+            mbabtn.removeClass("fa-play-circle-o");
+            mbabtn.addClass("fa-pause-circle");
+        }
+        else
+        {
+            player.pause();
+            mbabtn.addClass("fa-play-circle-o");
+            mbabtn.removeClass("fa-pause-circle");
+        }
+    }
+</script>
+        
+        <div class="toc-container">
+            <ul class="markdownIt-TOC">
+<li><a href="#stl-%E6%80%BB%E7%BB%93">stl 总结</a>
+<ul>
+<li><a href="#%E8%BF%AD%E4%BB%A3%E5%99%A8">迭代器</a></li>
+<li><a href="#priority_queue">priority_queue</a>
+<ul>
+<li><a href="#%E5%A4%B4%E6%96%87%E4%BB%B6">头文件</a></li>
+<li><a href="#%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD">运算符重载</a></li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%93%8D%E4%BD%9C">相关函数操作</a></li>
+<li><a href="#%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6">时间复杂度</a></li>
+</ul>
+</li>
+<li><a href="#vetor">vetor</a>
+<ul>
+<li><a href="#%E5%A4%B4%E6%96%87%E4%BB%B6-2">头文件</a></li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0">相关函数</a></li>
+<li><a href="#%E5%AE%9A%E4%B9%89">定义</a></li>
+<li><a href="#%E8%AE%BF%E9%97%AE">访问</a></li>
+<li><a href="#%E6%8F%92%E5%85%A5%E4%B8%8E%E5%88%A0%E9%99%A4">插入与删除</a></li>
+</ul>
+</li>
+<li><a href="#pair">pair</a>
+<ul>
+<li><a href="#%E5%A4%B4%E6%96%87%E4%BB%B6-3">头文件</a></li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0-2">相关函数</a></li>
+</ul>
+</li>
+<li><a href="#map">map</a>
+<ul>
+<li><a href="#%E5%A4%B4%E6%96%87%E4%BB%B6-4">头文件</a></li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0-3">相关函数</a>
+<ul>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%90%8Doperator">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>o</mi><mi>p</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>o</mi><mi>r</mi><mo>[</mo><mo>]</mo></mrow><annotation encoding="application/x-tex">.operator[]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">o</span><span class="mord mathdefault">p</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mopen">[</span><span class="mclose">]</span></span></span></span></a></li>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%90%8Dinsert">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.insert()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></a></li>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%90%8Dfind">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>f</mi><mi>i</mi><mi>n</mi><mi>d</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.find()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></a></li>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%90%8Dcount">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>c</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.count()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></a></li>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%90%8Derase">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>s</mi><mi>e</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.erase()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></a></li>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%90%8Dlower_boundqquad-qquad-%E5%8F%98%E9%87%8F%E5%90%8Dupper_bound">变量名$.lower_bound\qquad &amp;&amp;\qquad <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">变</mi><mi mathvariant="normal">量</mi><mi mathvariant="normal">名</mi></mrow><annotation encoding="application/x-tex">变量名</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">变</span><span class="mord cjk_fallback">量</span><span class="mord cjk_fallback">名</span></span></span></span>.upper_bound$</a></li>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%90%8Dequal_range">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>e</mi><mi>q</mi><mi>u</mi><mi>a</mi><mi>l</mi><mi mathvariant="normal">_</mi><mi>r</mi><mi>a</mi><mi>n</mi><mi>g</mi><mi>e</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.equal\_range()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.06em;vertical-align:-0.31em;"></span><span class="mord">.</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mord mathdefault">u</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#multimap">multimap</a>
+<ul>
+<li><a href="#%E5%A4%B4%E6%96%87%E4%BB%B6-5">头文件</a></li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0-4">相关函数</a>
+<ul>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%90%8Dinsert-2">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.insert()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></a></li>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%90%8Derase-2">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>s</mi><mi>e</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.erase()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></a></li>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%90%8Dfind-2">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>f</mi><mi>i</mi><mi>n</mi><mi>d</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.find()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></a></li>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%90%8Dcount-2">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>c</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.count()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></a></li>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%90%8Dequal_range-2">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>e</mi><mi>q</mi><mi>u</mi><mi>a</mi><mi>l</mi><mi mathvariant="normal">_</mi><mi>r</mi><mi>a</mi><mi>n</mi><mi>g</mi><mi>e</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.equal\_range()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.06em;vertical-align:-0.31em;"></span><span class="mord">.</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mord mathdefault">u</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#set">set</a>
+<ul>
+<li><a href="#%E5%A4%B4%E6%96%87%E4%BB%B6-6">头文件</a></li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0-5">相关函数</a>
+<ul>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%90%8Dinsert-3">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.insert()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></a></li>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%90%8Dcount-3">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>c</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>t</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.count()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">c</span><span class="mord mathdefault">o</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></a></li>
+<li><a href="#%E5%8F%98%E9%87%8F%E5%90%8Derase-3">变量名<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">.</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>s</mi><mi>e</mi><mo>(</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">.erase()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">.</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#multiset">multiset</a>
+<ul>
+<li><a href="#%E5%A4%B4%E6%96%87%E4%BB%B6-7">头文件</a></li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0-6">相关函数</a></li>
+<li><a href="#multiset%E4%B8%8Eset%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">multiset</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span>的区别</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    </div>
+    </div>
+    <div class="tog">
+        <div class="toggleContainer">
+            <div class="toggle">
+                <i class="fas fa-angle-double-up"></i>
+            </div>
+        </div>
+    </div>
+    <div id="bgchoice" style="display: none">link</div>
+    
+    <div id="bgurl" style="display:none">https://s1.ax1x.com/2020/11/11/BXo71s.jpg</div>
+    
+    </div>
+</body>
+<script>
+    var img = $("img");
+    for (var i = 0; i < img.length; i++) {
+        if (img.eq(i).attr("class") == undefined) {
+            img.eq(i).attr("class", "lazyload");
+            var imgsrc = img.eq(i).attr("src");
+            img.eq(i).attr("data-original", imgsrc);
+            img.eq(i).attr("src", "");
+            img.eq(i).hide();
+        }
+    }
+</script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+<script>
+    //寻找所有code标签，加复制按钮鸭！(行内代码除外)
+    var codes = document.getElementsByTagName('code');
+    if (codes.length) {
+        for (var i = 0; i < codes.length; i++) {
+            //高度/行高=文本行数
+            // var rowNum=Math.round(codes[i].height()/parseFloat(codes[i].css('line-height')));
+            // console.log("当前有"+rowNum+"行");
+            var code_id = "code_id_" + i;
+            codes[i].setAttribute("id", code_id);
+            var ci = "#" + code_id;
+            var codedot = $(ci);
+            var rowNum = Math.round(codedot.height() / parseFloat(codedot.css('line-height')));
+            if (rowNum <= 1) continue;
+            var btn = document.createElement("button");
+            btn.setAttribute("class", "copybt");
+            btn.setAttribute("data-clipboard-target", "#" + code_id);
+            btn.innerHTML = '复制代码';
+            codes[i].parentNode.insertBefore(btn, codes[i]);
+        }
+    };
+    var cop = new ClipboardJS('.copybt');
+    var codeCopyText = $("#codeCopyText").html();
+    cop.on('success', function (e) {
+        alert(codeCopyText);
+        e.clearSelection();
+    });
+    cop.on('error', function (e) {
+        alert("矮油，复制失败了...手动复制吧勇士！");
+        e.clearSelection();
+    });
+</script>
+
+<script type="text/javascript">
+    var message_Path = '/live2d/'
+    var home_Path = document.getElementById("domainname").innerHTML + "/"; //此处修改为你的域名，必须带斜杠
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/js/live2d.js"></script>
+<script type="text/javascript" src="https://yingfengpiao.github.io/media/live2d/js/message.js"></script>
+<script type="text/javascript">
+    loadlive2d("live2d", "https://yingfengpiao.github.io/media/live2d/assets/tororo.model.json");
+</script>
+
+<script>
+    $(function () {
+        $('.toggleContainer').click(function () {
+            $('html,body').animate({
+                scrollTop: '0px'
+            }, 800);
+        });
+        $(window).scroll(function () {
+            var st = $(window).scrollTop();
+            if (st > 30) {
+                $(".toggleContainer").fadeIn(400);
+            } else {
+                $(".toggleContainer").fadeOut(100);
+            }
+        });
+    });
+</script>
+
+<script>
+    var bgchoice = $('#bgchoice').html();
+    var bg = $('#bg');
+    var bgurl = document.getElementById("bgurl").innerHTML;
+    if (bgchoice == 'default')
+        for (var i = 0; i < 3; i++)
+            bgurl = bgurl.replace("\\", "/");
+    bg.css("background", "url('" + bgurl + "')");
+</script>
+
+
+<script src="https://yingfengpiao.github.io/media/js/index.js"></script>
+
+
+
+<!-- 动态更改上(下)一篇博客图片框长宽 -->
+<script>
+    npcontainer = document.querySelector('#npcontainer');
+    npstyle = window.getComputedStyle(npcontainer, null);
+    npwidth = npstyle.width;
+    npheight = 0.6 * Number(npwidth.replace("px", ""));
+    npheight = npheight.toString() + "px";
+    var op = $(".opimg");
+    op.css("height", npheight);
+</script>
+
+<script src="https://yingfengpiao.github.io/media/share/dist/Share.js"></script>
+
+<script>
+    var avatarSrc = $(".avatar").attr("src");
+    var dp = document.getElementsByClassName("describtion")[0].innerHTML;
+</script>
+
+
+<script>
+    var title = document.getElementById("texttitle").getElementsByTagName("h2");
+    
+    var share = new Share('.share', {
+        title: title[0].innerHTML,
+        initialized: true,
+        //默认获取网站描述
+        description: dp,
+        //网站图片默认获取的是设置的用户头像
+        image: avatarSrc,
+        //激活的分享网站
+        sites: ["weibo", "qq", "wechat", "douban", "qzone", "facebook", "twitter", "google"],
+        //微信分享PC端会生成二维码分享,移动端如果可以唤起微信最好
+        wechatQrcodeTitle: "微信扫一扫：分享", // 微信二维码提示文字
+        wechatQrcodeHelper: '<p>微信里扫一下二维码</p><p>便可将本文分享至朋友圈。</p>',
+        //关闭的网站分享
+        disabled: ['google', 'linkedin'],
+        wechatQrcodePosition: 'bottom'
+    });
+
+    //点击分享按钮展现出分享icons
+    var sharebtnTag = false;
+    $(".sharebtn").click(function () {
+        if(!sharebtnTag)
+        {
+            $(".share").show();
+            sharebtnTag = true;
+        }
+        else
+        {
+            $(".share").hide();
+            sharebtnTag = false;
+        }
+    })
+
+    var donatebtnTag = false;
+    $(".donateImg").click(function () {
+        if(!donatebtnTag)
+        {
+            $(".donate").show();
+            donatebtnTag = true;
+        }
+        else{
+            $(".donate").hide();
+            donatebtnTag = false;
+        }
+    })
+
+    //加载后的事件同步（阅读量、移动端评论等
+    window.onload=function(){
+        getHotnum();
+        var sharepc = $(".share").eq(0).html();
+        $(".share").eq(1).html(sharepc);
+        document.getElementById("veditor").setAttribute("placeholder", jrsc);
+        aplayerbtnInit();
+    }
+</script>
+
+
+<script>
+    jQuery(document).ready(function ($) {
+        function lazyload() {
+            var oLazyload = $("img.lazyload"),
+                fLazyload = function (hLazyload) {
+                    var nLazyload = $(window).height() + $(document).scrollTop();
+                    oLazyload.each(function () {
+                        $(this).offset().top < nLazyload && ($(this).trigger("appear"), oLazyload =
+                            oLazyload.not(this));
+                    }), 0 == oLazyload.length && $(window).unbind("scroll", fLazyload);
+                };
+            oLazyload.each(function () {
+                $(this).one("appear", function () {
+                    $(this).attr("src", $(this).attr("data-original"));
+                    $(this).fadeIn(500);
+                });
+            }), $(window).bind("scroll", fLazyload), fLazyload();
+        }
+        lazyload();
+    });
+</script>
+
+<!-- <script src="https://yingfengpiao.github.io/media/js/av-min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@3.13.0/dist/av-min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.6.1/dist/av-live-query-min.js"></script> -->
+
+<script>
+    function getHotnum() {
+        //文章阅读热度（重构，利用leancloud原生api）
+        var pl = $("#pl").html();
+        var rootaddr = $("#rootaddr").html();
+        pl = pl.replace(rootaddr, "");
+
+        var appid = '';
+        var appkey = '';
+        console.log(appid, appkey)
+        if(AV==undefined)
+            AV.init({
+                appId: appid,
+                appKey: appkey
+            });
+        const query = new AV.Query('Counter');
+        query.equalTo('url', pl);
+        var time = 'Loading...';
+        query.find().then(function (results) {
+            console.log(results)
+            if (results.length == 0) {
+                console.log("0")
+                var NewCounter = AV.Object.extend('Counter');
+                var nc = new NewCounter();
+                nc.save({
+                    time: 1,
+                    title: "STL",
+                    url: pl,
+                    xid: pl,
+                }).then(function (object) {
+                    $(".hotnum").eq(0).html(1);
+                    $(".hotnum").eq(1).html(1);
+                });
+            } else {
+                id = results[0].id;
+                var todo = AV.Object.createWithoutData('Counter', id);
+                time = results[0].attributes.time + 1;
+                todo.set("time", time);
+                todo.save();
+                console.log(todo);
+                $(".hotnum").eq(0).html(time);
+                $(".hotnum").eq(1).html(time);
+            }
+
+        }, function (error) {
+            console.log(error)
+        });
+    }
+</script>

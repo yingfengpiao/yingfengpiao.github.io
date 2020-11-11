@@ -1,22 +1,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
-    <meta name="description" content="线段树
-区间修改，查询lognlognlogn
-总复杂度nlognnlognnlogn
-高级数据结构
-可以用于88满足区间二分和区间加法的高级数据结构
+    <meta name="description" content="扫描线
+用于解决矩形相交的相关问题
 
-求和
-最大公因数
-最大最小值
-区间覆盖问题
+面积并
+周长并
 
+前置知识：
 
-区间修改 区间查询
-分为以下几个部分
-..." />
-    <meta name="keywords" content="数据结构" />
+线段树
+离散化
+
+离散化
+将点的集体坐标信息覆盖，只保留相对位置及其体现在位置上的性质
+当题目中只需要到点之间的相对信息，点的原位置跨度大难以维护时，可以采用离散化
+
+排..." />
+    <meta name="keywords" content="模板" />
     <link rel="stylesheet" href="https://yingfengpiao.github.io/media/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://yingfengpiao.github.io/styles/main.css">
     
@@ -435,15 +436,15 @@
         <div class="postshow" style="padding-bottom: 0;">
             
             <div class="postdetailimg" style="width:100%;overflow: hidden;">
-                <img src="https://s3.ax1x.com/2020/11/11/Bvu4u4.png" class="postimage" style="cursor:auto">
+                <img src="https://s3.ax1x.com/2020/11/11/Bv81R1.png" class="postimage" style="cursor:auto">
             </div>
             <div class="postinfo-detail">
                 <div class="postdate"><i class="fa fa-calendar"></i>2020-11-11</div>
-                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 6 min read</div>
+                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 13 min read</div>
                 <div class="posttag">
                     
-                    <a href="https://yingfengpiao.github.io/tag/UfzCbkxAh/" class="postlink">
-                        <i class="fa fa-tag"></i> 数据结构
+                    <a href="https://yingfengpiao.github.io/tag/_28acLtl2/" class="postlink">
+                        <i class="fa fa-tag"></i> 模板
                     </a>
                     
                 </div>
@@ -451,9 +452,9 @@
             
         <div id="articlecontent">
             <div id="texttitle" style="text-align: center">
-                <h2>线段树</h2>
+                <h2>扫描线</h2>
                 <!-- id 将作为查询条件 -->
-                <div id="pl" style="display:none">https://yingfengpiao.github.io/post/xian-duan-shu/</div>
+                <div id="pl" style="display:none">https://yingfengpiao.github.io/post/sao-miao-xian/</div>
                 <div id="rootaddr" style="display:none">https://yingfengpiao.github.io</div>
                 <span id="hotnum">
                     <h4><i class="fa fa-eye" aria-hidden="true" style="color: #FF8C00;"></i>&nbsp;&nbsp;热度</i>: <i
@@ -461,167 +462,355 @@
                 </span>
             </div>
             <div class="text ">
-                <h1 id="线段树">线段树</h1>
-<p><strong>区间修改，查询<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">logn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span></strong><br>
-<strong>总复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">nlogn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span></strong><br>
-<strong>高级数据结构</strong><br>
-<strong>可以用于88满足区间二分和区间加法的高级数据结构</strong></p>
+                <h1 id="扫描线">扫描线</h1>
+<p><strong>用于解决矩形相交的相关问题</strong></p>
 <ul>
-<li><strong>求和</strong></li>
-<li><strong>最大公因数</strong></li>
-<li><strong>最大最小值</strong></li>
-<li><strong>区间覆盖问题</strong></li>
+<li><strong>面积并</strong></li>
+<li><strong>周长并</strong></li>
 </ul>
-<hr>
-<p><strong>区间修改 区间查询</strong><br>
-<strong>分为以下几个部分</strong></p>
+<h2 id="前置知识">前置知识：</h2>
 <ul>
-<li><strong>建树</strong></li>
-<li><strong>区间修改</strong></li>
-<li><strong>区间查询</strong></li>
-<li><strong>懒标记下移</strong></li>
+<li><strong><a href="https://yingfengpiao.blog.luogu.org/segtree">线段树</a></strong></li>
+<li><strong>离散化</strong></li>
 </ul>
-<hr>
-<h2 id="建树">建树</h2>
-<pre><code class="language-cpp">void build(int id,int l,int r){
-	if(l==r){ segtree[id]=a[l]; return ; }
-	int mid=(l+r)&gt;&gt;1;
-	build(id&lt;&lt;1,l,mid);
-	build(id&lt;&lt;1|1,mid+1,r);
-	push_up(id);
-}
-</code></pre>
-<hr>
-<h2 id="区间修改">区间修改</h2>
-<pre><code class="language-cpp">void quadd(int li,int ri,int id,int l,int r,int v){
-	if(li&lt;=l&amp;&amp;r&lt;=ri){
-		lazy[id]+=v;
-		segtree[id]+=(r-l+1)*v;
-		return ; 
-	}
-	push_down(id,l,r);
-	int mid=(l+r)&gt;&gt;1;
-	if(mid&gt;=li){ quadd(li,ri,id&lt;&lt;1,l,mid,v);}
-	if(mid&lt;ri){ quadd(li,ri,id&lt;&lt;1|1,mid+1,r,v);}
-	push_up(id);
-}
-</code></pre>
-<p><strong>注意懒标记下移，边界判断</strong></p>
-<hr>
-<h2 id="区间查询">区间查询</h2>
-<pre><code class="language-cpp">int query(int li,int ri,int id,int l,int r){
-	if(li&lt;=l&amp;&amp;r&lt;=ri){
-		return segtree[id];
-	}
-	push_down(id,l,r);
-	int sum=0;
-	int mid=(l+r)&gt;&gt;1;
-	if(mid&gt;=li){ sum+=query(li,ri,id&lt;&lt;1,l,mid);}
-	if(mid&lt;ri){ sum+=query(li,ri,id&lt;&lt;1|1,mid+1,r);}
-	return sum;
-}
-</code></pre>
-<hr>
-<h2 id="懒标记下移">懒标记下移</h2>
-<pre><code class="language-cpp">void push_down(int id,int l,int r){
-	int mid=(l+r)&gt;&gt;1;
-	segtree[id&lt;&lt;1]+=(mid-l+1)*lazy[id];
-	segtree[id&lt;&lt;1|1]+=(r-mid)*lazy[id];
-	lazy[id&lt;&lt;1]+=lazy[id];
-	lazy[id&lt;&lt;1|1]+=lazy[id];
-	lazy[id]=0;
-}
-</code></pre>
-<p><strong>注意懒标记下推时的范围大小</strong></p>
-<hr>
-<h2 id="模板"><a href="https://www.luogu.com.cn/problem/P3372">模板</a></h2>
-<p><strong>贴一波完整代码</strong></p>
-<pre><code class="language-cpp">#include&lt;iostream&gt;
-#include&lt;cmath&gt;
-#include&lt;cstdio&gt;
+<h3 id="离散化">离散化</h3>
+<p><strong>将点的集体坐标信息覆盖，只保留相对位置及其体现在位置上的性质</strong><br>
+<strong>当题目中只需要到点之间的相对信息，点的原位置跨度大难以维护时，可以采用离散化</strong></p>
+<ul>
+<li><strong>排序二分(unique)</strong></li>
+<li><strong>重载运算符</strong></li>
+<li><strong>结构体索引(不去重)</strong></li>
+</ul>
+<h4 id="排序二分">排序二分</h4>
+<p><strong>stl:unique，可以将容器中的相邻元素的重复元素放至容器末端，容器大小并没有改变，返回去重后的尾地址</strong><br>
+<strong>1.将待离散的容器排序</strong><br>
+<strong>2.unique去重</strong><br>
+<strong>3.在去重后的有序序列中二分找到它的位置（lower_bound）</strong><br>
+<strong>4.将有序序列中它的索引作为它的值</strong></p>
+<pre><code class="language-cpp">#include&lt;cstdio&gt;
+#include&lt;iostream&gt;
+#include&lt;algorithm&gt;
 using namespace std;
-int n,m;
-long long segtree[400001];
-int a[100001];
-int lazy[400001];
-void push_up(int id){
-	segtree[id]=segtree[id&lt;&lt;1]+segtree[id&lt;&lt;1|1];
-}
-void push_down(int id,int l,int r){
-	int mid=(l+r)&gt;&gt;1;
-	segtree[id&lt;&lt;1]+=(mid-l+1)*lazy[id];
-	segtree[id&lt;&lt;1|1]+=(r-mid)*lazy[id];
-	lazy[id&lt;&lt;1]+=lazy[id];
-	lazy[id&lt;&lt;1|1]+=lazy[id];
-	lazy[id]=0;
-}
-void build(int id,int l,int r){
-	if(l==r){ segtree[id]=a[l]; return ;}
-	int mid=(l+r)&gt;&gt;1;
-	build(id&lt;&lt;1,l,mid);
-	build(id&lt;&lt;1|1,mid+1,r);
-	push_up(id);
-}
-void quadd(int li,int ri,int id,int l,int r,int v){
-	if(li&lt;=l&amp;&amp;r&lt;=ri){
-		segtree[id]+=(r-l+1)*v;
-		lazy[id]+=v;
-		return ; 
-	}
-	push_down(id,l,r);
-	int mid=(l+r)&gt;&gt;1;
-	if(mid&gt;=li){ quadd(li,ri,id&lt;&lt;1,l,mid,v);}
-	if(mid&lt;ri){ quadd(li,ri,id&lt;&lt;1|1,mid+1,r,v);}
-	push_up(id);
-}
-long long query(int li,int ri,int id,int l,int r){
-	if(li&lt;=l&amp;&amp;r&lt;=ri){
-		return segtree[id];
-	}
-	push_down(id,l,r);
-	long long sum=0;
-	int mid=(l+r)&gt;&gt;1;
-	if(mid&gt;=li){ sum+=query(li,ri,id&lt;&lt;1,l,mid);}
-	if(mid&lt;ri){ sum+=query(li,ri,id&lt;&lt;1|1,mid+1,r);}
-	return sum;
+int n;
+int a[100010];
+int b[100010];
+bool cmp(int x,int y){
+	return x&lt;y;
 }
 int main()
 {
-	cin&gt;&gt;n&gt;&gt;m;
-	for(int i=1;i&lt;=n;++i){
-		scanf(&quot;%d&quot;,&amp;a[i]); 
-	}
-	build(1,1,n);
-	for(int i=1;i&lt;=m;++i){
-		int id,x,y,k;
-		scanf(&quot;%d&quot;,&amp;id);
-		if(id==1){
-			scanf(&quot;%d%d%d&quot;,&amp;x,&amp;y,&amp;k);
-			quadd(x,y,1,1,n,k); 
-		}else{
-			scanf(&quot;%d%d&quot;,&amp;x,&amp;y);
-			printf(&quot;%lld\n&quot;,query(x,y,1,1,n));
-		}
-	}
-	return 0;
+  int n;
+  cin&gt;&gt;n;
+  for(int i=1;i&lt;=n;++i){
+    cin&gt;&gt;a[i];
+    b[i]=a[i];
+  }
+  sort(b+1,b+1+n,cmp);
+  int ant=unique(b+1,b+1+n)-b-1;
+  for(int i=1;i&lt;=n;++i){
+    a[i]=lower_bound(b+1,b+1+n,a[i])-b;
+    cout&lt;&lt;a[i]&lt;&lt;' ';
+  }
+  cout&lt;&lt;endl;
+  return 0;
 }
 </code></pre>
-<h2 id="区间覆盖问题">区间覆盖问题</h2>
-<h3 id="noi2015软件包管理器"><a href="https://www.luogu.com.cn/problem/P2146">[NOI2015]软件包管理器</a></h3>
-<p><strong>将所有的+=改为=</strong><br>
-<strong>考虑线段的初始值以及更改后的值如何变化</strong><br>
-<strong>考虑懒标记的变化</strong></p>
-<h2 id="区间最大值问题">区间最大值问题</h2>
-<h3 id="zjoi2008树的统计"><a href="https://www.luogu.com.cn/problem/P2590">[ZJOI2008]树的统计</a></h3>
-<p><strong>注意懒标记和最大值线段树的初始化为负无穷</strong></p>
-<h2 id="区间连续字段的长最长长度">区间连续字段的长最长长度</h2>
-<h3 id="序列操作"><a href="https://www.luogu.com.cn/problem/P2572">序列操作</a></h3>
-<p><strong>一道极其疯狂的线段树码农题</strong><br>
-<strong>维护：</strong><br>
-<strong>一个节点中最长的1段长度，最长的0段长度</strong><br>
-<strong>右段开始的1段长度，右端开始的0段长度</strong><br>
-<strong>左端开始的1段长度，左端开始的0段长度</strong><br>
-<strong>在push_down ，push_up ,合并查询最长1段数时都有许多细节需要思考</strong></p>
+<h4 id="重载运算符">重载运算符</h4>
+<p><strong>背......(略)</strong></p>
+<h4 id="结构体索引">结构体索引</h4>
+<p><strong>1.结构体储存索引和数值</strong><br>
+<strong>2.按照数值排序</strong><br>
+<strong>3.将排序后的索引作为离散后的值</strong></p>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;algorithm&gt;
+#include&lt;cstdio&gt;
+using namespace std;
+int n;
+struct node{
+  int x;
+  int id;
+}a[100010];
+bool cmp(node x,node y){
+  return x.x&lt;y.x;
+}
+int main()
+{
+  int n;
+  cin&gt;&gt;n;
+  for(int i=1;i&lt;=n;++i){ cin&gt;&gt;a[i].x; a[i].id=i; }
+  sort(a+1,a+1+n,cmp);
+  for(int i=1;i&lt;=n;++i){
+    cout&lt;&lt;a[i].id&lt;&lt;' ';
+  }
+  return 0;
+}
+</code></pre>
+<h2 id="正题">正题：</h2>
+<h3 id="面积并">面积并</h3>
+<p><strong>思考：</strong><br>
+<strong>求一个二维平面上若干矩阵叠加之后的面积之和</strong><br>
+<strong>扫描线从左往右，从右往左，从上到下，从下到上区别都不大，思路都是一致的</strong><br>
+<strong>我们讨论从下到上的写法</strong><br>
+<strong>我们考虑将面积并分解成若干的矩阵相加</strong><br>
+<strong>各个矩阵平行于x轴的边作为分割线是我们十分自然的想法</strong><br>
+<strong>此时平面中有若干分割线，我们只需要考虑相邻的两条分割线中的面积</strong><br>
+<strong>读入数据时，我们将所有的分割线存下来</strong></p>
+<pre><code class="language-cpp">  for(int i=1;i&lt;=n;++i){
+    int x_1,x_2,y_1,y_2;
+    scanf(&quot;%d%d%d%d&quot;,&amp;x_1,&amp;y_1,&amp;x_2,&amp;y_2);
+    xi[i*2-1]=x_1; xi[i*2]=x_2;
+    line[i*2-1]=(scanline){x_1,x_2,y_1,1};
+    line[i*2]=(scanline){x_1,x_2,y_2,-1};
+  }
+</code></pre>
+<p><strong>我们将x横坐标离散化</strong></p>
+<pre><code class="language-cpp">bool cmp1(int x,int y){ return x&lt;y; }
+bool cmp2(scanline x,scanline y){ return x.h&lt;y.h; }
+
+&gt;&gt;&gt;&gt;&gt;&gt;
+  sort(xi+1,xi+1+2*n,cmp1);
+  int ant=unique(xi+1,xi+1+2*n)-xi-1;
+  for(int i=1;i&lt;=2*n;++i){
+    int k1=lower_bound(xi+1,xi+1+ant,line[i].l)-xi;
+    int k2=lower_bound(xi+1,xi+1+ant,line[i].r)-xi;
+    line[i].l=k1;
+    line[i].r=k2;
+  }
+</code></pre>
+<p><strong>之后我们按照分割线的y轴坐标将所有的分割线从小到大排序</strong></p>
+<pre><code class="language-cpp">  sort(line+1,line+1+2*n,cmp2);
+</code></pre>
+<p><strong>如何维护每个两分割线截出来的矩形的面积的高？</strong><br>
+<strong>相邻分割线的高度相减</strong><br>
+<strong>如何维护截出来的矩形的长？</strong><br>
+<strong>线段树！！</strong><br>
+<strong>在离散后的x值中维护一棵线段树</strong><br>
+<strong>维护每一个节点中</strong><br>
+<strong>seg_sum:有多少次被整段地覆盖</strong><br>
+<strong>seg_len:当前节点被覆盖的长度</strong><br>
+<strong>我们最后需要的是seg_len[1],即整段序列中有多长被覆盖到</strong><br>
+<strong>这时候，我们需要push_up()来维护</strong></p>
+<pre><code class="language-cpp">void push_up(int id,int l,int r){
+  if(seg_sum[id]){
+    seg_len[id]=xi[r+1]-xi[l];
+  }else{
+    seg_len[id]=seg_len[id&lt;&lt;1]+seg_len[id&lt;&lt;1|1];
+  }
+  return;
+}
+</code></pre>
+<p><strong>我们判断当前的节点是否被完全地覆盖，如果有，我们直接将离散化前的两点之间的距离来更新它们</strong><br>
+<strong>如果没有被完全地覆盖，就将左右子节点的有覆盖的长度相加</strong><br>
+<strong>接下来就是区间的标记操作</strong><br>
+<strong>我们考虑对于一下分割线，什么时候需要对其进行什么操作</strong><br>
+<strong>可以发现，我们在首次遇到一个矩阵的一条分割线的时候需要在它覆盖的区间加1</strong><br>
+<strong>再次遇到一个矩阵中的另一条分割线的时候我们需要将其覆盖的区间-1</strong><br>
+<strong>我们只需要对其下放到线段树的子节点进行标记操作，即节点+1或者-1</strong><br>
+<strong>不需要push_down()?</strong><br>
+<strong>我们需要标记的区间最后会转化为最多log个区间，每个区间我们对其进行标记+1或者减一</strong><br>
+<strong>可以知道，保证当前被标记的区间+1一定在查询被覆盖长度时被取到</strong><br>
+<strong>当前覆盖的节点-1操作，我们push_up一下，判断其是否还能被之前的操作所完全覆盖，不行则此节点的答案长度是左右子节点的长度和</strong></p>
+<pre><code class="language-cpp">void change(int li,int ri,int id,int l,int r,int c){
+  if(li&lt;=l&amp;&amp;r&lt;=ri){
+    seg_sum[id]+=c;
+    push_up(id,l,r);
+    return ;
+  }
+  int mid=(l+r)&gt;&gt;1;
+  if(mid&gt;=li){ change(li,ri,id&lt;&lt;1,l,mid,c); }
+  if(mid&lt;ri){ change(li,ri,id&lt;&lt;1|1,mid+1,r,c); }
+  push_up(id,l,r);
+}
+</code></pre>
+<h4 id="模版题"><a href="https://www.luogu.com.cn/problem/P5490">模版题</a>**</h4>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;algorithm&gt;
+#include&lt;cmath&gt;
+#include&lt;cstdio&gt;
+#define ll long long
+#define N 1000010
+using namespace std;
+int n;
+ll ans;
+ll xi[N];
+struct scanline{
+  int l,r,h;
+  int mark;
+}line[2*N];
+ll seg_sum[4*N];
+ll seg_len[4*N];
+void push_up(int id,int l,int r){
+  if(seg_sum[id]){
+    seg_len[id]=xi[r+1]-xi[l];
+  }else{
+    seg_len[id]=seg_len[id&lt;&lt;1]+seg_len[id&lt;&lt;1|1];
+  }
+  return;
+}
+void change(int li,int ri,int id,int l,int r,int c){
+  if(li&lt;=l&amp;&amp;r&lt;=ri){
+    seg_sum[id]+=c;
+    push_up(id,l,r);
+    return ;
+  }
+  int mid=(l+r)&gt;&gt;1;
+  if(mid&gt;=li){ change(li,ri,id&lt;&lt;1,l,mid,c); }
+  if(mid&lt;ri){ change(li,ri,id&lt;&lt;1|1,mid+1,r,c); }
+  push_up(id,l,r);
+}
+bool cmp1(int x,int y){ return x&lt;y; }
+bool cmp2(scanline x,scanline y){ return x.h&lt;y.h; }
+int main()
+{
+  scanf(&quot;%d&quot;,&amp;n);
+  for(int i=1;i&lt;=n;++i){
+    int x_1,x_2,y_1,y_2;
+    scanf(&quot;%d%d%d%d&quot;,&amp;x_1,&amp;y_1,&amp;x_2,&amp;y_2);
+    xi[i*2-1]=x_1; xi[i*2]=x_2;
+    line[i*2-1]=(scanline){x_1,x_2,y_1,1};
+    line[i*2]=(scanline){x_1,x_2,y_2,-1};
+  }
+  sort(xi+1,xi+1+2*n,cmp1);
+  int ant=unique(xi+1,xi+1+2*n)-xi-1;
+  for(int i=1;i&lt;=2*n;++i){
+    int k1=lower_bound(xi+1,xi+1+ant,line[i].l)-xi;
+    int k2=lower_bound(xi+1,xi+1+ant,line[i].r)-xi;
+    line[i].l=k1;
+    line[i].r=k2;
+  }
+  sort(line+1,line+1+2*n,cmp2);
+  for(int i=1;i&lt;2*n;++i){
+    change(line[i].l,line[i].r-1,1,1,ant-1,line[i].mark);
+    ans+=seg_len[1]*(line[i+1].h-line[i].h);
+  }
+  cout&lt;&lt;ans&lt;&lt;endl;
+  return 0;
+}
+</code></pre>
+<h3 id="周长并">周长并</h3>
+<p><strong>求若干矩形叠加之后的周长</strong></p>
+<ul>
+<li><strong>两次扫描求扫描线长</strong></li>
+<li><strong>一次扫描维护端点数</strong></li>
+</ul>
+<hr>
+<p><strong>两次扫描</strong><br>
+<strong>从下到上，从左到右统计扫描线的长度</strong><br>
+<strong>答案在扫描线的部分长度和中取到</strong><br>
+<strong>当前扫描线应该加入答案中的长度为：</strong><br>
+<strong>当前被覆盖的长度与前一次被覆盖的长度之差的绝对值</strong><br>
+<strong>两次离散化，码量稍大</strong><br>
+<strong>ps:</strong><br>
+<strong>将扫描线先后排序时，将高度作为第一关键字，将入边出边作为第二关键字</strong><br>
+<strong>先扫描入边，再扫描出边</strong><br>
+<strong>先扫描出边会出现新的入边同时随后覆盖扫描线时，重复计算重叠部分</strong><br>
+<strong>先扫描入边使得先计算增加的边长，再计算未被覆盖的线段长度，维护了其正确性</strong></p>
+<h4 id="周长并模版"><a href="https://www.luogu.com.cn/problem/P1856">周长并模版</a></h4>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;cmath&gt;
+#include&lt;cstdio&gt;
+#include&lt;algorithm&gt;
+#define ll long long
+#define N 100010
+using namespace std;
+int n;
+int xi[N];
+int yi[N];
+int ans;
+struct scan{
+  int l,r,h;
+  int mark;
+}heng[2*N],line[2*N];
+int seg_sum[4*N];
+int seg_len[4*N];
+void push_up(int id,int l,int r,int k){
+  if(seg_sum[id]){
+    if(k==1)
+      seg_len[id]=xi[r+1]-xi[l];
+    else
+      seg_len[id]=yi[r+1]-yi[l];
+  }else{
+    seg_len[id]=seg_len[id&lt;&lt;1]+seg_len[id&lt;&lt;1|1];
+  }
+  return ;
+}
+void build(int id,int l,int r,int k){
+  seg_len[id]=0;
+  seg_sum[id]=0;
+  if(l==r){
+    return ;
+  }
+  int mid=(l+r)&gt;&gt;1;
+  build(id&lt;&lt;1,l,mid,k);
+  build(id&lt;&lt;1|1,mid+1,r,k);
+  push_up(id,l,r,k);
+}
+void change(int li,int ri,int id,int l,int r,int c,int k){
+  if(li&lt;=l&amp;&amp;r&lt;=ri){
+    seg_sum[id]+=c;
+    push_up(id,l,r,k);
+    return ;
+  }
+  int mid=(l+r)&gt;&gt;1;
+  if(mid&gt;=li){ change(li,ri,id&lt;&lt;1,l,mid,c,k); }
+  if(mid&lt;ri){ change(li,ri,id&lt;&lt;1|1,mid+1,r,c,k); }
+  push_up(id,l,r,k);
+}
+bool cmp1(int x,int y){ return x&lt;y; }
+bool cmp(scan x,scan y){
+  if(x.h==y.h) return x.mark&gt;y.mark;
+  return x.h&lt;y.h;
+}//注意此处
+int main()
+{
+  scanf(&quot;%d&quot;,&amp;n);
+  for(int i=1;i&lt;=n;++i){
+    int x_1,x_2,y_1,y_2;
+    scanf(&quot;%d%d%d%d&quot;,&amp;x_1,&amp;y_1,&amp;x_2,&amp;y_2);
+    xi[i*2-1]=x_1; xi[i*2]=x_2;
+    yi[i*2-1]=y_1; yi[i*2]=y_2;
+    heng[i*2-1]=(scan){x_1,x_2,y_1,1};
+    heng[i*2]=(scan){x_1,x_2,y_2,-1};
+    line[i*2-1]=(scan){y_1,y_2,x_1,1};
+    line[i*2]=(scan){y_1,y_2,x_2,-1};
+  }
+  n&lt;&lt;=1;
+  sort(xi+1,xi+1+n,cmp1);
+  sort(yi+1,yi+1+n,cmp1);
+  sort(heng+1,heng+1+n,cmp);
+  sort(line+1,line+1+n,cmp);
+  int antx=unique(xi+1,xi+1+n)-xi-1;
+  int anty=unique(yi+1,yi+1+n)-yi-1;
+  for(int i=1;i&lt;=n;++i){
+    int k1=lower_bound(xi+1,xi+1+antx,heng[i].l)-xi;
+    int k2=lower_bound(xi+1,xi+1+antx,heng[i].r)-xi;
+    heng[i].l=k1;
+    heng[i].r=k2;
+    k1=lower_bound(yi+1,yi+1+anty,line[i].l)-yi;
+    k2=lower_bound(yi+1,yi+1+anty,line[i].r)-yi;
+    line[i].l=k1;
+    line[i].r=k2;
+  }
+  build(1,1,antx,1);
+  int shang=0;
+  for(int i=1;i&lt;=n;++i){
+    change(heng[i].l,heng[i].r-1,1,1,antx,heng[i].mark,1);
+    ans+=abs(shang-seg_len[1]);
+    shang=seg_len[1];
+  }
+  shang=0;
+  build(1,1,anty,0);
+  for(int i=1;i&lt;=n;++i){
+    change(line[i].l,line[i].r-1,1,1,anty,line[i].mark,0); 
+    ans+=abs(shang-seg_len[1]);
+    shang=seg_len[1];
+  }
+  cout&lt;&lt;ans;
+  return 0;
+}
+</code></pre>
+<h4 id="维护节点上的端点数">维护节点上的端点数</h4>
+<p><strong>太麻烦....爬</strong></p>
 
             </div>
             <hr style="width: 80%;">
@@ -659,7 +848,7 @@ int main()
             <div class="postfooter">
                 <ul class="post-copyright">
                     <li><strong>文章作者：</strong>Piao-Yingfeng</li>
-            <li><strong>原文链接：</strong>https://yingfengpiao.github.io/post/xian-duan-shu/</li>
+            <li><strong>原文链接：</strong>https://yingfengpiao.github.io/post/sao-miao-xian/</li>
             <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA
                 许可协议。转载请注明出处！</li>
             </ul>
@@ -667,28 +856,28 @@ int main()
         <div id="otherpost">
             
             <div class="prev-post-pc">
-                <div id="ppcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/shu-zhuang-shu-zu/';return false">
+                <div id="ppcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/shu-de-zhi-jing-yu-chong-xin/';return false">
                     
-                    <img src="https://s3.ax1x.com/2020/11/11/BvuXvD.png" style="width: 100%;" class="opimg">
+                    <img src="https://s3.ax1x.com/2020/11/11/BvGQ0S.png" style="width: 100%;" class="opimg">
                     
-                    <h4 class="optitle">树状数组</h4>
+                    <h4 class="optitle">树的直径与重心</h4>
                 </div>
             </div>
             <div class="prev-post">
-                上一篇 <a href="https://yingfengpiao.github.io/post/shu-zhuang-shu-zu/">树状数组</a>
+                上一篇 <a href="https://yingfengpiao.github.io/post/shu-de-zhi-jing-yu-chong-xin/">树的直径与重心</a>
             </div>
             
             
             <div class="next-post-pc">
-                <div id="npcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/spfa/';return false">
+                <div id="npcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/fei-ma-xiao-ding-li/';return false">
                     
-                    <img src="https://s3.ax1x.com/2020/11/11/BvmbZR.png" style="width: 100%;" class="opimg">
+                    <img src="https://s3.ax1x.com/2020/11/11/Bv3m4A.png" style="width: 100%;" class="opimg">
                     
-                    <h4 class="optitle">SPFA</h4>
+                    <h4 class="optitle">费马小定理</h4>
                 </div>
             </div>
             <div class="next-post">
-                下一篇 <a href="https://yingfengpiao.github.io/post/spfa/">SPFA</a>
+                下一篇 <a href="https://yingfengpiao.github.io/post/fei-ma-xiao-ding-li/">费马小定理</a>
             </div>
             
         </div>
@@ -807,26 +996,32 @@ int main()
         
         <div class="toc-container">
             <ul class="markdownIt-TOC">
-<li><a href="#%E7%BA%BF%E6%AE%B5%E6%A0%91">线段树</a>
+<li><a href="#%E6%89%AB%E6%8F%8F%E7%BA%BF">扫描线</a>
 <ul>
-<li><a href="#%E5%BB%BA%E6%A0%91">建树</a></li>
-<li><a href="#%E5%8C%BA%E9%97%B4%E4%BF%AE%E6%94%B9">区间修改</a></li>
-<li><a href="#%E5%8C%BA%E9%97%B4%E6%9F%A5%E8%AF%A2">区间查询</a></li>
-<li><a href="#%E6%87%92%E6%A0%87%E8%AE%B0%E4%B8%8B%E7%A7%BB">懒标记下移</a></li>
-<li><a href="#%E6%A8%A1%E6%9D%BF">模板</a></li>
-<li><a href="#%E5%8C%BA%E9%97%B4%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98">区间覆盖问题</a>
+<li><a href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86">前置知识：</a>
 <ul>
-<li><a href="#noi2015%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8">[NOI2015]软件包管理器</a></li>
+<li><a href="#%E7%A6%BB%E6%95%A3%E5%8C%96">离散化</a>
+<ul>
+<li><a href="#%E6%8E%92%E5%BA%8F%E4%BA%8C%E5%88%86">排序二分</a></li>
+<li><a href="#%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E7%AC%A6">重载运算符</a></li>
+<li><a href="#%E7%BB%93%E6%9E%84%E4%BD%93%E7%B4%A2%E5%BC%95">结构体索引</a></li>
 </ul>
 </li>
-<li><a href="#%E5%8C%BA%E9%97%B4%E6%9C%80%E5%A4%A7%E5%80%BC%E9%97%AE%E9%A2%98">区间最大值问题</a>
-<ul>
-<li><a href="#zjoi2008%E6%A0%91%E7%9A%84%E7%BB%9F%E8%AE%A1">[ZJOI2008]树的统计</a></li>
 </ul>
 </li>
-<li><a href="#%E5%8C%BA%E9%97%B4%E8%BF%9E%E7%BB%AD%E5%AD%97%E6%AE%B5%E7%9A%84%E9%95%BF%E6%9C%80%E9%95%BF%E9%95%BF%E5%BA%A6">区间连续字段的长最长长度</a>
+<li><a href="#%E6%AD%A3%E9%A2%98">正题：</a>
 <ul>
-<li><a href="#%E5%BA%8F%E5%88%97%E6%93%8D%E4%BD%9C">序列操作</a></li>
+<li><a href="#%E9%9D%A2%E7%A7%AF%E5%B9%B6">面积并</a>
+<ul>
+<li><a href="#%E6%A8%A1%E7%89%88%E9%A2%98">模版题</a></li>
+</ul>
+</li>
+<li><a href="#%E5%91%A8%E9%95%BF%E5%B9%B6">周长并</a>
+<ul>
+<li><a href="#%E5%91%A8%E9%95%BF%E5%B9%B6%E6%A8%A1%E7%89%88">周长并模版</a></li>
+<li><a href="#%E7%BB%B4%E6%8A%A4%E8%8A%82%E7%82%B9%E4%B8%8A%E7%9A%84%E7%AB%AF%E7%82%B9%E6%95%B0">维护节点上的端点数</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1070,7 +1265,7 @@ int main()
                 var nc = new NewCounter();
                 nc.save({
                     time: 1,
-                    title: "线段树",
+                    title: "扫描线",
                     url: pl,
                     xid: pl,
                 }).then(function (object) {
