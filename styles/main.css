@@ -2068,7 +2068,31 @@ a {
   }
 }
 
+      .posttitlewithoutimg {
+        color: #b197fc;
+      }
+    
       .sitename {
         color: #4c6ef5;
       }
     
+        .describtion {
+          color: #faa2c1;
+        }
+      
+        .menubutton {
+          color: #3b5bdb;
+        }
+      
+        .posttitle {
+          color: #9775fa;
+        }
+      
+        #sitegotimeDate,#sitegotimes,#footinfo,#footinfo a{
+          color: #ff6b6b;
+        }
+      
+        .mobiledescribtion{
+          color: #ff6b6b;
+        }
+      
