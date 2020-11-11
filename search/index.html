@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8" />
@@ -28,10 +28,38 @@
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css">
             <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js"></script>
             
+        <script src="//cdn.jsdelivr.net/gh/tangkaichuan/gridea-search/lib/fuse.js"></script>
+        <script src="//cdn.jsdelivr.net/gh/tangkaichuan/gridea-search/lib/ejs.min.js"></script>
+        <script src="//cdn.jsdelivr.net/gh/tangkaichuan/gridea-search/lib/gridea-search.min.js"></script>
+        <script src="//cdn.jsdelivr.net/gh/tangkaichuan/gridea-search/example/assets/media/gridea-search/result-template.ejs" type="text/ejs"></script>
+        <style>
+            .main_ {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: 90vh;
+            }
+            
+            .result-box {
+                margin-top: 50px;
+                display: flex;
+                border-radius: 5px;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        </style>
 </head>
 
 <body>
-    <div class="wrapper">
+    <style>
+        .searched-keyword {
+            background-color: green;
+        }
+    </style>
+    <div class="main_">
         <header>
     <nav class="navbar">
         <div class="container">
@@ -139,84 +167,15 @@
     }
 </script>
 
-            <div class="main">
-                <div class="container">
-                    <article class="post-wrap">
-                        <header class="post-header">
-                            <h1 class="post-title">
-                                关于
-                            </h1>
-                            
-                                    <!--zh-->
-                                    <div class="post-meta zh">
-                                        &#x4F5C;&#x8005;:
-                                        <a itemprop="author" rel="author" href="/">
-                                            Gridea
-                                        </a>
-                                        <span class="post-time">&#x65E5;&#x671F;: <a href="#">2019-01-25</a></span>
-                                        <span class="post-readtime">&#x9605;&#x8BFB;&#x65F6;&#x95F4;:<a
-                                    href="#">0.1
-                                    &#x5206;&#x949F;</a></span>
-                                        <span class="post-words">&#x5B57;&#x6570;:<a href="#">31</a></span>
-                                        
-                                    </div>
-                                    
-                        </header>
-                        
-                        <div class="post-content">
-                            <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<h2 id="联系我呀">📬 联系我呀</h2>
-
-                        </div>
-                        
-                                
-                                                    
-                                                                    <!--Share-->
-                                                                    <span style="margin-right:15px">
-                        <i class="post-share"></i>
-                        <span>&#x5206;&#x4EAB;:</span>
-                                                                    <a title="QR 码" target="_blank" href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://yingfengpiao.github.io/post/about/"><i class="fa fa-qrcode"></i></a>
-                                                                    <a title="QQ" target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://yingfengpiao.github.io/post/about/&sharesource=qzone&title=关于&pics=https://yingfengpiao.github.io/images/avatar.png?v=1605054175551&summary="><i class="fa fa-qq"></i></a>
-                                                                    <a title="新浪微博" target="_blank" href="https://service.weibo.com/share/share.php?url=https://yingfengpiao.github.io/post/about/&sharesource=weibo&title=关于 + " - " + &pic="https://yingfengpiao.github.io/images/avatar.png?v=1605054175551 "><i class="fa fa-weibo "></i></a>
-
-                                                                    </span>
-                                                                    
-                                                                            <!--zh-->
-                                                                            <section class="post-tags zh ">
-                                                                                <div>
-                                                                                    <span>&#x6807;&#x7B7E;:</span>
-                                                                                    <span class="tag ">
-                        
-                                </span>
-                                                                                </div>
-                                                                                <div>
-                                                                                    <a href="javascript:window.history.back();">
-                        &#x8FD4;&#x56DE;</a>
-                                                                                    <span>&dot;</span>
-                                                                                    <a href="#">&#x4E3B;&#x9875;</a>
-                                                                                </div>
-                                                                            </section>
-
-                                                                            
-                                                                                <!---->
-                                                                                <section class="post-nav">
-                                                                                    
-                                                                                            
-                                                                                </section>
-                    </article>
+            <div class="result-box">
+                <div id="gridea-search-result">
+                    <p class="searching">搜索中......</p>
+                    <p class="no-result" style="display:none">未搜索到相关文章</p>
                 </div>
-                
-                                            
             </div>
     </div>
-    </div>
-    </div>
-    
+</body>
+
         <footer id="footer" class="footer">
             <div class="copyright">
                 
@@ -271,10 +230,3 @@
                     console.log(" Blog Update Time: " + newDate.toLocaleDateString());
                     console.log("\n %c \u26a1Theme:Chic Author's Blog:https://blog.itjoker.cn  Write By ITJoker  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;");
                 </script>
-        </div>
-</body>
-<script>
-    scroll();
-</script>
-
-</html>
