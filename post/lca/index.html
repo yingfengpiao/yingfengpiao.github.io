@@ -1,14 +1,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
-    <meta name="description" content="dijkstra
-迪杰斯特拉算法
-单源最短路——复杂度(nlognnlognnlogn-n2n^2n2)
-洛谷弱化版
-n2n^2n2
-#include&lt;iostream&gt;
-#include&lt;cmath&gt; 
-using..." />
+    <meta name="description" content="LCA
+最近公共祖先
+
+在线算法 倍增
+离线算法 tarjan
+ST/RMQ算法
+
+倍增法
+
+预处理 nlognnlognnlogn
+查询lognlognlogn
+f[i][j]表示第i个节点向上跳2k2^k2k步的点
+f[i[j]=f[f..." />
     <meta name="keywords" content="图论" />
     <link rel="stylesheet" href="https://yingfengpiao.github.io/media/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://yingfengpiao.github.io/styles/main.css">
@@ -428,11 +433,11 @@ using..." />
         <div class="postshow" style="padding-bottom: 0;">
             
             <div class="postdetailimg" style="width:100%;overflow: hidden;">
-                <img src="https://s1.ax1x.com/2020/07/02/NL8GLQ.jpg" class="postimage" style="cursor:auto">
+                <img src="https://s1.ax1x.com/2020/11/11/Bja6G4.jpg" class="postimage" style="cursor:auto">
             </div>
             <div class="postinfo-detail">
                 <div class="postdate"><i class="fa fa-calendar"></i>2020-11-11</div>
-                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 6 min read</div>
+                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 8 min read</div>
                 <div class="posttag">
                     
                     <a href="https://yingfengpiao.github.io/tag/uacC4WkMh/" class="postlink">
@@ -444,9 +449,9 @@ using..." />
             
         <div id="articlecontent">
             <div id="texttitle" style="text-align: center">
-                <h2>dijkstra</h2>
+                <h2>LCA</h2>
                 <!-- id 将作为查询条件 -->
-                <div id="pl" style="display:none">https://yingfengpiao.github.io/post/dijkstra/</div>
+                <div id="pl" style="display:none">https://yingfengpiao.github.io/post/lca/</div>
                 <div id="rootaddr" style="display:none">https://yingfengpiao.github.io</div>
                 <span id="hotnum">
                     <h4><i class="fa fa-eye" aria-hidden="true" style="color: #FF8C00;"></i>&nbsp;&nbsp;热度</i>: <i
@@ -454,256 +459,303 @@ using..." />
                 </span>
             </div>
             <div class="text ">
-                <h1 id="dijkstra">dijkstra</h1>
-<p><strong>迪杰斯特拉算法</strong><br>
-<strong>单源最短路——复杂度(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">nlogn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span>-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>)</strong></p>
-<h2 id="洛谷弱化版"><a href="https://www.luogu.com.cn/problem/P3371">洛谷弱化版</a></h2>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></p>
-<pre><code class="language-cpp">#include&lt;iostream&gt;
-#include&lt;cmath&gt; 
-using namespace std;
-const int inf=2147483647;
-int n,m,s;
-struct node{
-	int to;
-	int next;
-	int val;
-}a[500001];
-int head[10001];
-int arr;
-void add(int u,int v,int w){
-	a[++arr].next=head[u];
-	a[arr].to=v;
-	a[arr].val=w;
-	head[u]=arr;
-}
-long long dis[10001];
-bool visit[10001];
-void dijkstra(int x){
-	for(int i=1;i&lt;=n;i++){
-		if(i==x){
-			dis[i]=0;
-		}
-		else{
-			dis[i]=inf;
-		}
-	}
-	int re=x;
-	while(!visit[re]){
-		visit[re]=1;
+                <h1 id="lca">LCA</h1>
+<p><strong>最近公共祖先</strong></p>
+<ul>
+<li><strong>在线算法 倍增</strong></li>
+<li><strong>离线算法 tarjan</strong></li>
+<li><strong>ST/RMQ算法</strong></li>
+</ul>
+<h2 id="倍增法">倍增法</h2>
+<ul>
+<li><strong>预处理 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">nlogn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span></strong></li>
+<li><strong>查询<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">logn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span></strong><br>
+<strong>f[i][j]表示第i个节点向上跳<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.849108em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span>步的点</strong><br>
+<strong>f[i[j]=f[f[i][j-1]][j-1]</strong><br>
+<strong>bfs预处理出f[i][j]和每个节点的深度</strong></li>
+</ul>
+<h3 id="预处理">预处理</h3>
+<pre><code class="language-cpp">int deep[N];
+int f[N][21];
+void bfs(int x){
+	queue&lt;int &gt; q;
+	q.push(x);
+	deep[x]=1;
+	while(!q.empty()){
+		int re=q.front();
+		q.pop();
 		int k=head[re];
 		while(k!=0){
-			dis[a[k].to]=min(a[k].val+dis[re],dis[a[k].to]);
-			k=a[k].next;
-		}
-		long long minx=inf;
-		for(int i=1;i&lt;=n;i++){
-			if(!visit[i]&amp;&amp;dis[i]&lt;minx){
-				minx=dis[i];
-				re=i;
-			}
-		}
-	}
-}
-int main()
-{
-	cin&gt;&gt;n&gt;&gt;m&gt;&gt;s;
-	for(int i=1;i&lt;=m;i++){
-		int u,v,w;
-		cin&gt;&gt;u&gt;&gt;v&gt;&gt;w;
-		add(u,v,w);
-	}
-	dijkstra(s);
-	for(int i=1;i&lt;=n;i++){
-		cout&lt;&lt;dis[i]&lt;&lt;' ';
-	}
-	return 0;
-}
-</code></pre>
-<p>ps: 最大值要按照题目的条件定义<s>我经常忘</s></p>
-<h2 id="洛谷标准版"><a href="https://www.luogu.com.cn/problem/P4779">洛谷标准版</a></h2>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">nlogn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span><br>
-<s>手写堆</s></p>
-<pre><code class="language-cpp">#include&lt;iostream&gt;
-#include&lt;cstdio&gt;
-#include&lt;cmath&gt;
-#include&lt;algorithm&gt;
-using namespace std;
-const int inf=2147483647;
-int n,m,s;
-struct node{
-	int to;
-	int next;
-	int val;
-}e[2000001];
-int arr;
-int head[1000001];
-void add(int u,int v,int w){
-	e[++arr].next=head[u];
-	e[arr].to=v;
-	e[arr].val=w;
-	head[u]=arr;
-}
-struct num{
-	int id;
-	int val;
-}queue[1000001];
-int tail=1;
-void shift_up(int x){
-	while(x/2&gt;=1){
-		if(queue[x].val&lt;queue[x/2].val){
-			swap(queue[x],queue[x/2]);
-			x/=2;
-		}else{
-			break;
-		} 
-	}
-	return ;
-}
-void shift_down(int x,int n){
-	while(x*2&lt;=n){
-		int t=x*2;
-		if(t+1&lt;=n&amp;&amp;queue[t+1].val&lt;queue[t].val){
-			t++;
-		}
-		if(queue[x].val&gt;queue[t].val){
-			swap(queue[x],queue[t]);
-			x=t;
-		}else{
-			break;
-		}
-	}
-	return ;
-}
-void push(num x){
-	queue[tail++]=x;
-	shift_up(tail-1);
-	return ;
-}
-void pop(){
-	swap(queue[1],queue[tail-1]);
-	tail--;
-	shift_down(1,tail-1);
-}
-int dis[1000001];
-bool visit[100001];
-void dijkstra(int x){
-	for(int i=1;i&lt;=n;++i){
-		if(i==x){
-			dis[i]=0;
-			push((num){i,0});
-		}else{
-			dis[i]=inf;
-		}
-	}
-	while(tail!=1){
-		int re=queue[1].id;
-		pop();
-		if(visit[re]) continue;
-		visit[re]=1;
-		int k=head[re];
-		while(k!=0){
-			if(dis[e[k].to]&gt;dis[re]+e[k].val){
-				dis[e[k].to]=dis[re]+e[k].val;
-				push((num){e[k].to,dis[e[k].to]});
+			if(!deep[e[k].to]){
+				deep[e[k].to]=deep[re]+1;
+				q.push(e[k].to);
+				f[e[k].to][0]=re;
+				for(int i=1;i&lt;=20;++i){
+					f[e[k].to][i]=f[f[e[k].to][i-1]][i-1];
+				}
 			}
 			k=e[k].next;
 		}
 	}
 }
+</code></pre>
+<h3 id="查找lca">查找lca</h3>
+<pre><code class="language-cpp">int lca(int x,int y){
+	if(deep[x]&lt;deep[y]) swap(x,y);
+	for(int i=20;i&gt;=0;--i){
+		if(deep[f[x][i]]&gt;=deep[y]){
+			x=f[x][i];
+		}
+	}
+	if(x==y) return x;
+	for(int i=20;i&gt;=0;--i){
+		if(f[x][i]!=f[y][i]){
+			x=f[x][i];
+			y=f[y][i];
+		}
+	}
+	return f[x][0];
+}
+</code></pre>
+<h3 id="模板题"><a href="https://www.luogu.com.cn/problem/P3379">模板题</a></h3>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;cstdio&gt;
+#include&lt;cmath&gt;
+#include&lt;queue&gt;
+#include&lt;algorithm&gt;
+using namespace std;
+#define N 510000
+int n,m,s;
+struct node{
+	int next;
+	int to;
+}e[N*2];
+int arr;
+int head[N];
+void add(int u,int v){
+	e[++arr].next=head[u];
+	e[arr].to=v;
+	head[u]=arr;
+	return ;
+}
+int deep[N];
+int f[N][21];
+void bfs(int x){
+	queue&lt;int &gt; q;
+	q.push(x);
+	deep[x]=1;
+	while(!q.empty()){
+		int re=q.front();
+		q.pop();
+		int k=head[re];
+		while(k!=0){
+			if(!deep[e[k].to]){
+				deep[e[k].to]=deep[re]+1;
+				q.push(e[k].to);
+				f[e[k].to][0]=re;
+				for(int i=1;i&lt;=20;++i){
+					f[e[k].to][i]=f[f[e[k].to][i-1]][i-1];
+				}
+			}
+			k=e[k].next;
+		}
+	}
+}
+int lca(int x,int y){
+	if(deep[x]&lt;deep[y]) swap(x,y);
+	for(int i=20;i&gt;=0;--i){
+		if(deep[f[x][i]]&gt;=deep[y]){
+			x=f[x][i];
+		}
+	}
+	if(x==y) return x;
+	for(int i=20;i&gt;=0;--i){
+		if(f[x][i]!=f[y][i]){
+			x=f[x][i];
+			y=f[y][i];
+		}
+	}
+	return f[x][0];
+}
 int main()
 {
 	cin&gt;&gt;n&gt;&gt;m&gt;&gt;s;
-	for(int i=1;i&lt;=m;++i){
-		int u,v,w;
-		scanf(&quot;%d%d%d&quot;,&amp;u,&amp;v,&amp;w);
-		add(u,v,w);
+	for(int i=1;i&lt;=n-1;++i){
+		int u,v;
+		scanf(&quot;%d%d&quot;,&amp;u,&amp;v);
+		add(u,v);
+		add(v,u);
 	}
-	dijkstra(s);
-	for(int i=1;i&lt;=n;++i){
-		printf(&quot;%d &quot;,dis[i]);
+	bfs(s);
+	for(int i=1;i&lt;=m;++i){
+		int x,y;
+		scanf(&quot;%d%d&quot;,&amp;x,&amp;y);
+		printf(&quot;%d\n&quot;,lca(x,y));
 	}
 	return 0;
 }
 </code></pre>
-<h2 id="std优先队列">std:优先队列</h2>
-<p><strong>$nlogn $</strong></p>
-<pre><code class="language-cpp">#include&lt;iostream&gt;
-#include&lt;cstdio&gt;
-#include&lt;queue&gt;
-#include&lt;cmath&gt;
-#define N 100010
-const int inf=2147483647;
-using namespace std;
-int n,m,s;
-struct node{
-  int next;
-  int to;
-  int val;
+<h2 id="离线算法-tarjan">离线算法 tarjan</h2>
+<p><strong>预处理O(n+m)</strong><br>
+<strong>查询O(1)</strong></p>
+<hr>
+<h3 id="预处理-2">预处理</h3>
+<p><strong>建立一棵题目给出的关系树e[N]</strong><br>
+<strong>建立一棵根据询问建立的询问树e_ask[N]</strong></p>
+<pre><code class="language-cpp">struct  node{
+	int to;
+	int next; 
 }e[2*N];
 int arr;
 int head[N];
-void add(int u,int v,int w){
-  e[++arr].next=head[u];
-  e[arr].to=v;
-  e[arr].val=w;
-  head[u]=arr;
+void add(int u,int v){
+	e[++arr].next=head[u];
+	e[arr].to=v;
+	head[u]=arr;
 }
-struct num{
-  int x;
-  int dis;
-  bool operator &lt; (const num &amp;x) const {
-    return dis&gt;x.dis;
-  }
-};
-priority_queue&lt;num &gt; q;
-int dis[N];
-bool vis[N];
-void dijkstra(int x){
-  for(int i=1;i&lt;=n;++i){
-    if(i==x){
-      dis[i]=0;
-    }else{
-      dis[i]=inf;
-    }
-  }
-  q.push((num){x,0});
-  while(!q.empty()){
-    num re=q.top();
-    q.pop();
-    if(vis[re.x]) continue;
-    vis[re.x]=1;
-    int k=head[re.x];
-    while(k){
-      if(dis[e[k].to]&gt;re.dis+e[k].val){
-        dis[e[k].to]=re.dis+e[k].val;
-        q.push((num){e[k].to,dis[e[k].to]});
-      }
-      k=e[k].next;
-    }
-  }
+struct ask{
+	int to;
+	int next;
+	int id;//此查询的编号
+}e_ask[2*N];
+int head_ask[N];
+void add_ask(int u,int v,int id){
+	e_ask[++arr].next=head_ask[u];
+	e_ask[arr].to=v;
+	e_ask[arr].id=id;
+	head_ask[u]=arr;
+}
+</code></pre>
+<p><strong>访问每一个节点的子树</strong><br>
+<strong>让子树的fa指向自己</strong><br>
+<strong>如果当前节点的子树都访问完时</strong><br>
+<strong>访问此节点询问树</strong><br>
+<strong>根据讯问树访问到的点</strong></p>
+<ul>
+<li><strong>如果没有被访问过---跳过，之后一定会被他的另一节点访问（说明未访问到对面节点的旁支）</strong></li>
+<li><strong>如果已经被访问---此查询答案为他的fa节点</strong></li>
+</ul>
+<pre><code class="language-cpp">int fa[N];
+int find(int x){
+	if(fa[x]!=x){ return fa[x]=find(fa[x]);}
+	else return x;
+}
+bool visit[N];
+int ans[N];
+bool used[N];
+void dfs(int x){
+	visit[x]=1;
+	int k=head[x];
+	while(k!=0){
+		if(!visit[e[k].to]){
+			dfs(e[k].to);
+			fa[e[k].to]=x;
+		}
+		k=e[k].next;
+	}
+	k=head_ask[x];
+	while(k!=0){
+		if(visit[e_ask[k].to]&amp;&amp;!used[e_ask[k].id]){
+			used[e_ask[k].id]=1;
+			ans[e_ask[k].id]=find(e_ask[k].to);
+		}
+		k=e_ask[k].next;
+	}
+}
+</code></pre>
+<h3 id="为什么此查询的答案一定是他的fa节点">为什么此查询的答案一定是他的fa节点</h3>
+<p><strong>当一个节点根据询问树访问到一个已经被访问过的节点时</strong><br>
+<strong>这两个节点一定是在他们的公共祖先上遍历下来的</strong><br>
+<strong>在最近公共祖先建立的子树系统中</strong><br>
+<strong>已经被访问的那一个节点的旁支已经被访问完</strong><br>
+<strong>即：此旁支的所有节点的fa 都指向了这个最近公共祖先</strong><br>
+<strong>由此得证</strong></p>
+<h3 id="贴一波完整代码">贴一波完整代码</h3>
+<pre><code class="language-cpp">#include&lt;iostream&gt; //离线 tarjan算法 
+#include&lt;cmath&gt;
+#include&lt;cstdio&gt;
+#include&lt;algorithm&gt;
+#define N 510000
+using namespace std;
+int n,m,s;
+struct  node{
+	int to;
+	int next; 
+}e[2*N];
+int arr;
+int head[N];
+void add(int u,int v){
+	e[++arr].next=head[u];
+	e[arr].to=v;
+	head[u]=arr;
+}
+struct ask{
+	int to;
+	int next;
+	int id;
+}e_ask[2*N];
+int head_ask[N];
+void add_ask(int u,int v,int id){
+	e_ask[++arr].next=head_ask[u];
+	e_ask[arr].to=v;
+	e_ask[arr].id=id;
+	head_ask[u]=arr;
+}
+int fa[N];
+int find(int x){
+	if(fa[x]!=x){ return fa[x]=find(fa[x]);}
+	else return x;
+}
+bool visit[N];
+int ans[N];
+bool used[N];
+void dfs(int x){
+	visit[x]=1;
+	int k=head[x];
+	while(k!=0){
+		if(!visit[e[k].to]){
+			dfs(e[k].to);
+			fa[e[k].to]=x;
+		}
+		k=e[k].next;
+	}
+	k=head_ask[x];
+	while(k!=0){
+		if(visit[e_ask[k].to]&amp;&amp;!used[e_ask[k].id]){
+			used[e_ask[k].id]=1;
+			ans[e_ask[k].id]=find(e_ask[k].to);
+		}
+		k=e_ask[k].next;
+	}
 }
 int main()
 {
-  scanf(&quot;%d%d%d&quot;,&amp;n,&amp;m,&amp;s);
-  for(int i=1;i&lt;=m;++i){
-    int u,v,w;
-    scanf(&quot;%d%d%d&quot;,&amp;u,&amp;v,&amp;w);
-    add(u,v,w);
-  }
-  dijkstra(s);
-  for(int i=1;i&lt;=n;++i){
-    cout&lt;&lt;dis[i]&lt;&lt;' ';
-  }
-  cout&lt;&lt;endl;
-  return 0;
+	cin&gt;&gt;n&gt;&gt;m&gt;&gt;s;
+	for(int i=1;i&lt;n;++i){
+		int u,v;
+		scanf(&quot;%d%d&quot;,&amp;u,&amp;v);
+		add(u,v);
+		add(v,u);
+	}
+	arr=0;
+	for(int i=1;i&lt;=m;++i){
+		int x,y;
+		scanf(&quot;%d%d&quot;,&amp;x,&amp;y);
+		add_ask(x,y,i);
+		add_ask(y,x,i);
+	}
+	for(int i=1;i&lt;=n;++i){ fa[i]=i;}
+	dfs(s);
+	for(int i=1;i&lt;=m;++i){
+		cout&lt;&lt;ans[i]&lt;&lt;endl;
+	}
+	return 0;
 }
 </code></pre>
-<h3 id="为什么最大值inf赋值成2147483647不会炸">为什么最大值inf赋值成2147483647不会炸？？</h3>
-<p>会炸的情况可能发生在 dis[re]+e[k].val<br>
-dis[re]肯定是被更新过的值<br>
-e[k].val也不会超范围<br>
-自然就没有什么问题</p>
+<h2 id="strmq算法">ST/RMQ算法</h2>
+<p><strong>欧拉序+ST</strong><br>
+<strong>O(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>+</mo><mi>m</mi><mo>−</mo><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">n+m-nlogn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span>)</strong><br>
+<em>不打算学.....</em></p>
 
             </div>
             <hr style="width: 80%;">
@@ -734,7 +786,7 @@ e[k].val也不会超范围<br>
             <div class="postfooter">
                 <ul class="post-copyright">
                     <li><strong>文章作者：</strong>Piao-Yingfeng</li>
-            <li><strong>原文链接：</strong>https://yingfengpiao.github.io/post/dijkstra/</li>
+            <li><strong>原文链接：</strong>https://yingfengpiao.github.io/post/lca/</li>
             <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA
                 许可协议。转载请注明出处！</li>
             </ul>
@@ -742,17 +794,29 @@ e[k].val也不会超范围<br>
         <div id="otherpost">
             
             <div class="prev-post-pc">
-                <div id="ppcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/ri-chang/';return false">
+                <div id="ppcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/shu-lian-pou-fen/';return false">
                     
-                    <img src="https://s1.ax1x.com/2020/11/11/Bj859I.jpg" style="width: 100%;" class="opimg">
+                    <img src="https://s1.ax1x.com/2020/11/11/BjdxXR.jpg" style="width: 100%;" class="opimg">
                     
-                    <h4 class="optitle">日常</h4>
+                    <h4 class="optitle">树链剖分</h4>
                 </div>
             </div>
             <div class="prev-post">
-                上一篇 <a href="https://yingfengpiao.github.io/post/ri-chang/">日常</a>
+                上一篇 <a href="https://yingfengpiao.github.io/post/shu-lian-pou-fen/">树链剖分</a>
             </div>
             
+            
+            <div class="next-post-pc">
+                <div id="npcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/shu-zhuang-shu-zu/';return false">
+                    
+                    <img src="https://s1.ax1x.com/2020/11/11/BjNT0K.jpg" style="width: 100%;" class="opimg">
+                    
+                    <h4 class="optitle">树状数组</h4>
+                </div>
+            </div>
+            <div class="next-post">
+                下一篇 <a href="https://yingfengpiao.github.io/post/shu-zhuang-shu-zu/">树状数组</a>
+            </div>
             
         </div>
     </div>
@@ -870,15 +934,23 @@ e[k].val也不会超范围<br>
         
         <div class="toc-container">
             <ul class="markdownIt-TOC">
-<li><a href="#dijkstra">dijkstra</a>
+<li><a href="#lca">LCA</a>
 <ul>
-<li><a href="#%E6%B4%9B%E8%B0%B7%E5%BC%B1%E5%8C%96%E7%89%88">洛谷弱化版</a></li>
-<li><a href="#%E6%B4%9B%E8%B0%B7%E6%A0%87%E5%87%86%E7%89%88">洛谷标准版</a></li>
-<li><a href="#std%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97">std:优先队列</a>
+<li><a href="#%E5%80%8D%E5%A2%9E%E6%B3%95">倍增法</a>
 <ul>
-<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%80%E5%A4%A7%E5%80%BCinf%E8%B5%8B%E5%80%BC%E6%88%902147483647%E4%B8%8D%E4%BC%9A%E7%82%B8">为什么最大值inf赋值成2147483647不会炸？？</a></li>
+<li><a href="#%E9%A2%84%E5%A4%84%E7%90%86">预处理</a></li>
+<li><a href="#%E6%9F%A5%E6%89%BElca">查找lca</a></li>
+<li><a href="#%E6%A8%A1%E6%9D%BF%E9%A2%98">模板题</a></li>
 </ul>
 </li>
+<li><a href="#%E7%A6%BB%E7%BA%BF%E7%AE%97%E6%B3%95-tarjan">离线算法 tarjan</a>
+<ul>
+<li><a href="#%E9%A2%84%E5%A4%84%E7%90%86-2">预处理</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AD%A4%E6%9F%A5%E8%AF%A2%E7%9A%84%E7%AD%94%E6%A1%88%E4%B8%80%E5%AE%9A%E6%98%AF%E4%BB%96%E7%9A%84fa%E8%8A%82%E7%82%B9">为什么此查询的答案一定是他的fa节点</a></li>
+<li><a href="#%E8%B4%B4%E4%B8%80%E6%B3%A2%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81">贴一波完整代码</a></li>
+</ul>
+</li>
+<li><a href="#strmq%E7%AE%97%E6%B3%95">ST/RMQ算法</a></li>
 </ul>
 </li>
 </ul>
@@ -1120,7 +1192,7 @@ e[k].val也不会超范围<br>
                 var nc = new NewCounter();
                 nc.save({
                     time: 1,
-                    title: "dijkstra",
+                    title: "LCA",
                     url: pl,
                     xid: pl,
                 }).then(function (object) {

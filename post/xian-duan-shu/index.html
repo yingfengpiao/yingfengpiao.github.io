@@ -1,15 +1,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
-    <meta name="description" content="dijkstra
-迪杰斯特拉算法
-单源最短路——复杂度(nlognnlognnlogn-n2n^2n2)
-洛谷弱化版
-n2n^2n2
-#include&lt;iostream&gt;
-#include&lt;cmath&gt; 
-using..." />
-    <meta name="keywords" content="图论" />
+    <meta name="description" content="线段树
+区间修改，查询lognlognlogn
+总复杂度nlognnlognnlogn
+高级数据结构
+可以用于88满足区间二分和区间加法的高级数据结构
+
+求和
+最大公因数
+最大最小值
+区间覆盖问题
+
+
+区间修改 区间查询
+分为以下几个部分
+..." />
+    <meta name="keywords" content="数据结构" />
     <link rel="stylesheet" href="https://yingfengpiao.github.io/media/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://yingfengpiao.github.io/styles/main.css">
     
@@ -428,15 +435,15 @@ using..." />
         <div class="postshow" style="padding-bottom: 0;">
             
             <div class="postdetailimg" style="width:100%;overflow: hidden;">
-                <img src="https://s1.ax1x.com/2020/07/02/NL8GLQ.jpg" class="postimage" style="cursor:auto">
+                <img src="https://s1.ax1x.com/2020/11/11/Bjte8s.jpg" class="postimage" style="cursor:auto">
             </div>
             <div class="postinfo-detail">
                 <div class="postdate"><i class="fa fa-calendar"></i>2020-11-11</div>
                 <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 6 min read</div>
                 <div class="posttag">
                     
-                    <a href="https://yingfengpiao.github.io/tag/uacC4WkMh/" class="postlink">
-                        <i class="fa fa-tag"></i> 图论
+                    <a href="https://yingfengpiao.github.io/tag/UfzCbkxAh/" class="postlink">
+                        <i class="fa fa-tag"></i> 数据结构
                     </a>
                     
                 </div>
@@ -444,9 +451,9 @@ using..." />
             
         <div id="articlecontent">
             <div id="texttitle" style="text-align: center">
-                <h2>dijkstra</h2>
+                <h2>线段树</h2>
                 <!-- id 将作为查询条件 -->
-                <div id="pl" style="display:none">https://yingfengpiao.github.io/post/dijkstra/</div>
+                <div id="pl" style="display:none">https://yingfengpiao.github.io/post/xian-duan-shu/</div>
                 <div id="rootaddr" style="display:none">https://yingfengpiao.github.io</div>
                 <span id="hotnum">
                     <h4><i class="fa fa-eye" aria-hidden="true" style="color: #FF8C00;"></i>&nbsp;&nbsp;热度</i>: <i
@@ -454,256 +461,167 @@ using..." />
                 </span>
             </div>
             <div class="text ">
-                <h1 id="dijkstra">dijkstra</h1>
-<p><strong>迪杰斯特拉算法</strong><br>
-<strong>单源最短路——复杂度(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">nlogn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span>-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>)</strong></p>
-<h2 id="洛谷弱化版"><a href="https://www.luogu.com.cn/problem/P3371">洛谷弱化版</a></h2>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></p>
-<pre><code class="language-cpp">#include&lt;iostream&gt;
-#include&lt;cmath&gt; 
-using namespace std;
-const int inf=2147483647;
-int n,m,s;
-struct node{
-	int to;
-	int next;
-	int val;
-}a[500001];
-int head[10001];
-int arr;
-void add(int u,int v,int w){
-	a[++arr].next=head[u];
-	a[arr].to=v;
-	a[arr].val=w;
-	head[u]=arr;
-}
-long long dis[10001];
-bool visit[10001];
-void dijkstra(int x){
-	for(int i=1;i&lt;=n;i++){
-		if(i==x){
-			dis[i]=0;
-		}
-		else{
-			dis[i]=inf;
-		}
-	}
-	int re=x;
-	while(!visit[re]){
-		visit[re]=1;
-		int k=head[re];
-		while(k!=0){
-			dis[a[k].to]=min(a[k].val+dis[re],dis[a[k].to]);
-			k=a[k].next;
-		}
-		long long minx=inf;
-		for(int i=1;i&lt;=n;i++){
-			if(!visit[i]&amp;&amp;dis[i]&lt;minx){
-				minx=dis[i];
-				re=i;
-			}
-		}
-	}
-}
-int main()
-{
-	cin&gt;&gt;n&gt;&gt;m&gt;&gt;s;
-	for(int i=1;i&lt;=m;i++){
-		int u,v,w;
-		cin&gt;&gt;u&gt;&gt;v&gt;&gt;w;
-		add(u,v,w);
-	}
-	dijkstra(s);
-	for(int i=1;i&lt;=n;i++){
-		cout&lt;&lt;dis[i]&lt;&lt;' ';
-	}
-	return 0;
+                <h1 id="线段树">线段树</h1>
+<p><strong>区间修改，查询<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">logn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span></strong><br>
+<strong>总复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">nlogn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span></strong><br>
+<strong>高级数据结构</strong><br>
+<strong>可以用于88满足区间二分和区间加法的高级数据结构</strong></p>
+<ul>
+<li><strong>求和</strong></li>
+<li><strong>最大公因数</strong></li>
+<li><strong>最大最小值</strong></li>
+<li><strong>区间覆盖问题</strong></li>
+</ul>
+<hr>
+<p><strong>区间修改 区间查询</strong><br>
+<strong>分为以下几个部分</strong></p>
+<ul>
+<li><strong>建树</strong></li>
+<li><strong>区间修改</strong></li>
+<li><strong>区间查询</strong></li>
+<li><strong>懒标记下移</strong></li>
+</ul>
+<hr>
+<h2 id="建树">建树</h2>
+<pre><code class="language-cpp">void build(int id,int l,int r){
+	if(l==r){ segtree[id]=a[l]; return ; }
+	int mid=(l+r)&gt;&gt;1;
+	build(id&lt;&lt;1,l,mid);
+	build(id&lt;&lt;1|1,mid+1,r);
+	push_up(id);
 }
 </code></pre>
-<p>ps: 最大值要按照题目的条件定义<s>我经常忘</s></p>
-<h2 id="洛谷标准版"><a href="https://www.luogu.com.cn/problem/P4779">洛谷标准版</a></h2>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">nlogn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span><br>
-<s>手写堆</s></p>
+<hr>
+<h2 id="区间修改">区间修改</h2>
+<pre><code class="language-cpp">void quadd(int li,int ri,int id,int l,int r,int v){
+	if(li&lt;=l&amp;&amp;r&lt;=ri){
+		lazy[id]+=v;
+		segtree[id]+=(r-l+1)*v;
+		return ; 
+	}
+	push_down(id,l,r);
+	int mid=(l+r)&gt;&gt;1;
+	if(mid&gt;=li){ quadd(li,ri,id&lt;&lt;1,l,mid,v);}
+	if(mid&lt;ri){ quadd(li,ri,id&lt;&lt;1|1,mid+1,r,v);}
+	push_up(id);
+}
+</code></pre>
+<p><strong>注意懒标记下移，边界判断</strong></p>
+<hr>
+<h2 id="区间查询">区间查询</h2>
+<pre><code class="language-cpp">int query(int li,int ri,int id,int l,int r){
+	if(li&lt;=l&amp;&amp;r&lt;=ri){
+		return segtree[id];
+	}
+	push_down(id,l,r);
+	int sum=0;
+	int mid=(l+r)&gt;&gt;1;
+	if(mid&gt;=li){ sum+=query(li,ri,id&lt;&lt;1,l,mid);}
+	if(mid&lt;ri){ sum+=query(li,ri,id&lt;&lt;1|1,mid+1,r);}
+	return sum;
+}
+</code></pre>
+<hr>
+<h2 id="懒标记下移">懒标记下移</h2>
+<pre><code class="language-cpp">void push_down(int id,int l,int r){
+	int mid=(l+r)&gt;&gt;1;
+	segtree[id&lt;&lt;1]+=(mid-l+1)*lazy[id];
+	segtree[id&lt;&lt;1|1]+=(r-mid)*lazy[id];
+	lazy[id&lt;&lt;1]+=lazy[id];
+	lazy[id&lt;&lt;1|1]+=lazy[id];
+	lazy[id]=0;
+}
+</code></pre>
+<p><strong>注意懒标记下推时的范围大小</strong></p>
+<hr>
+<h2 id="模板"><a href="https://www.luogu.com.cn/problem/P3372">模板</a></h2>
+<p><strong>贴一波完整代码</strong></p>
 <pre><code class="language-cpp">#include&lt;iostream&gt;
-#include&lt;cstdio&gt;
 #include&lt;cmath&gt;
-#include&lt;algorithm&gt;
+#include&lt;cstdio&gt;
 using namespace std;
-const int inf=2147483647;
-int n,m,s;
-struct node{
-	int to;
-	int next;
-	int val;
-}e[2000001];
-int arr;
-int head[1000001];
-void add(int u,int v,int w){
-	e[++arr].next=head[u];
-	e[arr].to=v;
-	e[arr].val=w;
-	head[u]=arr;
+int n,m;
+long long segtree[400001];
+int a[100001];
+int lazy[400001];
+void push_up(int id){
+	segtree[id]=segtree[id&lt;&lt;1]+segtree[id&lt;&lt;1|1];
 }
-struct num{
-	int id;
-	int val;
-}queue[1000001];
-int tail=1;
-void shift_up(int x){
-	while(x/2&gt;=1){
-		if(queue[x].val&lt;queue[x/2].val){
-			swap(queue[x],queue[x/2]);
-			x/=2;
-		}else{
-			break;
-		} 
+void push_down(int id,int l,int r){
+	int mid=(l+r)&gt;&gt;1;
+	segtree[id&lt;&lt;1]+=(mid-l+1)*lazy[id];
+	segtree[id&lt;&lt;1|1]+=(r-mid)*lazy[id];
+	lazy[id&lt;&lt;1]+=lazy[id];
+	lazy[id&lt;&lt;1|1]+=lazy[id];
+	lazy[id]=0;
+}
+void build(int id,int l,int r){
+	if(l==r){ segtree[id]=a[l]; return ;}
+	int mid=(l+r)&gt;&gt;1;
+	build(id&lt;&lt;1,l,mid);
+	build(id&lt;&lt;1|1,mid+1,r);
+	push_up(id);
+}
+void quadd(int li,int ri,int id,int l,int r,int v){
+	if(li&lt;=l&amp;&amp;r&lt;=ri){
+		segtree[id]+=(r-l+1)*v;
+		lazy[id]+=v;
+		return ; 
 	}
-	return ;
+	push_down(id,l,r);
+	int mid=(l+r)&gt;&gt;1;
+	if(mid&gt;=li){ quadd(li,ri,id&lt;&lt;1,l,mid,v);}
+	if(mid&lt;ri){ quadd(li,ri,id&lt;&lt;1|1,mid+1,r,v);}
+	push_up(id);
 }
-void shift_down(int x,int n){
-	while(x*2&lt;=n){
-		int t=x*2;
-		if(t+1&lt;=n&amp;&amp;queue[t+1].val&lt;queue[t].val){
-			t++;
-		}
-		if(queue[x].val&gt;queue[t].val){
-			swap(queue[x],queue[t]);
-			x=t;
-		}else{
-			break;
-		}
+long long query(int li,int ri,int id,int l,int r){
+	if(li&lt;=l&amp;&amp;r&lt;=ri){
+		return segtree[id];
 	}
-	return ;
-}
-void push(num x){
-	queue[tail++]=x;
-	shift_up(tail-1);
-	return ;
-}
-void pop(){
-	swap(queue[1],queue[tail-1]);
-	tail--;
-	shift_down(1,tail-1);
-}
-int dis[1000001];
-bool visit[100001];
-void dijkstra(int x){
-	for(int i=1;i&lt;=n;++i){
-		if(i==x){
-			dis[i]=0;
-			push((num){i,0});
-		}else{
-			dis[i]=inf;
-		}
-	}
-	while(tail!=1){
-		int re=queue[1].id;
-		pop();
-		if(visit[re]) continue;
-		visit[re]=1;
-		int k=head[re];
-		while(k!=0){
-			if(dis[e[k].to]&gt;dis[re]+e[k].val){
-				dis[e[k].to]=dis[re]+e[k].val;
-				push((num){e[k].to,dis[e[k].to]});
-			}
-			k=e[k].next;
-		}
-	}
+	push_down(id,l,r);
+	long long sum=0;
+	int mid=(l+r)&gt;&gt;1;
+	if(mid&gt;=li){ sum+=query(li,ri,id&lt;&lt;1,l,mid);}
+	if(mid&lt;ri){ sum+=query(li,ri,id&lt;&lt;1|1,mid+1,r);}
+	return sum;
 }
 int main()
 {
-	cin&gt;&gt;n&gt;&gt;m&gt;&gt;s;
+	cin&gt;&gt;n&gt;&gt;m;
+	for(int i=1;i&lt;=n;++i){
+		scanf(&quot;%d&quot;,&amp;a[i]); 
+	}
+	build(1,1,n);
 	for(int i=1;i&lt;=m;++i){
-		int u,v,w;
-		scanf(&quot;%d%d%d&quot;,&amp;u,&amp;v,&amp;w);
-		add(u,v,w);
-	}
-	dijkstra(s);
-	for(int i=1;i&lt;=n;++i){
-		printf(&quot;%d &quot;,dis[i]);
+		int id,x,y,k;
+		scanf(&quot;%d&quot;,&amp;id);
+		if(id==1){
+			scanf(&quot;%d%d%d&quot;,&amp;x,&amp;y,&amp;k);
+			quadd(x,y,1,1,n,k); 
+		}else{
+			scanf(&quot;%d%d&quot;,&amp;x,&amp;y);
+			printf(&quot;%lld\n&quot;,query(x,y,1,1,n));
+		}
 	}
 	return 0;
 }
 </code></pre>
-<h2 id="std优先队列">std:优先队列</h2>
-<p><strong>$nlogn $</strong></p>
-<pre><code class="language-cpp">#include&lt;iostream&gt;
-#include&lt;cstdio&gt;
-#include&lt;queue&gt;
-#include&lt;cmath&gt;
-#define N 100010
-const int inf=2147483647;
-using namespace std;
-int n,m,s;
-struct node{
-  int next;
-  int to;
-  int val;
-}e[2*N];
-int arr;
-int head[N];
-void add(int u,int v,int w){
-  e[++arr].next=head[u];
-  e[arr].to=v;
-  e[arr].val=w;
-  head[u]=arr;
-}
-struct num{
-  int x;
-  int dis;
-  bool operator &lt; (const num &amp;x) const {
-    return dis&gt;x.dis;
-  }
-};
-priority_queue&lt;num &gt; q;
-int dis[N];
-bool vis[N];
-void dijkstra(int x){
-  for(int i=1;i&lt;=n;++i){
-    if(i==x){
-      dis[i]=0;
-    }else{
-      dis[i]=inf;
-    }
-  }
-  q.push((num){x,0});
-  while(!q.empty()){
-    num re=q.top();
-    q.pop();
-    if(vis[re.x]) continue;
-    vis[re.x]=1;
-    int k=head[re.x];
-    while(k){
-      if(dis[e[k].to]&gt;re.dis+e[k].val){
-        dis[e[k].to]=re.dis+e[k].val;
-        q.push((num){e[k].to,dis[e[k].to]});
-      }
-      k=e[k].next;
-    }
-  }
-}
-int main()
-{
-  scanf(&quot;%d%d%d&quot;,&amp;n,&amp;m,&amp;s);
-  for(int i=1;i&lt;=m;++i){
-    int u,v,w;
-    scanf(&quot;%d%d%d&quot;,&amp;u,&amp;v,&amp;w);
-    add(u,v,w);
-  }
-  dijkstra(s);
-  for(int i=1;i&lt;=n;++i){
-    cout&lt;&lt;dis[i]&lt;&lt;' ';
-  }
-  cout&lt;&lt;endl;
-  return 0;
-}
-</code></pre>
-<h3 id="为什么最大值inf赋值成2147483647不会炸">为什么最大值inf赋值成2147483647不会炸？？</h3>
-<p>会炸的情况可能发生在 dis[re]+e[k].val<br>
-dis[re]肯定是被更新过的值<br>
-e[k].val也不会超范围<br>
-自然就没有什么问题</p>
+<h2 id="区间覆盖问题">区间覆盖问题</h2>
+<h3 id="noi2015软件包管理器"><a href="https://www.luogu.com.cn/problem/P2146">[NOI2015]软件包管理器</a></h3>
+<p><strong>将所有的+=改为=</strong><br>
+<strong>考虑线段的初始值以及更改后的值如何变化</strong><br>
+<strong>考虑懒标记的变化</strong></p>
+<h2 id="区间最大值问题">区间最大值问题</h2>
+<h3 id="zjoi2008树的统计"><a href="https://www.luogu.com.cn/problem/P2590">[ZJOI2008]树的统计</a></h3>
+<p><strong>注意懒标记和最大值线段树的初始化为负无穷</strong></p>
+<h2 id="区间连续字段的长最长长度">区间连续字段的长最长长度</h2>
+<h3 id="序列操作"><a href="https://www.luogu.com.cn/problem/P2572">序列操作</a></h3>
+<p><strong>一道极其疯狂的线段树码农题</strong><br>
+<strong>维护：</strong><br>
+<strong>一个节点中最长的1段长度，最长的0段长度</strong><br>
+<strong>右段开始的1段长度，右端开始的0段长度</strong><br>
+<strong>左端开始的1段长度，左端开始的0段长度</strong><br>
+<strong>在push_down ，push_up ,合并查询最长1段数时都有许多细节需要思考</strong></p>
 
             </div>
             <hr style="width: 80%;">
@@ -734,7 +652,7 @@ e[k].val也不会超范围<br>
             <div class="postfooter">
                 <ul class="post-copyright">
                     <li><strong>文章作者：</strong>Piao-Yingfeng</li>
-            <li><strong>原文链接：</strong>https://yingfengpiao.github.io/post/dijkstra/</li>
+            <li><strong>原文链接：</strong>https://yingfengpiao.github.io/post/xian-duan-shu/</li>
             <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA
                 许可协议。转载请注明出处！</li>
             </ul>
@@ -742,17 +660,29 @@ e[k].val也不会超范围<br>
         <div id="otherpost">
             
             <div class="prev-post-pc">
-                <div id="ppcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/ri-chang/';return false">
+                <div id="ppcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/shu-zhuang-shu-zu/';return false">
                     
-                    <img src="https://s1.ax1x.com/2020/11/11/Bj859I.jpg" style="width: 100%;" class="opimg">
+                    <img src="https://s1.ax1x.com/2020/11/11/BjNT0K.jpg" style="width: 100%;" class="opimg">
                     
-                    <h4 class="optitle">日常</h4>
+                    <h4 class="optitle">树状数组</h4>
                 </div>
             </div>
             <div class="prev-post">
-                上一篇 <a href="https://yingfengpiao.github.io/post/ri-chang/">日常</a>
+                上一篇 <a href="https://yingfengpiao.github.io/post/shu-zhuang-shu-zu/">树状数组</a>
             </div>
             
+            
+            <div class="next-post-pc">
+                <div id="npcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/spfa/';return false">
+                    
+                    <img src="https://s1.ax1x.com/2020/11/11/BjYp0U.jpg" style="width: 100%;" class="opimg">
+                    
+                    <h4 class="optitle">SPFA</h4>
+                </div>
+            </div>
+            <div class="next-post">
+                下一篇 <a href="https://yingfengpiao.github.io/post/spfa/">SPFA</a>
+            </div>
             
         </div>
     </div>
@@ -870,13 +800,26 @@ e[k].val也不会超范围<br>
         
         <div class="toc-container">
             <ul class="markdownIt-TOC">
-<li><a href="#dijkstra">dijkstra</a>
+<li><a href="#%E7%BA%BF%E6%AE%B5%E6%A0%91">线段树</a>
 <ul>
-<li><a href="#%E6%B4%9B%E8%B0%B7%E5%BC%B1%E5%8C%96%E7%89%88">洛谷弱化版</a></li>
-<li><a href="#%E6%B4%9B%E8%B0%B7%E6%A0%87%E5%87%86%E7%89%88">洛谷标准版</a></li>
-<li><a href="#std%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97">std:优先队列</a>
+<li><a href="#%E5%BB%BA%E6%A0%91">建树</a></li>
+<li><a href="#%E5%8C%BA%E9%97%B4%E4%BF%AE%E6%94%B9">区间修改</a></li>
+<li><a href="#%E5%8C%BA%E9%97%B4%E6%9F%A5%E8%AF%A2">区间查询</a></li>
+<li><a href="#%E6%87%92%E6%A0%87%E8%AE%B0%E4%B8%8B%E7%A7%BB">懒标记下移</a></li>
+<li><a href="#%E6%A8%A1%E6%9D%BF">模板</a></li>
+<li><a href="#%E5%8C%BA%E9%97%B4%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98">区间覆盖问题</a>
 <ul>
-<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%80%E5%A4%A7%E5%80%BCinf%E8%B5%8B%E5%80%BC%E6%88%902147483647%E4%B8%8D%E4%BC%9A%E7%82%B8">为什么最大值inf赋值成2147483647不会炸？？</a></li>
+<li><a href="#noi2015%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8">[NOI2015]软件包管理器</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8C%BA%E9%97%B4%E6%9C%80%E5%A4%A7%E5%80%BC%E9%97%AE%E9%A2%98">区间最大值问题</a>
+<ul>
+<li><a href="#zjoi2008%E6%A0%91%E7%9A%84%E7%BB%9F%E8%AE%A1">[ZJOI2008]树的统计</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8C%BA%E9%97%B4%E8%BF%9E%E7%BB%AD%E5%AD%97%E6%AE%B5%E7%9A%84%E9%95%BF%E6%9C%80%E9%95%BF%E9%95%BF%E5%BA%A6">区间连续字段的长最长长度</a>
+<ul>
+<li><a href="#%E5%BA%8F%E5%88%97%E6%93%8D%E4%BD%9C">序列操作</a></li>
 </ul>
 </li>
 </ul>
@@ -1120,7 +1063,7 @@ e[k].val也不会超范围<br>
                 var nc = new NewCounter();
                 nc.save({
                     time: 1,
-                    title: "dijkstra",
+                    title: "线段树",
                     url: pl,
                     xid: pl,
                 }).then(function (object) {

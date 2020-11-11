@@ -1,14 +1,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
-    <meta name="description" content="dijkstra
-迪杰斯特拉算法
-单源最短路——复杂度(nlognnlognnlogn-n2n^2n2)
-洛谷弱化版
-n2n^2n2
+    <meta name="description" content="SPFA
+复杂度nnn-$n^2
+
+可以处理负权边
+可以判负环
+贴一波代码
+
 #include&lt;iostream&gt;
-#include&lt;cmath&gt; 
-using..." />
+#include&lt;queue&gt;
+using namespace std;
+const int inf..." />
     <meta name="keywords" content="图论" />
     <link rel="stylesheet" href="https://yingfengpiao.github.io/media/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://yingfengpiao.github.io/styles/main.css">
@@ -428,11 +431,11 @@ using..." />
         <div class="postshow" style="padding-bottom: 0;">
             
             <div class="postdetailimg" style="width:100%;overflow: hidden;">
-                <img src="https://s1.ax1x.com/2020/07/02/NL8GLQ.jpg" class="postimage" style="cursor:auto">
+                <img src="https://s1.ax1x.com/2020/11/11/BjYp0U.jpg" class="postimage" style="cursor:auto">
             </div>
             <div class="postinfo-detail">
                 <div class="postdate"><i class="fa fa-calendar"></i>2020-11-11</div>
-                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 6 min read</div>
+                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 2 min read</div>
                 <div class="posttag">
                     
                     <a href="https://yingfengpiao.github.io/tag/uacC4WkMh/" class="postlink">
@@ -444,9 +447,9 @@ using..." />
             
         <div id="articlecontent">
             <div id="texttitle" style="text-align: center">
-                <h2>dijkstra</h2>
+                <h2>SPFA</h2>
                 <!-- id 将作为查询条件 -->
-                <div id="pl" style="display:none">https://yingfengpiao.github.io/post/dijkstra/</div>
+                <div id="pl" style="display:none">https://yingfengpiao.github.io/post/spfa/</div>
                 <div id="rootaddr" style="display:none">https://yingfengpiao.github.io</div>
                 <span id="hotnum">
                     <h4><i class="fa fa-eye" aria-hidden="true" style="color: #FF8C00;"></i>&nbsp;&nbsp;热度</i>: <i
@@ -454,82 +457,18 @@ using..." />
                 </span>
             </div>
             <div class="text ">
-                <h1 id="dijkstra">dijkstra</h1>
-<p><strong>迪杰斯特拉算法</strong><br>
-<strong>单源最短路——复杂度(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">nlogn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span>-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>)</strong></p>
-<h2 id="洛谷弱化版"><a href="https://www.luogu.com.cn/problem/P3371">洛谷弱化版</a></h2>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></p>
+                <h1 id="spfa">SPFA</h1>
+<p><strong>复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>-$n^2</strong></p>
+<ul>
+<li>可以处理负权边</li>
+<li>可以判负环<br>
+<strong>贴一波代码</strong></li>
+</ul>
 <pre><code class="language-cpp">#include&lt;iostream&gt;
-#include&lt;cmath&gt; 
+#include&lt;queue&gt;
 using namespace std;
 const int inf=2147483647;
-int n,m,s;
-struct node{
-	int to;
-	int next;
-	int val;
-}a[500001];
-int head[10001];
-int arr;
-void add(int u,int v,int w){
-	a[++arr].next=head[u];
-	a[arr].to=v;
-	a[arr].val=w;
-	head[u]=arr;
-}
-long long dis[10001];
-bool visit[10001];
-void dijkstra(int x){
-	for(int i=1;i&lt;=n;i++){
-		if(i==x){
-			dis[i]=0;
-		}
-		else{
-			dis[i]=inf;
-		}
-	}
-	int re=x;
-	while(!visit[re]){
-		visit[re]=1;
-		int k=head[re];
-		while(k!=0){
-			dis[a[k].to]=min(a[k].val+dis[re],dis[a[k].to]);
-			k=a[k].next;
-		}
-		long long minx=inf;
-		for(int i=1;i&lt;=n;i++){
-			if(!visit[i]&amp;&amp;dis[i]&lt;minx){
-				minx=dis[i];
-				re=i;
-			}
-		}
-	}
-}
-int main()
-{
-	cin&gt;&gt;n&gt;&gt;m&gt;&gt;s;
-	for(int i=1;i&lt;=m;i++){
-		int u,v,w;
-		cin&gt;&gt;u&gt;&gt;v&gt;&gt;w;
-		add(u,v,w);
-	}
-	dijkstra(s);
-	for(int i=1;i&lt;=n;i++){
-		cout&lt;&lt;dis[i]&lt;&lt;' ';
-	}
-	return 0;
-}
-</code></pre>
-<p>ps: 最大值要按照题目的条件定义<s>我经常忘</s></p>
-<h2 id="洛谷标准版"><a href="https://www.luogu.com.cn/problem/P4779">洛谷标准版</a></h2>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">nlogn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span><br>
-<s>手写堆</s></p>
-<pre><code class="language-cpp">#include&lt;iostream&gt;
-#include&lt;cstdio&gt;
-#include&lt;cmath&gt;
-#include&lt;algorithm&gt;
-using namespace std;
-const int inf=2147483647;
+queue&lt;int &gt; q;
 int n,m,s;
 struct node{
 	int to;
@@ -544,68 +483,30 @@ void add(int u,int v,int w){
 	e[arr].val=w;
 	head[u]=arr;
 }
-struct num{
-	int id;
-	int val;
-}queue[1000001];
-int tail=1;
-void shift_up(int x){
-	while(x/2&gt;=1){
-		if(queue[x].val&lt;queue[x/2].val){
-			swap(queue[x],queue[x/2]);
-			x/=2;
-		}else{
-			break;
-		} 
-	}
-	return ;
-}
-void shift_down(int x,int n){
-	while(x*2&lt;=n){
-		int t=x*2;
-		if(t+1&lt;=n&amp;&amp;queue[t+1].val&lt;queue[t].val){
-			t++;
-		}
-		if(queue[x].val&gt;queue[t].val){
-			swap(queue[x],queue[t]);
-			x=t;
-		}else{
-			break;
-		}
-	}
-	return ;
-}
-void push(num x){
-	queue[tail++]=x;
-	shift_up(tail-1);
-	return ;
-}
-void pop(){
-	swap(queue[1],queue[tail-1]);
-	tail--;
-	shift_down(1,tail-1);
-}
 int dis[1000001];
-bool visit[100001];
-void dijkstra(int x){
+bool visit[1000001];
+void spfa(int x){
 	for(int i=1;i&lt;=n;++i){
 		if(i==x){
 			dis[i]=0;
-			push((num){i,0});
 		}else{
 			dis[i]=inf;
 		}
 	}
-	while(tail!=1){
-		int re=queue[1].id;
-		pop();
-		if(visit[re]) continue;
-		visit[re]=1;
+	q.push(x);
+	visit[x]=1;
+	while(!q.empty()){
+		int re=q.front();
+		q.pop();
+		visit[re]=0;
 		int k=head[re];
 		while(k!=0){
 			if(dis[e[k].to]&gt;dis[re]+e[k].val){
 				dis[e[k].to]=dis[re]+e[k].val;
-				push((num){e[k].to,dis[e[k].to]});
+				if(!visit[e[k].to]){
+					q.push(e[k].to);
+					visit[e[k].to]=1;
+				}
 			}
 			k=e[k].next;
 		}
@@ -616,94 +517,18 @@ int main()
 	cin&gt;&gt;n&gt;&gt;m&gt;&gt;s;
 	for(int i=1;i&lt;=m;++i){
 		int u,v,w;
-		scanf(&quot;%d%d%d&quot;,&amp;u,&amp;v,&amp;w);
+		cin&gt;&gt;u&gt;&gt;v&gt;&gt;w;
 		add(u,v,w);
-	}
-	dijkstra(s);
+	} 
+	spfa(s);
 	for(int i=1;i&lt;=n;++i){
-		printf(&quot;%d &quot;,dis[i]);
+		cout&lt;&lt;dis[i]&lt;&lt;' ';
 	}
 	return 0;
 }
 </code></pre>
-<h2 id="std优先队列">std:优先队列</h2>
-<p><strong>$nlogn $</strong></p>
-<pre><code class="language-cpp">#include&lt;iostream&gt;
-#include&lt;cstdio&gt;
-#include&lt;queue&gt;
-#include&lt;cmath&gt;
-#define N 100010
-const int inf=2147483647;
-using namespace std;
-int n,m,s;
-struct node{
-  int next;
-  int to;
-  int val;
-}e[2*N];
-int arr;
-int head[N];
-void add(int u,int v,int w){
-  e[++arr].next=head[u];
-  e[arr].to=v;
-  e[arr].val=w;
-  head[u]=arr;
-}
-struct num{
-  int x;
-  int dis;
-  bool operator &lt; (const num &amp;x) const {
-    return dis&gt;x.dis;
-  }
-};
-priority_queue&lt;num &gt; q;
-int dis[N];
-bool vis[N];
-void dijkstra(int x){
-  for(int i=1;i&lt;=n;++i){
-    if(i==x){
-      dis[i]=0;
-    }else{
-      dis[i]=inf;
-    }
-  }
-  q.push((num){x,0});
-  while(!q.empty()){
-    num re=q.top();
-    q.pop();
-    if(vis[re.x]) continue;
-    vis[re.x]=1;
-    int k=head[re.x];
-    while(k){
-      if(dis[e[k].to]&gt;re.dis+e[k].val){
-        dis[e[k].to]=re.dis+e[k].val;
-        q.push((num){e[k].to,dis[e[k].to]});
-      }
-      k=e[k].next;
-    }
-  }
-}
-int main()
-{
-  scanf(&quot;%d%d%d&quot;,&amp;n,&amp;m,&amp;s);
-  for(int i=1;i&lt;=m;++i){
-    int u,v,w;
-    scanf(&quot;%d%d%d&quot;,&amp;u,&amp;v,&amp;w);
-    add(u,v,w);
-  }
-  dijkstra(s);
-  for(int i=1;i&lt;=n;++i){
-    cout&lt;&lt;dis[i]&lt;&lt;' ';
-  }
-  cout&lt;&lt;endl;
-  return 0;
-}
-</code></pre>
-<h3 id="为什么最大值inf赋值成2147483647不会炸">为什么最大值inf赋值成2147483647不会炸？？</h3>
-<p>会炸的情况可能发生在 dis[re]+e[k].val<br>
-dis[re]肯定是被更新过的值<br>
-e[k].val也不会超范围<br>
-自然就没有什么问题</p>
+<p><strong>判负环</strong><br>
+<strong>记录每一个点的搜索层数，即当前已经有超过<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>层的点，便存在负环</strong></p>
 
             </div>
             <hr style="width: 80%;">
@@ -734,7 +559,7 @@ e[k].val也不会超范围<br>
             <div class="postfooter">
                 <ul class="post-copyright">
                     <li><strong>文章作者：</strong>Piao-Yingfeng</li>
-            <li><strong>原文链接：</strong>https://yingfengpiao.github.io/post/dijkstra/</li>
+            <li><strong>原文链接：</strong>https://yingfengpiao.github.io/post/spfa/</li>
             <li><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用<i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA
                 许可协议。转载请注明出处！</li>
             </ul>
@@ -742,17 +567,29 @@ e[k].val也不会超范围<br>
         <div id="otherpost">
             
             <div class="prev-post-pc">
-                <div id="ppcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/ri-chang/';return false">
+                <div id="ppcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/xian-duan-shu/';return false">
                     
-                    <img src="https://s1.ax1x.com/2020/11/11/Bj859I.jpg" style="width: 100%;" class="opimg">
+                    <img src="https://s1.ax1x.com/2020/11/11/Bjte8s.jpg" style="width: 100%;" class="opimg">
                     
-                    <h4 class="optitle">日常</h4>
+                    <h4 class="optitle">线段树</h4>
                 </div>
             </div>
             <div class="prev-post">
-                上一篇 <a href="https://yingfengpiao.github.io/post/ri-chang/">日常</a>
+                上一篇 <a href="https://yingfengpiao.github.io/post/xian-duan-shu/">线段树</a>
             </div>
             
+            
+            <div class="next-post-pc">
+                <div id="npcontainer" onclick="window.location.href= 'https://yingfengpiao.github.io/post/Floyd/';return false">
+                    
+                    <img src="https://s1.ax1x.com/2020/11/11/BjGmgx.jpg" style="width: 100%;" class="opimg">
+                    
+                    <h4 class="optitle">Floyd</h4>
+                </div>
+            </div>
+            <div class="next-post">
+                下一篇 <a href="https://yingfengpiao.github.io/post/Floyd/">Floyd</a>
+            </div>
             
         </div>
     </div>
@@ -870,17 +707,7 @@ e[k].val也不会超范围<br>
         
         <div class="toc-container">
             <ul class="markdownIt-TOC">
-<li><a href="#dijkstra">dijkstra</a>
-<ul>
-<li><a href="#%E6%B4%9B%E8%B0%B7%E5%BC%B1%E5%8C%96%E7%89%88">洛谷弱化版</a></li>
-<li><a href="#%E6%B4%9B%E8%B0%B7%E6%A0%87%E5%87%86%E7%89%88">洛谷标准版</a></li>
-<li><a href="#std%E4%BC%98%E5%85%88%E9%98%9F%E5%88%97">std:优先队列</a>
-<ul>
-<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%80%E5%A4%A7%E5%80%BCinf%E8%B5%8B%E5%80%BC%E6%88%902147483647%E4%B8%8D%E4%BC%9A%E7%82%B8">为什么最大值inf赋值成2147483647不会炸？？</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a href="#spfa">SPFA</a></li>
 </ul>
 
     </div>
@@ -1120,7 +947,7 @@ e[k].val也不会超范围<br>
                 var nc = new NewCounter();
                 nc.save({
                     time: 1,
-                    title: "dijkstra",
+                    title: "SPFA",
                     url: pl,
                     xid: pl,
                 }).then(function (object) {
