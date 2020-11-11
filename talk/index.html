@@ -21,7 +21,7 @@
     
     <div id=side>
         <div class="avatar-border">
-            <img src="https://yingfengpiao.github.io/images/avatar.png?v=1605079283744" class="avatar">
+            <img src="https://yingfengpiao.github.io/images/avatar.png?v=1605079477620" class="avatar">
         </div>
         <div class="sitename">迎风飘</div>
         <span class="describtion" data-text='["迎风而立，顺风而飘"]'>&nbsp;</span>
@@ -91,46 +91,11 @@
     <div id="footinfo">nnez-OIer-Piao | Theme: <a
         href="https://github.com/850552586/gridea-theme-fog">Fog</a></div>
     
-    <div class="sitetime"><div id="sitegotimeDate">载入天数...</div>
-    <div id="sitegotimes">载入时分秒...</div></div>
-    <div id="cussitetime" style="display:none">02/02/2020</div>
-    
     
     </div>
 
 
 <script src="https://yingfengpiao.github.io/media/js/wordshow.js"></script>
-    
-    <script>
-        //----------------------站点运行时间
-        var now = new Date();
-
-        function createtime() {
-            var sitegotime = document.getElementById("cussitetime").innerHTML + " 00:00:00";
-            var grt = new Date(sitegotime); //此处修改你的建站时间或者网站上线时间
-            now.setTime(now.getTime() + 250);
-            days = (now - grt) / 1000 / 60 / 60 / 24;
-            dnum = Math.floor(days);
-            hours = (now - grt) / 1000 / 60 / 60 - (24 * dnum);
-            hnum = Math.floor(hours);
-            if (String(hnum).length == 1) {
-                hnum = "0" + hnum;
-            }
-            minutes = (now - grt) / 1000 / 60 - (24 * 60 * dnum) - (60 * hnum);
-            mnum = Math.floor(minutes);
-            if (String(mnum).length == 1) {
-                mnum = "0" + mnum;
-            }
-            seconds = (now - grt) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-            snum = Math.round(seconds);
-            if (String(snum).length == 1) {
-                snum = "0" + snum;
-            }
-            document.getElementById("sitegotimeDate").innerHTML = "本站已安全运行 " + dnum + " 天 ";
-            document.getElementById("sitegotimes").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
-        }
-        setInterval("createtime()", 250);
-    </script>
     
 
 
@@ -555,7 +520,7 @@
                 <img src="' + talks[i].img + '" class="talkimg"> \
                 <div class="ainfo">\
                     <div class="ainfo-intro">\
-                        <img class="intro1" src="https://yingfengpiao.github.io/images/avatar.png?v=1605079283744">\
+                        <img class="intro1" src="https://yingfengpiao.github.io/images/avatar.png?v=1605079477620">\
                         <div class="author">' + talks[i].author + '</div>·\
                         <div class="time">' + talks[i].time + '</div>\
                     </div>\
@@ -568,7 +533,7 @@
             <div class="talk" v-for="t in talks"> \
                 <div class="ainfo">\
                     <div class="ainfo-intro">\
-                        <img class="intro1" src="https://yingfengpiao.github.io/images/avatar.png?v=1605079283744">\
+                        <img class="intro1" src="https://yingfengpiao.github.io/images/avatar.png?v=1605079477620">\
                         <div class="author">' + talks[i].author + '</div>·\
                         <div class="time">' + talks[i].time + '</div>\
                     </div>\
