@@ -1,161 +1,281 @@
-
-<html>
-  <head>
-    
-<meta charset="utf-8" >
-
-<title>Gridea</title>
-<meta name="description" content="温故而知新">
-
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://yingfengpiao.github.io/favicon.ico?v=1605054238871">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-<link rel="stylesheet" href="https://yingfengpiao.github.io/styles/main.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://yingfengpiao.github.io/media/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/live2d.css">
+    <link rel="stylesheet" href="https://yingfengpiao.github.io/styles/main.css">
+    <meta name="description" content="温故而知新" />
+    <title>迎风飘</title>
+</head>
 
 
-
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-
-
-
-  </head>
-  <body>
-    <div id="app" class="main">
-      <div class="site-header-container">
-  <div class="site-header">
-    <div class="left">
-      <a href="https://yingfengpiao.github.io">
-        <img class="avatar" src="https://yingfengpiao.github.io/images/avatar.png?v=1605054238871" alt="" width="32px" height="32px">
-      </a>
-      <a href="https://yingfengpiao.github.io">
-        <h1 class="site-title">Gridea</h1>
-      </a>
-    </div>
-    <div class="right">
-      <transition name="fade">
-        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
-      </transition>
-    </div>
-  </div>
-</div>
-
-<transition name="fade">
-  <div class="menu-container" style="display: none;" v-show="menuVisible">
-    <div class="menu-list">
-      
-        
-          <a href="/" class="menu purple-link">
-            首页
-          </a>
-        
-      
-        
-          <a href="/archives" class="menu purple-link">
-            归档
-          </a>
-        
-      
-        
-          <a href="/tags" class="menu purple-link">
-            标签
-          </a>
-        
-      
-        
-          <a href="/post/about" class="menu purple-link">
-            关于
-          </a>
-        
-      
-    </div>
-  </div>
-</transition>
-
-
-      <div class="content-container">
-        
-        
-<section class="post-item">
-    <div class="content">
-      <a href="https://yingfengpiao.github.io/post/hello-gridea/">
-        <h2 class="post-title">Hello Gridea</h2>
-      </a>
-      <div class="post-abstract">
-        <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-
-      </div>
-      <div class="post-info">
-        <span><i class="icon icon-calendar-outline"></i> 2018-12-12</span>
-        
-          <span>
-            <i class="icon icon-pricetags-outline"></i>
-            
-              <a href="https://yingfengpiao.github.io/tag/mWsy3Aogk/">
-                Gridea
+<body>
+    <!-- 响应式布局，针对PC端内容显示 -->
+    <div id="content">
+        <div class="nav-large">
+            <div class="row">
                 
-              </a>
-            
-          </span>
         
-      </div>
     </div>
     
-      <a href="https://yingfengpiao.github.io/post/hello-gridea/">
-        <div class="feature-container" style="background-image: url('https://yingfengpiao.github.io/post-images/hello-gridea.png')">
-        </div>
-      </a>
     
-  </section>
+    </div>
+    <div id="bg">
+    </div>
+    <div id="bgchoice" style="display: none">
+    </div>
+            
+            <div id="bgurl" style="display:none"></div>
+             
 
+    <!-- 响应式布局，针对手机端内容显示 -->
+    <div class="nav-small">
+            <head>
+  <!-- 引入Bootstrap核心样式文件 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/850552586/ericamcdn@0.1/css/bootstrap.min.css">
+</head>
+<style>
+  @media screen and (max-width:1200px) and (min-width: 768px) {
+    @media (min-width: 768px) {
+      .navbar-nav {
+        float: right;
+        margin: 0;
+      }
+    }
+  }
+  @media screen and (max-width:768px){
+    .mbapspan{
+      padding: 0;
+    }
+  }
+</style>
 
-<div class="pagination-container">
-  
-  
-</div>
-
-
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#barmenu"
+          aria-expanded="false" id="barbutton">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="https://yingfengpiao.github.io">迎风飘&nbsp;&nbsp;|</a>
+        <span class="navbar-brand mbapspan"><i id="mbaplayer" class="fa fa-play-circle-o" aria-hidden="true"
+            style="font-size: 28px;top: 12px;position: absolute;" onclick="aplayerPlay();"></i></span>
       </div>
 
-      <div class="site-footer">
-  <div class="slogan">温故而知新</div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://yingfengpiao.github.io/atom.xml" target="_blank">RSS</a>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="barmenu">
+        <ul class="nav navbar-nav">
+          
+          
+          <li>
+            <a href="/">
+              首页
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="/archives">
+              归档
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="/tags">
+              标签
+            </a>
+          </li>
+          
+          
+          
+          <li>
+            <a href="/post/about">
+              关于
+            </a>
+          </li>
+          
+          
+          
+          
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+
+
+  <!-- 引入jQuery核心js文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+  <script>
+  var btstate = false;
+  var bt = $("#barbutton");
+  var bm = $("#barmenu");
+  bt.click(function(){
+    dropdown();
+  })
+  function dropdown(){
+    console.log(btstate);
+    //下拉
+    if(btstate==false){
+      bt.removeClass("collapsed");
+      bt.attr("aria-expanded","true");
+      bm.attr("aria-expanded","true")
+      bm.fadeIn(700);
+      btstate = true;
+    }
+    else{
+      bt.addClass("collapsed");
+      bt.attr("aria-expanded","false");
+      bm.removeClass("in");
+      bm.hide();
+      bm.attr("aria-expanded","false");
+      btstate = false;
+    }
+  }
+  </script> 
+</body>
+            <!-- 移动端欢迎页 -->
+<div class="welcome">
+    <div class="avatar-border">
+        <img src="https://yingfengpiao.github.io/images/avatar.png?v=1605055891671" class="avatar">
+    </div>
+    <span class="mobiledescribtion"></span>
 </div>
 
+    <div id="mobilebgurl" style="display:none"></div>
 
-    </div>
-    <script type="application/javascript">
+<script>
+    var welcome = $('.welcome');
+    var bgurl = document.getElementById("mobilebgurl").innerHTML;
+    for (var i = 0; i < 3; i++)
+        bgurl = bgurl.replace("\\", "/");
+    welcome.css("background", "url('" + bgurl + "')");
+    var mobiledes = document.querySelector(".mobiledescribtion");
+    var text = "温故而知新";
+    // 当前显示第几个字
+    var mobilecharIndex = 1;
+    // 每个字显示间隔默认是500毫秒
+    var mobiledelta = 500;
 
-hljs.initHighlightingOnLoad()
+    // 记录动画执行开始时间
+    var mobilestart = null;
+    // 是否为删除动画
+    var mobileisDeleting = false;
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
+    // 动画回调函数
+    function mobileLoadDes(time) {
+        window.requestAnimationFrame(mobileLoadDes);
+        // 初始化开始时间
+        if (!mobilestart) start = time;
+        // 获取时间间隔
+        var mobileprogress = time - mobilestart;
+        // 每隔一定的时间，打印出一个新的字符
+        if (mobileprogress > mobiledelta) {
+            // 如果是打字效果
+            if (!mobileisDeleting) {
+                // 给展示文字的span新增一个字符，使用innerHTML来替换，charIndex自增1，然后返回新的字符串子串
+                mobiledes.innerHTML = "&nbsp;" + text.slice(
+                    0,
+                    ++mobilecharIndex
+                );
+                mobiledelta = 500 - Math.random() * 400;
+            } else {
+                // 如果是删除效果，则把文字一个一个减掉
+                mobiledes.innerHTML = "&nbsp;" + text.slice(
+                    0,
+                    mobilecharIndex--
+                );
+            }
+            // 把star更新为当前时间，进行下一个周期
+            mobilestart = time;
 
+            // 如果文字已经全部打印完毕
+            if (mobilecharIndex === text.length) {
+                // 下次开始删除文字
+                mobileisDeleting = true;
+                // 删除文字的间隔为200毫秒
+                mobiledelta = 100;
+                // 额外等待1.2秒后再删除
+                mobilestart = time + 1000;
+            }
+
+            // 如果文字删除完毕
+            if (mobilecharIndex < 0) {
+                mobileisDeleting = false;
+                // 额外增加200毫秒延迟
+                mobilestart = time + 200;
+            }
+        }
+    }
+
+    window.requestAnimationFrame(mobileLoadDes);
 </script>
+            <link rel="stylesheet" href="https://yingfengpiao.github.io/media/css/font-awesome.css">
+<div id="post-container">
+    
+    <div class="postshow postlist">
+        
+        <div id="post" style="width:100%">
+            <img src="https://yingfengpiao.github.io/post-images/hello-gridea.png" class="postimage"
+                onclick="window.location.href= 'https://yingfengpiao.github.io/post/hello-gridea/';return false">
+            <div class="posttitlebox">
+                <div class="posttitle" onclick="window.location.href= 'https://yingfengpiao.github.io/post/hello-gridea/';return false">
+                    Hello Gridea
+                </div>
+            </div>
+        </div>
+        <div class="postinfo">
+            <div class="postdate"><i class="fa fa-calendar"></i>2018-12-12</div>
+            <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 2 min read</div>
+            <div class="posttag">
+                
+                <a href="https://yingfengpiao.github.io/tag/mWsy3Aogk/" class="postlink">
+                    <i class="fa fa-tag"></i> Gridea
+                </a>
+                
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+            <div class="pagination-container">
+                  
+                
+            </div>
+        </div>
 
+        <div id="landlord">
+            <div class="message" style="opacity:0"></div>
+            <canvas id="live2d" width="240" height="250" class="live2d"></canvas>
+        </div>
+    </div>
+    <div id="domainname" style="display:none">https://yingfengpiao.github.io</div>
+</body>
 
-
-
-  </body>
 </html>
+
+
+<script>
+        var bgchoice=$('#bgchoice').html();
+        var bg = $('#bg');
+        var bgurl = document.getElementById("bgurl").innerHTML;
+        if(bgchoice=='default')
+            for (var i = 0; i < 3; i++)
+                bgurl = bgurl.replace("\\", "/");
+        bg.css("background", "url('" + bgurl + "')");
+
+        window.onload = function(){
+            aplayerbtnInit();
+        }
+</script>
