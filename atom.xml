@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://yingfengpiao.github.io</id>
     <title>迎风飘</title>
-    <updated>2020-11-11T03:49:13.837Z</updated>
+    <updated>2020-11-11T04:07:57.795Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://yingfengpiao.github.io"/>
     <link rel="self" href="https://yingfengpiao.github.io/atom.xml"/>
@@ -16,7 +16,8 @@
         <link href="https://yingfengpiao.github.io/post/dijk/">
         </link>
         <updated>2020-11-11T01:28:52.000Z</updated>
-        <content type="html"><![CDATA[<p>#dijkstra<br>
+        <content type="html"><![CDATA[<!-- more -->
+<p>#dijkstra<br>
 ##迪杰斯特拉算法<br>
 ##单源最短路——复杂度(<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">nlogn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span>-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span>)<br>
 ##<a href="https://www.luogu.com.cn/problem/P3371">洛谷弱化版</a></p>
