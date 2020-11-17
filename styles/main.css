@@ -2141,29 +2141,29 @@ p > code {
       transition-duration: 59s;
       transition-timing-function: cubic-bezier(.34,0,.84,1);
     }.markdownIt-TOC a {
-      color: #eee;
-      border-bottom-color: #eee;
+      color: #495057;
+      border-bottom-color: #495057;
     }.markdownIt-TOC a:hover {
-      color: #fff;
-      border-bottom-color: #fff;
+      color: #f03e3e;
+      border-bottom-color: #f03e3e;
     }.active-current > a {
-      color: #fc6423 !important;
-      border-bottom-color: #fc6423 !important;
+      color: #e03131 !important;
+      border-bottom-color: #e03131 !important;
     }
     .sidebar-title-active {
-      color: #fc6423 !important;
-      border-bottom-color: #fc6423 !important;
+      color: #e03131;
+      border-bottom-color: #e03131;
     }
     .sidebar-title-item:hover {
-      color: #fc6423 !important;
+      color: #e03131 !important;
     }
     .active-show > a {
-      color: #fc6423;
-      border-bottom-color: #fc6423;
+      color: #e03131;
+      border-bottom-color: #e03131;
     }
     .active-hidden > a {
-      color: #fc6423;
-      border-bottom-color: #fc6423;
+      color: #e03131;
+      border-bottom-color: #e03131;
     }.bg-color {
       background-color: #ced4dad8;
     }
