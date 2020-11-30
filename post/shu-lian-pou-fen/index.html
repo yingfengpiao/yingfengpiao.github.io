@@ -9,7 +9,7 @@
 <meta name="description" content="迎风而立，顺风而飘">
 <meta name="theme-color" content="#212529">
 <title>树链剖分 | 迎风飘</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1606048459018">
+<link rel="shortcut icon" href="/favicon.ico?v=1606714948037">
 <link rel="stylesheet" href="/media/css/gemini.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -244,6 +244,9 @@
 <ul>
 <li><a href="#dfs1">dfs1</a></li>
 <li><a href="#dfs2">dfs2</a></li>
+<li><a href="#%E7%BA%BF%E6%AE%B5%E6%A0%91%E5%BB%BA%E5%9B%BE">线段树建图</a></li>
+<li><a href="#%E6%9F%A5%E6%89%BElca">查找<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>c</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lca</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">c</span><span class="mord mathdefault">a</span></span></span></span></a></li>
+<li><a href="#%E6%A8%A1%E7%89%88%E9%A2%98">模版题</a></li>
 </ul>
 </li>
 </ul>
@@ -545,12 +548,12 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>2<span class="language" data-lan="minute">分钟</span></span>
+      <span>8<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>401<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>1425<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
     
@@ -622,6 +625,204 @@ void dfs2(int x,int t){
 		}
 		k=e[k].next;
 	}
+}
+</code></pre>
+<h2 id="线段树建图">线段树建图</h2>
+<pre><code class="language-cpp">void build(int id,int l,int r){
+    if(l==r){
+        seg[id]=ai[rk[l]];
+        return ;
+    }
+    int mid=(l+r)&gt;&gt;1;
+    build(id&lt;&lt;1,l,mid);
+    build(id&lt;&lt;1|1,mid+1,r);
+    push_up(id);
+}
+</code></pre>
+<h2 id="查找lca">查找<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>c</mi><mi>a</mi></mrow><annotation encoding="application/x-tex">lca</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">c</span><span class="mord mathdefault">a</span></span></span></span></h2>
+<p><strong>将线段树上两点之间路径进行修改</strong><br>
+<strong>时间复杂度: <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">nlogn</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span></span></span></span></strong></p>
+<pre><code class="language-cpp">void ask1(int x,int y,int v){
+    while(top[x]!=top[y]){
+        if(deep[top[x]]&lt;deep[top[y]]) swap(x,y);
+        qu_add(id[top[x]],id[x],1,1,n,v);
+        x=fa[top[x]];
+    }
+    if(id[x]&gt;id[y]) swap(x,y);
+    qu_add(id[x],id[y],1,1,n,v);
+}
+</code></pre>
+<p><strong>统计树上两点之间的信息之和</strong><br>
+<strong>以求和为例</strong></p>
+<pre><code class="language-cpp">int ask2(int x,int y){
+    int sum=0;
+    while(top[x]!=top[y]){
+        if(deep[top[x]]&lt;deep[top[y]]) swap(x,y);
+        sum=(sum+query(id[top[x]],id[x],1,1,n))%p;
+        x=fa[top[x]];
+    }
+    if(id[x]&gt;id[y]) swap(x,y);
+    sum=(sum+query(id[x],id[y],1,1,n))%p;
+    return sum;
+}
+</code></pre>
+<h2 id="模版题">模版题</h2>
+<p><strong><a href="https://www.luogu.com.cn/problem/P3384">P3384 【模板】轻重链剖分</a></strong></p>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;cstdio&gt;
+#include&lt;cmath&gt;
+#include&lt;algorithm&gt;
+#define rep(i,a,b) for(register int i=(a); i&lt;=(b); ++i)
+#define per(i,a,b) for(register int i=(a); i&gt;=(b); --i)
+#define ll long long
+#define N 100010
+using namespace std;
+int n,m,r,p;
+int ai[N];
+struct node{
+    int to;
+    int next;
+}e[2*N];
+int arr;
+int head[N];
+void add(int u,int v){
+    e[++arr].next=head[u];
+    e[arr].to=v;
+    head[u]=arr;
+}
+int son[N];
+int size[N];
+int deep[N];
+int fa[N];
+void dfs1(int x){
+    deep[x]=deep[fa[x]]+1;
+    size[x]=1;
+    for(int k=head[x]; k; k=e[k].next){
+        int v=e[k].to;
+        if(v!=fa[x]){
+            fa[v]=x;
+            dfs1(v);
+            size[x]+=size[v];
+            if(size[son[x]]&lt;size[v]) son[x]=v;
+        }
+    }
+}
+int top[N];
+int id[N];
+int rk[N];
+int ant;
+void dfs2(int x,int t){
+    top[x]=t;
+    id[x]=++ant;
+    rk[ant]=x;
+    if(!son[x]) return ;
+    dfs2(son[x],t); 
+    for(int k=head[x]; k; k=e[k].next){
+        int v=e[k].to;
+        if(v!=fa[x]&amp;&amp;v!=son[x]){
+            dfs2(v,v);
+        }
+    }
+}
+int seg[4*N];
+int lazy[4*N];
+void push_up(int id){
+    seg[id]=(seg[id&lt;&lt;1]+seg[id&lt;&lt;1|1])%p;
+}
+void push_down(int id,int l,int r){
+    int mid=(l+r)&gt;&gt;1;
+    seg[id&lt;&lt;1]=(seg[id&lt;&lt;1]+(mid-l+1)*lazy[id])%p;
+    seg[id&lt;&lt;1|1]=(seg[id&lt;&lt;1|1]+(r-mid)*lazy[id])%p;
+    lazy[id&lt;&lt;1]=(lazy[id&lt;&lt;1]+lazy[id])%p;
+    lazy[id&lt;&lt;1|1]=(lazy[id&lt;&lt;1|1]+lazy[id])%p;
+    lazy[id]=0;
+}
+void build(int id,int l,int r){
+    if(l==r){
+        seg[id]=ai[rk[l]];
+        return ;
+    }
+    int mid=(l+r)&gt;&gt;1;
+    build(id&lt;&lt;1,l,mid);
+    build(id&lt;&lt;1|1,mid+1,r);
+    push_up(id);
+}
+void qu_add(int li,int ri,int id,int l,int r,int v){
+    if(li&lt;=l&amp;&amp;r&lt;=ri){
+        seg[id]=(seg[id]+(r-l+1)*v)%p;
+        lazy[id]=(lazy[id]+v)%p;
+        return ;
+    }
+    push_down(id,l,r);
+    int mid=(l+r)&gt;&gt;1;
+    if(mid&gt;=li){ qu_add(li,ri,id&lt;&lt;1,l,mid,v); }
+    if(mid&lt;ri){ qu_add(li,ri,id&lt;&lt;1|1,mid+1,r,v); }
+    push_up(id);
+}
+int query(int li,int ri,int id,int l,int r){
+    if(li&lt;=l&amp;&amp;r&lt;=ri){
+        return seg[id];
+    }
+    push_down(id,l,r);
+    int ans=0;
+    int mid=(l+r)&gt;&gt;1;
+    if(mid&gt;=li){ ans=(ans+query(li,ri,id&lt;&lt;1,l,mid))%p; }
+    if(mid&lt;ri){ ans=(ans+query(li,ri,id&lt;&lt;1|1,mid+1,r))%p; }
+    return ans;
+}
+void ask1(int x,int y,int v){
+    while(top[x]!=top[y]){
+        if(deep[top[x]]&lt;deep[top[y]]) swap(x,y);
+        qu_add(id[top[x]],id[x],1,1,n,v);
+        x=fa[top[x]];
+    }
+    if(id[x]&gt;id[y]) swap(x,y);
+    qu_add(id[x],id[y],1,1,n,v);
+}
+int ask2(int x,int y){
+    int sum=0;
+    while(top[x]!=top[y]){
+        if(deep[top[x]]&lt;deep[top[y]]) swap(x,y);
+        sum=(sum+query(id[top[x]],id[x],1,1,n))%p;
+        x=fa[top[x]];
+    }
+    if(id[x]&gt;id[y]) swap(x,y);
+    sum=(sum+query(id[x],id[y],1,1,n))%p;
+    return sum;
+}
+
+int main()
+{
+    scanf(&quot;%d%d%d%d&quot;,&amp;n,&amp;m,&amp;r,&amp;p);
+    rep(i,1,n) scanf(&quot;%d&quot;,&amp;ai[i]);
+    rep(i,1,n-1){
+        int u,v;
+        scanf(&quot;%d%d&quot;,&amp;u,&amp;v);
+        add(u,v); add(v,u);
+    }
+    dfs1(r); dfs2(r,r);
+    build(1,1,n);
+    rep(i,1,m){
+        int k,x,y,v;
+        scanf(&quot;%d&quot;,&amp;k);
+        if(k==1){
+            scanf(&quot;%d%d%d&quot;,&amp;x,&amp;y,&amp;v);
+            ask1(x,y,v);
+        }
+        if(k==2){
+            scanf(&quot;%d%d&quot;,&amp;x,&amp;y);
+            printf(&quot;%d\n&quot;,ask2(x,y));
+        }
+        if(k==3){
+            scanf(&quot;%d%d&quot;,&amp;x,&amp;v);
+            qu_add(id[x],id[x]+size[x]-1,1,1,n,v);
+        }
+        if(k==4){
+            scanf(&quot;%d&quot;,&amp;x);
+            printf(&quot;%d\n&quot;,query(id[x],id[x]+size[x]-1,1,1,n));
+        }
+    }
+    return 0;
 }
 </code></pre>
 
@@ -5007,6 +5208,204 @@ void dfs2(int x,int t){
 		}
 		k=e[k].next;
 	}
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;线段树建图&#34;&gt;线段树建图&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;void build(int id,int l,int r){
+    if(l==r){
+        seg[id]=ai[rk[l]];
+        return ;
+    }
+    int mid=(l+r)&amp;gt;&amp;gt;1;
+    build(id&amp;lt;&amp;lt;1,l,mid);
+    build(id&amp;lt;&amp;lt;1|1,mid+1,r);
+    push_up(id);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;查找lca&#34;&gt;查找&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;lca&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.69444em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.01968em;&#34;&gt;l&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;a&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;将线段树上两点之间路径进行修改&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;时间复杂度: &lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;l&lt;/mi&gt;&lt;mi&gt;o&lt;/mi&gt;&lt;mi&gt;g&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;nlogn&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.8888799999999999em;vertical-align:-0.19444em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.01968em;&#34;&gt;l&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;o&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.03588em;&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;n&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;void ask1(int x,int y,int v){
+    while(top[x]!=top[y]){
+        if(deep[top[x]]&amp;lt;deep[top[y]]) swap(x,y);
+        qu_add(id[top[x]],id[x],1,1,n,v);
+        x=fa[top[x]];
+    }
+    if(id[x]&amp;gt;id[y]) swap(x,y);
+    qu_add(id[x],id[y],1,1,n,v);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;统计树上两点之间的信息之和&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;以求和为例&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;int ask2(int x,int y){
+    int sum=0;
+    while(top[x]!=top[y]){
+        if(deep[top[x]]&amp;lt;deep[top[y]]) swap(x,y);
+        sum=(sum+query(id[top[x]],id[x],1,1,n))%p;
+        x=fa[top[x]];
+    }
+    if(id[x]&amp;gt;id[y]) swap(x,y);
+    sum=(sum+query(id[x],id[y],1,1,n))%p;
+    return sum;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;模版题&#34;&gt;模版题&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://www.luogu.com.cn/problem/P3384&#34;&gt;P3384 【模板】轻重链剖分&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;#include&amp;lt;iostream&amp;gt;
+#include&amp;lt;cstdio&amp;gt;
+#include&amp;lt;cmath&amp;gt;
+#include&amp;lt;algorithm&amp;gt;
+#define rep(i,a,b) for(register int i=(a); i&amp;lt;=(b); ++i)
+#define per(i,a,b) for(register int i=(a); i&amp;gt;=(b); --i)
+#define ll long long
+#define N 100010
+using namespace std;
+int n,m,r,p;
+int ai[N];
+struct node{
+    int to;
+    int next;
+}e[2*N];
+int arr;
+int head[N];
+void add(int u,int v){
+    e[++arr].next=head[u];
+    e[arr].to=v;
+    head[u]=arr;
+}
+int son[N];
+int size[N];
+int deep[N];
+int fa[N];
+void dfs1(int x){
+    deep[x]=deep[fa[x]]+1;
+    size[x]=1;
+    for(int k=head[x]; k; k=e[k].next){
+        int v=e[k].to;
+        if(v!=fa[x]){
+            fa[v]=x;
+            dfs1(v);
+            size[x]+=size[v];
+            if(size[son[x]]&amp;lt;size[v]) son[x]=v;
+        }
+    }
+}
+int top[N];
+int id[N];
+int rk[N];
+int ant;
+void dfs2(int x,int t){
+    top[x]=t;
+    id[x]=++ant;
+    rk[ant]=x;
+    if(!son[x]) return ;
+    dfs2(son[x],t); 
+    for(int k=head[x]; k; k=e[k].next){
+        int v=e[k].to;
+        if(v!=fa[x]&amp;amp;&amp;amp;v!=son[x]){
+            dfs2(v,v);
+        }
+    }
+}
+int seg[4*N];
+int lazy[4*N];
+void push_up(int id){
+    seg[id]=(seg[id&amp;lt;&amp;lt;1]+seg[id&amp;lt;&amp;lt;1|1])%p;
+}
+void push_down(int id,int l,int r){
+    int mid=(l+r)&amp;gt;&amp;gt;1;
+    seg[id&amp;lt;&amp;lt;1]=(seg[id&amp;lt;&amp;lt;1]+(mid-l+1)*lazy[id])%p;
+    seg[id&amp;lt;&amp;lt;1|1]=(seg[id&amp;lt;&amp;lt;1|1]+(r-mid)*lazy[id])%p;
+    lazy[id&amp;lt;&amp;lt;1]=(lazy[id&amp;lt;&amp;lt;1]+lazy[id])%p;
+    lazy[id&amp;lt;&amp;lt;1|1]=(lazy[id&amp;lt;&amp;lt;1|1]+lazy[id])%p;
+    lazy[id]=0;
+}
+void build(int id,int l,int r){
+    if(l==r){
+        seg[id]=ai[rk[l]];
+        return ;
+    }
+    int mid=(l+r)&amp;gt;&amp;gt;1;
+    build(id&amp;lt;&amp;lt;1,l,mid);
+    build(id&amp;lt;&amp;lt;1|1,mid+1,r);
+    push_up(id);
+}
+void qu_add(int li,int ri,int id,int l,int r,int v){
+    if(li&amp;lt;=l&amp;amp;&amp;amp;r&amp;lt;=ri){
+        seg[id]=(seg[id]+(r-l+1)*v)%p;
+        lazy[id]=(lazy[id]+v)%p;
+        return ;
+    }
+    push_down(id,l,r);
+    int mid=(l+r)&amp;gt;&amp;gt;1;
+    if(mid&amp;gt;=li){ qu_add(li,ri,id&amp;lt;&amp;lt;1,l,mid,v); }
+    if(mid&amp;lt;ri){ qu_add(li,ri,id&amp;lt;&amp;lt;1|1,mid+1,r,v); }
+    push_up(id);
+}
+int query(int li,int ri,int id,int l,int r){
+    if(li&amp;lt;=l&amp;amp;&amp;amp;r&amp;lt;=ri){
+        return seg[id];
+    }
+    push_down(id,l,r);
+    int ans=0;
+    int mid=(l+r)&amp;gt;&amp;gt;1;
+    if(mid&amp;gt;=li){ ans=(ans+query(li,ri,id&amp;lt;&amp;lt;1,l,mid))%p; }
+    if(mid&amp;lt;ri){ ans=(ans+query(li,ri,id&amp;lt;&amp;lt;1|1,mid+1,r))%p; }
+    return ans;
+}
+void ask1(int x,int y,int v){
+    while(top[x]!=top[y]){
+        if(deep[top[x]]&amp;lt;deep[top[y]]) swap(x,y);
+        qu_add(id[top[x]],id[x],1,1,n,v);
+        x=fa[top[x]];
+    }
+    if(id[x]&amp;gt;id[y]) swap(x,y);
+    qu_add(id[x],id[y],1,1,n,v);
+}
+int ask2(int x,int y){
+    int sum=0;
+    while(top[x]!=top[y]){
+        if(deep[top[x]]&amp;lt;deep[top[y]]) swap(x,y);
+        sum=(sum+query(id[top[x]],id[x],1,1,n))%p;
+        x=fa[top[x]];
+    }
+    if(id[x]&amp;gt;id[y]) swap(x,y);
+    sum=(sum+query(id[x],id[y],1,1,n))%p;
+    return sum;
+}
+
+int main()
+{
+    scanf(&amp;quot;%d%d%d%d&amp;quot;,&amp;amp;n,&amp;amp;m,&amp;amp;r,&amp;amp;p);
+    rep(i,1,n) scanf(&amp;quot;%d&amp;quot;,&amp;amp;ai[i]);
+    rep(i,1,n-1){
+        int u,v;
+        scanf(&amp;quot;%d%d&amp;quot;,&amp;amp;u,&amp;amp;v);
+        add(u,v); add(v,u);
+    }
+    dfs1(r); dfs2(r,r);
+    build(1,1,n);
+    rep(i,1,m){
+        int k,x,y,v;
+        scanf(&amp;quot;%d&amp;quot;,&amp;amp;k);
+        if(k==1){
+            scanf(&amp;quot;%d%d%d&amp;quot;,&amp;amp;x,&amp;amp;y,&amp;amp;v);
+            ask1(x,y,v);
+        }
+        if(k==2){
+            scanf(&amp;quot;%d%d&amp;quot;,&amp;amp;x,&amp;amp;y);
+            printf(&amp;quot;%d\n&amp;quot;,ask2(x,y));
+        }
+        if(k==3){
+            scanf(&amp;quot;%d%d&amp;quot;,&amp;amp;x,&amp;amp;v);
+            qu_add(id[x],id[x]+size[x]-1,1,1,n,v);
+        }
+        if(k==4){
+            scanf(&amp;quot;%d&amp;quot;,&amp;amp;x);
+            printf(&amp;quot;%d\n&amp;quot;,query(id[x],id[x]+size[x]-1,1,1,n));
+        }
+    }
+    return 0;
 }
 &lt;/code&gt;&lt;/pre&gt;
 ">树链剖分</a>
